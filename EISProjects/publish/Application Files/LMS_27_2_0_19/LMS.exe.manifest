@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="LMS.exe" version="27.2.0.19" publicKeyToken="cbf2ca155fca0bd3" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="LMS.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="LMS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="LMS.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LMS.exe" size="3748664">
+      <assemblyIdentity name="LMS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>mlIerP0FYWoWbtHpGMUOzbwToV0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="LMS.ico" size="144462">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>vrywDioCZvqyYMEkjWsFhF6aIRY=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=MohammadNakhaee" issuerKeyHash="278483662d9c3b34c687de8646192efbd888dc3d" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>mLAojrsj0/G160g/dr2ampwln3M=</DigestValue></Reference></SignedInfo><SignatureValue>EXDy7LmoVFM9tzKlKK6nXv+FoM683IxyPcrtdPVeZoNKOQlDWuiR8ZZUAjTMig8DIC9hBJWhHfYreCRUDPU4c/+pDmgUo9y5drZu7E/AFLnfz84agJO/BnxTx0O03satIripJSVhGrwR7AMH/ANJsDQ8+BGMviEbwhYxgVb9+wUXPHmhXSp8qpItT9wnrTHWCyeXL0l5pdtCO8/28jYJn6vB0EKigM9Yj70fjupxqM4o1QHQmDLhLiP+AwfHABZxtrjKQr6IDHF7CsCINBL3315ORDD5IxAs1cwS7XU5rR9zTp5jr0iCfORdZPAigDVXQjjBH+03ecv/HIcXapub4A==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>xKrkSsNwgjruhuhYYTZGEebSH4vRB8xKY672X77w/lk3VKC0bWU6xwxE5eOImJz2h/gmx+MjEuSOEqO9KE/J8fIeNRhJxdysd+q8ShLh7kzUvEs8ZqK12cTEiYfod8vlKZQz4rTHvA3+1AWtkSWgh2tew2x5K+GC941u9QFIbCI8WYGjfQwYlKOnRrME9VO/cJH3vCLOrVc951RitDgOdAtoHYLxBsaYbQCH0X2nHVGI9I3DUH/FlFjhe5zRBwrRl581wgthVJhbxRM41eYpwY5zBvVySa3Z7ZJye/Xqb9bVMiwoGBjxRnZrgof5++6mhJFu2AfFfPJqQ+YEi2VoSQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="739f259c9a9abd763f48ebb5f1d323bb8e28b098" Description="" Url=""><as:assemblyIdentity name="LMS.exe" version="27.2.0.19" publicKeyToken="cbf2ca155fca0bd3" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=MohammadNakhaee</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>E/4f9fNW7RZdyA8V3VZZUVojMWU=</DigestValue></Reference></SignedInfo><SignatureValue>vv8LFZzFtN9coZ/E3L12Yr7A2fIEBIcrzP9X7OKTwDP5YWjMAcDwxnUqq/pvhN74Z4IJJlougpoo85tDOey/s1uemg6mxnU/rSxIdwyoqbAJ80qF+IrHJoOkdtKusQAG1f/0X/YOAIgtiHEG7Dlq9GjyXf+B7j8Ah0vCNwCArtI/fJmN7EOeQwPSdQe5NcqI+rSMhLrguoifrS3bGm3Ca4FBArIIpLdqmTw0dR8vzuNU6Am09UJeQD9OhbA08L6IQo/Gio0I2zCeAvGaRf3k7L0RcdzYiXJuhK1b7P3Cz3oCeh1FGBuFrGtEAR+ysQQ4cNGze6hDqVCFBNDuWk02xQ==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>xKrkSsNwgjruhuhYYTZGEebSH4vRB8xKY672X77w/lk3VKC0bWU6xwxE5eOImJz2h/gmx+MjEuSOEqO9KE/J8fIeNRhJxdysd+q8ShLh7kzUvEs8ZqK12cTEiYfod8vlKZQz4rTHvA3+1AWtkSWgh2tew2x5K+GC941u9QFIbCI8WYGjfQwYlKOnRrME9VO/cJH3vCLOrVc951RitDgOdAtoHYLxBsaYbQCH0X2nHVGI9I3DUH/FlFjhe5zRBwrRl581wgthVJhbxRM41eYpwY5zBvVySa3Z7ZJye/Xqb9bVMiwoGBjxRnZrgof5++6mhJFu2AfFfPJqQ+YEi2VoSQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIDBTCCAfGgAwIBAgIQQ/OR1OrWcKJKu6a7Vutg5zAJBgUrDgMCHQUAMBoxGDAWBgNVBAMTD01vaGFtbWFkTmFraGFlZTAeFw0xOTAyMTAxMTI5NDFaFw0zOTEyMzEyMzU5NTlaMBoxGDAWBgNVBAMTD01vaGFtbWFkTmFraGFlZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMSq5ErDcII67oboWGE2RhHm0h+L0QfMSmOu9l++8P5ZN1SgtG1lOscMROXjiJic9of4JsfjIxLkjhKjvShPyfHyHjUYScXcrHfqvEoS4e5M1LxLPGaitdnExImH6HfL5SmUM+K0x7wN/tQFrZEloIdrXsNseSvhgveNbvUBSGwiPFmBo30MGJSjp0azBPVTv3CR97wizq1XPedUYrQ4DnQLaB2C8QbGmG0Ah9F9px1RiPSNw1B/xZRY4Xuc0QcK0ZefNcILYVSYW8UTONXmKcGOcwb1ckmt2e2Scnv16m/W1TIsKBgY8UZ2a4KH+fvupoSRbtgHxXzyakPmBItlaEkCAwEAAaNPME0wSwYDVR0BBEQwQoAQkuTxv3DL+2e4cyGq7eSNTKEcMBoxGDAWBgNVBAMTD01vaGFtbWFkTmFraGFlZYIQQ/OR1OrWcKJKu6a7Vutg5zAJBgUrDgMCHQUAA4IBAQCrWp5jUOomvLz9bkEX+z66d5zeY4HmQ6bpne4XeG/0u2y97nIeGSz/dicAtnQYZm66l4DXe3pITf0y/axdyKgLiJppb7tBJ9L1qb2qtENdVx94+0P/ZF+LNqHOfgKiW9zP07QUxZE6Bk/6PWKWvrY3/8Hv1+jEAU2BA5WzF4MhlvJD9nq9P+nnpHRXMsYzrohNL1fjGAtEe04uxgNK4nFa8s6jxxjjxKm4eFdFJsRHgcUX8tv70hAgWoVzp8OVrts+U8CbPoLMdDm8MNytF1hU3BjMzgJwW1JnOsmMnhDOLFq8/xZ81cx3BS7NxcwvjMUYSCpEbspb0Sbd4DPSkA8Z</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
