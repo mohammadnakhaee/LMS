@@ -33,9 +33,9 @@ namespace EISProjects
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabFile = new System.Windows.Forms.TabPage();
             this.BtnImport = new System.Windows.Forms.Button();
@@ -91,6 +91,7 @@ namespace EISProjects
             this.TBLogin = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.StatusPanel = new System.Windows.Forms.Panel();
+            this.label_per = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.LabelIwar = new System.Windows.Forms.Label();
             this.LabelVwar = new System.Windows.Forms.Label();
@@ -272,6 +273,9 @@ namespace EISProjects
             this.IVTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.GBAdminLog = new System.Windows.Forms.GroupBox();
+            this.label_iacdac = new System.Windows.Forms.Label();
+            this.label82 = new System.Windows.Forms.Label();
+            this.label_false = new System.Windows.Forms.Label();
             this.label80 = new System.Windows.Forms.Label();
             this.label79 = new System.Windows.Forms.Label();
             this.label_iIs = new System.Windows.Forms.Label();
@@ -316,6 +320,9 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label81 = new System.Windows.Forms.Label();
+            this.label_clm = new System.Windows.Forms.Label();
+            this.button_clm = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -690,6 +697,7 @@ namespace EISProjects
             // TabTools
             // 
             this.TabTools.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TabTools.Controls.Add(this.button_clm);
             this.TabTools.Controls.Add(this.button_earth);
             this.TabTools.Controls.Add(this.button_notch);
             this.TabTools.Controls.Add(this.button11);
@@ -1103,16 +1111,26 @@ namespace EISProjects
             // StatusPanel
             // 
             this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.StatusPanel.Controls.Add(this.label_per);
             this.StatusPanel.Controls.Add(this.webBrowser1);
             this.StatusPanel.Controls.Add(this.LabelIwar);
             this.StatusPanel.Controls.Add(this.LabelVwar);
             this.StatusPanel.Controls.Add(this.ProbWarningLabel);
             this.StatusPanel.Controls.Add(this.PBAllSessions);
             this.StatusPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.StatusPanel.Location = new System.Drawing.Point(0, 513);
+            this.StatusPanel.Location = new System.Drawing.Point(0, 535);
             this.StatusPanel.Name = "StatusPanel";
             this.StatusPanel.Size = new System.Drawing.Size(1225, 70);
             this.StatusPanel.TabIndex = 1;
+            // 
+            // label_per
+            // 
+            this.label_per.AutoSize = true;
+            this.label_per.Location = new System.Drawing.Point(414, 7);
+            this.label_per.Name = "label_per";
+            this.label_per.Size = new System.Drawing.Size(28, 13);
+            this.label_per.TabIndex = 33;
+            this.label_per.Text = "-------";
             // 
             // webBrowser1
             // 
@@ -1172,7 +1190,7 @@ namespace EISProjects
             this.Panel101.Dock = System.Windows.Forms.DockStyle.Right;
             this.Panel101.Location = new System.Drawing.Point(790, 100);
             this.Panel101.Name = "Panel101";
-            this.Panel101.Size = new System.Drawing.Size(435, 413);
+            this.Panel101.Size = new System.Drawing.Size(435, 435);
             this.Panel101.TabIndex = 3;
             // 
             // PanelProperties
@@ -1192,7 +1210,7 @@ namespace EISProjects
             this.PanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelProperties.Location = new System.Drawing.Point(0, 22);
             this.PanelProperties.Name = "PanelProperties";
-            this.PanelProperties.Size = new System.Drawing.Size(435, 391);
+            this.PanelProperties.Size = new System.Drawing.Size(435, 413);
             this.PanelProperties.TabIndex = 1;
             this.PanelProperties.Visible = false;
             this.PanelProperties.MouseEnter += new System.EventHandler(this.PanelProperties_MouseEnter);
@@ -1607,17 +1625,17 @@ namespace EISProjects
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(5, 18);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(388, 123);
             this.chart1.TabIndex = 28;
             this.chart1.Text = "chart1";
@@ -3030,26 +3048,26 @@ namespace EISProjects
             this.duplicateToolStripMenuItem,
             this.exportDataToolStripMenuItem});
             this.CMSSession.Name = "CMSSession";
-            this.CMSSession.Size = new System.Drawing.Size(136, 70);
+            this.CMSSession.Size = new System.Drawing.Size(135, 70);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // exportDataToolStripMenuItem
             // 
             this.exportDataToolStripMenuItem.Name = "exportDataToolStripMenuItem";
-            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exportDataToolStripMenuItem.Text = "Export Data";
             this.exportDataToolStripMenuItem.Click += new System.EventHandler(this.exportDataToolStripMenuItem_Click);
             // 
@@ -3068,11 +3086,16 @@ namespace EISProjects
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 100);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(286, 413);
+            this.panel2.Size = new System.Drawing.Size(286, 435);
             this.panel2.TabIndex = 6;
             // 
             // GBAdminLog
             // 
+            this.GBAdminLog.Controls.Add(this.label_clm);
+            this.GBAdminLog.Controls.Add(this.label81);
+            this.GBAdminLog.Controls.Add(this.label_iacdac);
+            this.GBAdminLog.Controls.Add(this.label82);
+            this.GBAdminLog.Controls.Add(this.label_false);
             this.GBAdminLog.Controls.Add(this.label80);
             this.GBAdminLog.Controls.Add(this.label79);
             this.GBAdminLog.Controls.Add(this.label_iIs);
@@ -3104,10 +3127,37 @@ namespace EISProjects
             this.GBAdminLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.GBAdminLog.Location = new System.Drawing.Point(14, 433);
             this.GBAdminLog.Name = "GBAdminLog";
-            this.GBAdminLog.Size = new System.Drawing.Size(243, 279);
+            this.GBAdminLog.Size = new System.Drawing.Size(243, 261);
             this.GBAdminLog.TabIndex = 0;
             this.GBAdminLog.TabStop = false;
             this.GBAdminLog.Text = "Admin Log";
+            // 
+            // label_iacdac
+            // 
+            this.label_iacdac.AutoSize = true;
+            this.label_iacdac.Location = new System.Drawing.Point(126, 192);
+            this.label_iacdac.Name = "label_iacdac";
+            this.label_iacdac.Size = new System.Drawing.Size(35, 15);
+            this.label_iacdac.TabIndex = 34;
+            this.label_iacdac.Text = "-------";
+            // 
+            // label82
+            // 
+            this.label82.AutoSize = true;
+            this.label82.Location = new System.Drawing.Point(33, 222);
+            this.label82.Name = "label82";
+            this.label82.Size = new System.Drawing.Size(36, 15);
+            this.label82.TabIndex = 33;
+            this.label82.Text = "false:";
+            // 
+            // label_false
+            // 
+            this.label_false.AutoSize = true;
+            this.label_false.Location = new System.Drawing.Point(67, 222);
+            this.label_false.Name = "label_false";
+            this.label_false.Size = new System.Drawing.Size(35, 15);
+            this.label_false.TabIndex = 32;
+            this.label_false.Text = "-------";
             // 
             // label80
             // 
@@ -3184,7 +3234,7 @@ namespace EISProjects
             // Label_Filter_C_V
             // 
             this.Label_Filter_C_V.AutoSize = true;
-            this.Label_Filter_C_V.Location = new System.Drawing.Point(181, 125);
+            this.Label_Filter_C_V.Location = new System.Drawing.Point(182, 124);
             this.Label_Filter_C_V.Name = "Label_Filter_C_V";
             this.Label_Filter_C_V.Size = new System.Drawing.Size(35, 15);
             this.Label_Filter_C_V.TabIndex = 23;
@@ -3202,7 +3252,7 @@ namespace EISProjects
             // label63
             // 
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(181, 48);
+            this.label63.Location = new System.Drawing.Point(182, 48);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(35, 15);
             this.label63.TabIndex = 19;
@@ -3211,7 +3261,7 @@ namespace EISProjects
             // iLabel_frq
             // 
             this.iLabel_frq.AutoSize = true;
-            this.iLabel_frq.Location = new System.Drawing.Point(181, 95);
+            this.iLabel_frq.Location = new System.Drawing.Point(182, 95);
             this.iLabel_frq.Name = "iLabel_frq";
             this.iLabel_frq.Size = new System.Drawing.Size(35, 15);
             this.iLabel_frq.TabIndex = 16;
@@ -3220,7 +3270,7 @@ namespace EISProjects
             // iLabel_vac
             // 
             this.iLabel_vac.AutoSize = true;
-            this.iLabel_vac.Location = new System.Drawing.Point(180, 23);
+            this.iLabel_vac.Location = new System.Drawing.Point(182, 23);
             this.iLabel_vac.Name = "iLabel_vac";
             this.iLabel_vac.Size = new System.Drawing.Size(35, 15);
             this.iLabel_vac.TabIndex = 13;
@@ -3247,7 +3297,7 @@ namespace EISProjects
             // Label_Vmlp
             // 
             this.Label_Vmlp.AutoSize = true;
-            this.Label_Vmlp.Location = new System.Drawing.Point(181, 72);
+            this.Label_Vmlp.Location = new System.Drawing.Point(182, 72);
             this.Label_Vmlp.Name = "Label_Vmlp";
             this.Label_Vmlp.Size = new System.Drawing.Size(35, 15);
             this.Label_Vmlp.TabIndex = 11;
@@ -3503,6 +3553,8 @@ namespace EISProjects
             this.DebugListBox.Name = "DebugListBox";
             this.DebugListBox.Size = new System.Drawing.Size(237, 256);
             this.DebugListBox.TabIndex = 17;
+            this.DebugListBox.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.DebugListBox_MeasureItem);
+            this.DebugListBox.SelectedValueChanged += new System.EventHandler(this.DebugListBox_SelectedValueChanged);
             // 
             // PreproccessingTimer
             // 
@@ -3519,7 +3571,7 @@ namespace EISProjects
             this.Desktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Desktop.Location = new System.Drawing.Point(286, 100);
             this.Desktop.Name = "Desktop";
-            this.Desktop.Size = new System.Drawing.Size(504, 413);
+            this.Desktop.Size = new System.Drawing.Size(504, 435);
             this.Desktop.TabIndex = 4;
             this.Desktop.MouseEnter += new System.EventHandler(this.Desktop_MouseEnter);
             this.Desktop.MouseLeave += new System.EventHandler(this.Desktop_MouseLeave);
@@ -3534,12 +3586,43 @@ namespace EISProjects
             this.panel1.Size = new System.Drawing.Size(1225, 100);
             this.panel1.TabIndex = 8;
             // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(108, 167);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(74, 15);
+            this.label81.TabIndex = 35;
+            this.label81.Text = "current limit:";
+            // 
+            // label_clm
+            // 
+            this.label_clm.AutoSize = true;
+            this.label_clm.Location = new System.Drawing.Point(182, 171);
+            this.label_clm.Name = "label_clm";
+            this.label_clm.Size = new System.Drawing.Size(35, 15);
+            this.label_clm.TabIndex = 36;
+            this.label_clm.Text = "-------";
+            // 
+            // button_clm
+            // 
+            this.button_clm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button_clm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.button_clm.Location = new System.Drawing.Point(1049, 3);
+            this.button_clm.Margin = new System.Windows.Forms.Padding(2);
+            this.button_clm.Name = "button_clm";
+            this.button_clm.Size = new System.Drawing.Size(100, 60);
+            this.button_clm.TabIndex = 19;
+            this.button_clm.Text = "Current Limit OFF";
+            this.button_clm.UseVisualStyleBackColor = true;
+            this.button_clm.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1225, 583);
+            this.ClientSize = new System.Drawing.Size(1225, 605);
             this.Controls.Add(this.Desktop);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Panel101);
@@ -3912,6 +3995,13 @@ namespace EISProjects
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Splitter splitter3;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label82;
+        private System.Windows.Forms.Label label_false;
+        private System.Windows.Forms.Label label_per;
+        private System.Windows.Forms.Label label_iacdac;
+        private System.Windows.Forms.Label label_clm;
+        private System.Windows.Forms.Label label81;
+        private System.Windows.Forms.Button button_clm;
     }
 
 
@@ -4240,7 +4330,7 @@ namespace EISProjects
         public double V_OCT = 0.0;
         public double IdealVoltage = 0.0;
         public bool isOCP = false;
-        public bool isOCPAutoStart = true;
+        public bool isOCPAutoStart = false;
         public int PGmode = 1;
         public bool RelRef = true;
         public int EqTime = 3;
