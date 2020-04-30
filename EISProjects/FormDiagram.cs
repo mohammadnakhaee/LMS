@@ -381,7 +381,7 @@ public class SampleTicks : FrameChart {
             }
             else
             {
-                int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1));
+                int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1)) + 1;
                 //double[] SortVlt = new double[CVnFirst];
                 //double[] SortAmp = new double[CVnFirst];
                 //for (int i = 0; i < CVnFirst; i++)
@@ -533,7 +533,7 @@ public class SampleTicks : FrameChart {
                 else
                 {
                     ClearPlot(chart);
-                    int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1));
+                    int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1)) + 1;
                     int npoints0 = Math.Min(npoints, CVnFirst);
 
                     if (npoints0 > 0 && isLogX)
@@ -1348,7 +1348,7 @@ public class SampleTicks : FrameChart {
                 }
                 else
                 {
-                    int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1));
+                    int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1)) + 1;
                     if (npoints > 0 && isLogX)
                         chart.ChartAreas[0].AxisX.IsLogarithmic = true;
                     else
