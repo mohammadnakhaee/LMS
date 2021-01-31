@@ -43,17 +43,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LMS.exe" size="3728384">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LMS.exe" size="3738624">
       <assemblyIdentity name="LMS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7y57bkLQRk8UR/4T5CQwg/apuIQ=</dsig:DigestValue>
+        <dsig:DigestValue>wdmUFMB6EuI2qfrnEKzN61i+JWc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="LMS.exe.config" size="2548">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>b2XgclrA36VqMHrbE/KhAvR18eM=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="LMS.ico" size="144462">
     <hash>
       <dsig:Transforms>

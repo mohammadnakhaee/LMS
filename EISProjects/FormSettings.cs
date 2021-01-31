@@ -531,6 +531,7 @@ namespace EISProjects
         private void TBVTau_H_TextChanged(object sender, EventArgs e)
         {
             DigitTextChange(ref Form1.Settings.VTau_H, TBVTau_H);
+            DigitTextChange(ref Form1.Settings.VTau_H, TBVTau_H);
         }
 
         private void TBITau_L_TextChanged(object sender, EventArgs e)
