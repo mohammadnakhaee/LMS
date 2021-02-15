@@ -33,9 +33,9 @@ namespace EISProjects
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabFile = new System.Windows.Forms.TabPage();
             this.BtnImport = new System.Windows.Forms.Button();
@@ -59,6 +59,7 @@ namespace EISProjects
             this.button1 = new System.Windows.Forms.Button();
             this.BtnDiagram = new System.Windows.Forms.Button();
             this.TabTools = new System.Windows.Forms.TabPage();
+            this.button_clm = new System.Windows.Forms.Button();
             this.button_earth = new System.Windows.Forms.Button();
             this.button_notch = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -273,6 +274,8 @@ namespace EISProjects
             this.IVTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.GBAdminLog = new System.Windows.Forms.GroupBox();
+            this.label_clm = new System.Windows.Forms.Label();
+            this.label81 = new System.Windows.Forms.Label();
             this.label_iacdac = new System.Windows.Forms.Label();
             this.label82 = new System.Windows.Forms.Label();
             this.label_false = new System.Windows.Forms.Label();
@@ -320,9 +323,6 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label81 = new System.Windows.Forms.Label();
-            this.label_clm = new System.Windows.Forms.Label();
-            this.button_clm = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -383,7 +383,7 @@ namespace EISProjects
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1225, 100);
+            this.tabControl1.Size = new System.Drawing.Size(1028, 100);
             this.tabControl1.TabIndex = 0;
             // 
             // TabFile
@@ -401,7 +401,7 @@ namespace EISProjects
             this.TabFile.Location = new System.Drawing.Point(4, 28);
             this.TabFile.Name = "TabFile";
             this.TabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.TabFile.Size = new System.Drawing.Size(1217, 68);
+            this.TabFile.Size = new System.Drawing.Size(1020, 68);
             this.TabFile.TabIndex = 0;
             this.TabFile.Text = "File";
             // 
@@ -717,6 +717,19 @@ namespace EISProjects
             this.TabTools.TabIndex = 4;
             this.TabTools.Text = "Measurement";
             this.TabTools.UseVisualStyleBackColor = true;
+            // 
+            // button_clm
+            // 
+            this.button_clm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button_clm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.button_clm.Location = new System.Drawing.Point(1049, 3);
+            this.button_clm.Margin = new System.Windows.Forms.Padding(2);
+            this.button_clm.Name = "button_clm";
+            this.button_clm.Size = new System.Drawing.Size(100, 60);
+            this.button_clm.TabIndex = 19;
+            this.button_clm.Text = "Current Limit OFF";
+            this.button_clm.UseVisualStyleBackColor = true;
+            this.button_clm.Click += new System.EventHandler(this.button12_Click);
             // 
             // button_earth
             // 
@@ -1120,7 +1133,7 @@ namespace EISProjects
             this.StatusPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.StatusPanel.Location = new System.Drawing.Point(0, 535);
             this.StatusPanel.Name = "StatusPanel";
-            this.StatusPanel.Size = new System.Drawing.Size(1225, 70);
+            this.StatusPanel.Size = new System.Drawing.Size(1028, 70);
             this.StatusPanel.TabIndex = 1;
             // 
             // label_per
@@ -1188,7 +1201,7 @@ namespace EISProjects
             this.Panel101.Controls.Add(this.PanelProperties);
             this.Panel101.Controls.Add(this.Prop);
             this.Panel101.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Panel101.Location = new System.Drawing.Point(790, 100);
+            this.Panel101.Location = new System.Drawing.Point(593, 100);
             this.Panel101.Name = "Panel101";
             this.Panel101.Size = new System.Drawing.Size(435, 435);
             this.Panel101.TabIndex = 3;
@@ -1625,17 +1638,17 @@ namespace EISProjects
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(5, 18);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(388, 123);
             this.chart1.TabIndex = 28;
             this.chart1.Text = "chart1";
@@ -3048,26 +3061,26 @@ namespace EISProjects
             this.duplicateToolStripMenuItem,
             this.exportDataToolStripMenuItem});
             this.CMSSession.Name = "CMSSession";
-            this.CMSSession.Size = new System.Drawing.Size(135, 70);
+            this.CMSSession.Size = new System.Drawing.Size(136, 70);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // exportDataToolStripMenuItem
             // 
             this.exportDataToolStripMenuItem.Name = "exportDataToolStripMenuItem";
-            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exportDataToolStripMenuItem.Text = "Export Data";
             this.exportDataToolStripMenuItem.Click += new System.EventHandler(this.exportDataToolStripMenuItem_Click);
             // 
@@ -3131,6 +3144,24 @@ namespace EISProjects
             this.GBAdminLog.TabIndex = 0;
             this.GBAdminLog.TabStop = false;
             this.GBAdminLog.Text = "Admin Log";
+            // 
+            // label_clm
+            // 
+            this.label_clm.AutoSize = true;
+            this.label_clm.Location = new System.Drawing.Point(182, 171);
+            this.label_clm.Name = "label_clm";
+            this.label_clm.Size = new System.Drawing.Size(35, 15);
+            this.label_clm.TabIndex = 36;
+            this.label_clm.Text = "-------";
+            // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(108, 167);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(74, 15);
+            this.label81.TabIndex = 35;
+            this.label81.Text = "current limit:";
             // 
             // label_iacdac
             // 
@@ -3571,7 +3602,7 @@ namespace EISProjects
             this.Desktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Desktop.Location = new System.Drawing.Point(286, 100);
             this.Desktop.Name = "Desktop";
-            this.Desktop.Size = new System.Drawing.Size(504, 435);
+            this.Desktop.Size = new System.Drawing.Size(307, 435);
             this.Desktop.TabIndex = 4;
             this.Desktop.MouseEnter += new System.EventHandler(this.Desktop_MouseEnter);
             this.Desktop.MouseLeave += new System.EventHandler(this.Desktop_MouseLeave);
@@ -3583,46 +3614,15 @@ namespace EISProjects
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1225, 100);
+            this.panel1.Size = new System.Drawing.Size(1028, 100);
             this.panel1.TabIndex = 8;
-            // 
-            // label81
-            // 
-            this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(108, 167);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(74, 15);
-            this.label81.TabIndex = 35;
-            this.label81.Text = "current limit:";
-            // 
-            // label_clm
-            // 
-            this.label_clm.AutoSize = true;
-            this.label_clm.Location = new System.Drawing.Point(182, 171);
-            this.label_clm.Name = "label_clm";
-            this.label_clm.Size = new System.Drawing.Size(35, 15);
-            this.label_clm.TabIndex = 36;
-            this.label_clm.Text = "-------";
-            // 
-            // button_clm
-            // 
-            this.button_clm.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button_clm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_clm.Location = new System.Drawing.Point(1049, 3);
-            this.button_clm.Margin = new System.Windows.Forms.Padding(2);
-            this.button_clm.Name = "button_clm";
-            this.button_clm.Size = new System.Drawing.Size(100, 60);
-            this.button_clm.TabIndex = 19;
-            this.button_clm.Text = "Current Limit OFF";
-            this.button_clm.UseVisualStyleBackColor = true;
-            this.button_clm.Click += new System.EventHandler(this.button12_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1225, 605);
+            this.ClientSize = new System.Drawing.Size(1028, 605);
             this.Controls.Add(this.Desktop);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Panel101);
