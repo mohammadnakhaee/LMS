@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LMS.exe" size="3968512">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LMS.exe" size="3970048">
       <assemblyIdentity name="LMS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>SvRD4H6AVyLv1fkxBJcv+5jw7bQ=</dsig:DigestValue>
+        <dsig:DigestValue>r8vZwmDpXcSbLC13HsxbuWpDFaM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

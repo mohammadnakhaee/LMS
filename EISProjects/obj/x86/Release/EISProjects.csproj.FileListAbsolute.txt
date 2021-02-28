@@ -667,11 +667,11 @@ C:\Users\DELL\Documents\EISProjects_9step_newform\EISProjects\obj\x86\Release\LM
 C:\Users\DELL\Documents\EISProjects_9step_newform\EISProjects\obj\x86\Release\LMS.application
 C:\Users\DELL\Documents\EISProjects_9step_newform\EISProjects\obj\x86\Release\LMS.exe
 C:\Users\DELL\Documents\EISProjects_9step_newform\EISProjects\obj\x86\Release\LMS.pdb
+C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.exe.config
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.exe.manifest
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.application
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.exe
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.pdb
-C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\EISProjects.csprojAssemblyReference.cache
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\EISProjects.AboutBox.resources
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\EISProjects.ChronoTimingForm.resources
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\EISProjects.Form1.resources
@@ -699,4 +699,4 @@ C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\LMS.exe.mani
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\LMS.application
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\LMS.exe
 C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\LMS.pdb
-C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\bin\Release\LMS.exe.config
+C:\Users\DELL\Documents\GitProjects\LMS\EISProjects\obj\x86\Release\EISProjects.csprojAssemblyReference.cache

@@ -28,11 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btnReset = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ocp10 = new System.Windows.Forms.CheckBox();
+            this.ocp9 = new System.Windows.Forms.CheckBox();
+            this.ocp8 = new System.Windows.Forms.CheckBox();
+            this.ocp7 = new System.Windows.Forms.CheckBox();
+            this.ocp6 = new System.Windows.Forms.CheckBox();
+            this.ocp5 = new System.Windows.Forms.CheckBox();
+            this.ocp4 = new System.Windows.Forms.CheckBox();
+            this.ocp3 = new System.Windows.Forms.CheckBox();
+            this.ocp2 = new System.Windows.Forms.CheckBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.ocp1 = new System.Windows.Forms.CheckBox();
             this.maxperiod = new System.Windows.Forms.Label();
             this.dt1 = new System.Windows.Forms.NumericUpDown();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -77,17 +88,6 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.ocp1 = new System.Windows.Forms.CheckBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.ocp2 = new System.Windows.Forms.CheckBox();
-            this.ocp3 = new System.Windows.Forms.CheckBox();
-            this.ocp4 = new System.Windows.Forms.CheckBox();
-            this.ocp5 = new System.Windows.Forms.CheckBox();
-            this.ocp6 = new System.Windows.Forms.CheckBox();
-            this.ocp7 = new System.Windows.Forms.CheckBox();
-            this.ocp8 = new System.Windows.Forms.CheckBox();
-            this.ocp9 = new System.Windows.Forms.CheckBox();
-            this.ocp10 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dt1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -165,6 +165,124 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Timing";
+            // 
+            // ocp10
+            // 
+            this.ocp10.AutoSize = true;
+            this.ocp10.Enabled = false;
+            this.ocp10.Location = new System.Drawing.Point(124, 283);
+            this.ocp10.Name = "ocp10";
+            this.ocp10.Size = new System.Drawing.Size(15, 14);
+            this.ocp10.TabIndex = 36;
+            this.ocp10.UseVisualStyleBackColor = true;
+            this.ocp10.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp9
+            // 
+            this.ocp9.AutoSize = true;
+            this.ocp9.Enabled = false;
+            this.ocp9.Location = new System.Drawing.Point(124, 263);
+            this.ocp9.Name = "ocp9";
+            this.ocp9.Size = new System.Drawing.Size(15, 14);
+            this.ocp9.TabIndex = 35;
+            this.ocp9.UseVisualStyleBackColor = true;
+            this.ocp9.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp8
+            // 
+            this.ocp8.AutoSize = true;
+            this.ocp8.Enabled = false;
+            this.ocp8.Location = new System.Drawing.Point(124, 241);
+            this.ocp8.Name = "ocp8";
+            this.ocp8.Size = new System.Drawing.Size(15, 14);
+            this.ocp8.TabIndex = 34;
+            this.ocp8.UseVisualStyleBackColor = true;
+            this.ocp8.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp7
+            // 
+            this.ocp7.AutoSize = true;
+            this.ocp7.Enabled = false;
+            this.ocp7.Location = new System.Drawing.Point(124, 222);
+            this.ocp7.Name = "ocp7";
+            this.ocp7.Size = new System.Drawing.Size(15, 14);
+            this.ocp7.TabIndex = 33;
+            this.ocp7.UseVisualStyleBackColor = true;
+            this.ocp7.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp6
+            // 
+            this.ocp6.AutoSize = true;
+            this.ocp6.Enabled = false;
+            this.ocp6.Location = new System.Drawing.Point(124, 201);
+            this.ocp6.Name = "ocp6";
+            this.ocp6.Size = new System.Drawing.Size(15, 14);
+            this.ocp6.TabIndex = 32;
+            this.ocp6.UseVisualStyleBackColor = true;
+            this.ocp6.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp5
+            // 
+            this.ocp5.AutoSize = true;
+            this.ocp5.Enabled = false;
+            this.ocp5.Location = new System.Drawing.Point(124, 178);
+            this.ocp5.Name = "ocp5";
+            this.ocp5.Size = new System.Drawing.Size(15, 14);
+            this.ocp5.TabIndex = 31;
+            this.ocp5.UseVisualStyleBackColor = true;
+            this.ocp5.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp4
+            // 
+            this.ocp4.AutoSize = true;
+            this.ocp4.Enabled = false;
+            this.ocp4.Location = new System.Drawing.Point(124, 157);
+            this.ocp4.Name = "ocp4";
+            this.ocp4.Size = new System.Drawing.Size(15, 14);
+            this.ocp4.TabIndex = 30;
+            this.ocp4.UseVisualStyleBackColor = true;
+            this.ocp4.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp3
+            // 
+            this.ocp3.AutoSize = true;
+            this.ocp3.Enabled = false;
+            this.ocp3.Location = new System.Drawing.Point(124, 136);
+            this.ocp3.Name = "ocp3";
+            this.ocp3.Size = new System.Drawing.Size(15, 14);
+            this.ocp3.TabIndex = 29;
+            this.ocp3.UseVisualStyleBackColor = true;
+            this.ocp3.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // ocp2
+            // 
+            this.ocp2.AutoSize = true;
+            this.ocp2.Enabled = false;
+            this.ocp2.Location = new System.Drawing.Point(124, 115);
+            this.ocp2.Name = "ocp2";
+            this.ocp2.Size = new System.Drawing.Size(15, 14);
+            this.ocp2.TabIndex = 28;
+            this.ocp2.UseVisualStyleBackColor = true;
+            this.ocp2.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(119, 73);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(29, 13);
+            this.label18.TabIndex = 27;
+            this.label18.Text = "OCP";
+            // 
+            // ocp1
+            // 
+            this.ocp1.AutoSize = true;
+            this.ocp1.Location = new System.Drawing.Point(124, 94);
+            this.ocp1.Name = "ocp1";
+            this.ocp1.Size = new System.Drawing.Size(15, 14);
+            this.ocp1.TabIndex = 26;
+            this.ocp1.UseVisualStyleBackColor = true;
+            this.ocp1.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
             // 
             // maxperiod
             // 
@@ -593,12 +711,12 @@
             65536});
             this.v10.Location = new System.Drawing.Point(0, 190);
             this.v10.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v10.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -618,12 +736,12 @@
             65536});
             this.v9.Location = new System.Drawing.Point(0, 169);
             this.v9.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v9.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -643,12 +761,12 @@
             65536});
             this.v8.Location = new System.Drawing.Point(0, 148);
             this.v8.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v8.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -668,12 +786,12 @@
             65536});
             this.v7.Location = new System.Drawing.Point(0, 127);
             this.v7.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v7.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -693,12 +811,12 @@
             65536});
             this.v6.Location = new System.Drawing.Point(0, 106);
             this.v6.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v6.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -718,12 +836,12 @@
             65536});
             this.v5.Location = new System.Drawing.Point(0, 85);
             this.v5.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v5.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -743,12 +861,12 @@
             65536});
             this.v4.Location = new System.Drawing.Point(0, 64);
             this.v4.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v4.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -768,12 +886,12 @@
             65536});
             this.v3.Location = new System.Drawing.Point(0, 43);
             this.v3.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v3.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -793,12 +911,12 @@
             65536});
             this.v2.Location = new System.Drawing.Point(0, 22);
             this.v2.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v2.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -817,12 +935,12 @@
             65536});
             this.v1.Location = new System.Drawing.Point(0, 1);
             this.v1.Maximum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             0});
             this.v1.Minimum = new decimal(new int[] {
-            5,
+            150,
             0,
             0,
             -2147483648});
@@ -924,139 +1042,21 @@
             // 
             // chart1
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(268, 0);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart1.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(595, 389);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
-            // 
-            // ocp1
-            // 
-            this.ocp1.AutoSize = true;
-            this.ocp1.Location = new System.Drawing.Point(124, 94);
-            this.ocp1.Name = "ocp1";
-            this.ocp1.Size = new System.Drawing.Size(15, 14);
-            this.ocp1.TabIndex = 26;
-            this.ocp1.UseVisualStyleBackColor = true;
-            this.ocp1.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(119, 73);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(29, 13);
-            this.label18.TabIndex = 27;
-            this.label18.Text = "OCP";
-            // 
-            // ocp2
-            // 
-            this.ocp2.AutoSize = true;
-            this.ocp2.Enabled = false;
-            this.ocp2.Location = new System.Drawing.Point(124, 115);
-            this.ocp2.Name = "ocp2";
-            this.ocp2.Size = new System.Drawing.Size(15, 14);
-            this.ocp2.TabIndex = 28;
-            this.ocp2.UseVisualStyleBackColor = true;
-            this.ocp2.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp3
-            // 
-            this.ocp3.AutoSize = true;
-            this.ocp3.Enabled = false;
-            this.ocp3.Location = new System.Drawing.Point(124, 136);
-            this.ocp3.Name = "ocp3";
-            this.ocp3.Size = new System.Drawing.Size(15, 14);
-            this.ocp3.TabIndex = 29;
-            this.ocp3.UseVisualStyleBackColor = true;
-            this.ocp3.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp4
-            // 
-            this.ocp4.AutoSize = true;
-            this.ocp4.Enabled = false;
-            this.ocp4.Location = new System.Drawing.Point(124, 157);
-            this.ocp4.Name = "ocp4";
-            this.ocp4.Size = new System.Drawing.Size(15, 14);
-            this.ocp4.TabIndex = 30;
-            this.ocp4.UseVisualStyleBackColor = true;
-            this.ocp4.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp5
-            // 
-            this.ocp5.AutoSize = true;
-            this.ocp5.Enabled = false;
-            this.ocp5.Location = new System.Drawing.Point(124, 178);
-            this.ocp5.Name = "ocp5";
-            this.ocp5.Size = new System.Drawing.Size(15, 14);
-            this.ocp5.TabIndex = 31;
-            this.ocp5.UseVisualStyleBackColor = true;
-            this.ocp5.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp6
-            // 
-            this.ocp6.AutoSize = true;
-            this.ocp6.Enabled = false;
-            this.ocp6.Location = new System.Drawing.Point(124, 201);
-            this.ocp6.Name = "ocp6";
-            this.ocp6.Size = new System.Drawing.Size(15, 14);
-            this.ocp6.TabIndex = 32;
-            this.ocp6.UseVisualStyleBackColor = true;
-            this.ocp6.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp7
-            // 
-            this.ocp7.AutoSize = true;
-            this.ocp7.Enabled = false;
-            this.ocp7.Location = new System.Drawing.Point(124, 222);
-            this.ocp7.Name = "ocp7";
-            this.ocp7.Size = new System.Drawing.Size(15, 14);
-            this.ocp7.TabIndex = 33;
-            this.ocp7.UseVisualStyleBackColor = true;
-            this.ocp7.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp8
-            // 
-            this.ocp8.AutoSize = true;
-            this.ocp8.Enabled = false;
-            this.ocp8.Location = new System.Drawing.Point(124, 241);
-            this.ocp8.Name = "ocp8";
-            this.ocp8.Size = new System.Drawing.Size(15, 14);
-            this.ocp8.TabIndex = 34;
-            this.ocp8.UseVisualStyleBackColor = true;
-            this.ocp8.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp9
-            // 
-            this.ocp9.AutoSize = true;
-            this.ocp9.Enabled = false;
-            this.ocp9.Location = new System.Drawing.Point(124, 263);
-            this.ocp9.Name = "ocp9";
-            this.ocp9.Size = new System.Drawing.Size(15, 14);
-            this.ocp9.TabIndex = 35;
-            this.ocp9.UseVisualStyleBackColor = true;
-            this.ocp9.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
-            // 
-            // ocp10
-            // 
-            this.ocp10.AutoSize = true;
-            this.ocp10.Enabled = false;
-            this.ocp10.Location = new System.Drawing.Point(124, 283);
-            this.ocp10.Name = "ocp10";
-            this.ocp10.Size = new System.Drawing.Size(15, 14);
-            this.ocp10.TabIndex = 36;
-            this.ocp10.UseVisualStyleBackColor = true;
-            this.ocp10.CheckedChanged += new System.EventHandler(this.v1_ValueChanged);
             // 
             // ChronoTimingForm
             // 

@@ -140,7 +140,18 @@ namespace EISProjects
             e.Cancel = true;
             this.Hide();
             Form1.isFormEISDScope = false;
-            if (flowLayoutPanel1.Visible == false) return;
+            //if (flowLayoutPanel1.Visible == false) return;
+            try
+            {
+                Form1.Port.Write(";");
+                Form1.Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+               
+
+            }
+            catch (Exception ee) { }
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.DiscardOutBuffer();
             try
             {
             
@@ -354,6 +365,13 @@ namespace EISProjects
         {
             if (button2.Text == "stop")
                 button2_Click(sender, null);
+            try
+            {
+                Form1.Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+                Form1.Port.Write(";");
+
+            }
+            catch (Exception ee) { }
             System.Threading.Thread.Sleep(50);
             Form1.Port.DiscardInBuffer();
             Form1.Port.DiscardOutBuffer();
