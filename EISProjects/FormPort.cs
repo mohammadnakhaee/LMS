@@ -643,6 +643,20 @@ namespace EISProjects
                 Thread.Sleep(500);
                 Form1.Port.Write("a");
                 Thread.Sleep(100);
+               
+                Form1.Port.ReadByte();
+                Form1.Port.DiscardInBuffer(); //Clear Buffer
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Form1.Port.Write("U"); Thread.Sleep(10); Form1.Port.Write("N"); Thread.Sleep(10);
+                Thread.Sleep(10);
                 Form1.Port.ReadByte();
                 Form1.Port.DiscardOutBuffer(); //Clear Buffer
                 Form1.Port.DiscardInBuffer(); //Clear Buffer

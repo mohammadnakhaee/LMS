@@ -25,16 +25,45 @@ namespace EISProjects
             if (Form1.AllSessions[Form1.Selected].PGmode == 3)
             {
                 string PGxunit = "";
+                uint Amode = 1;
+                decimal range =(decimal)1.5;
                 if (Form1.AllSessions[Form1.Selected].IVCurrentRangeMode == 0)
-                    PGxunit = "(A)";
+                { PGxunit = "(A)"; Amode = 1; }
                 else if (Form1.AllSessions[Form1.Selected].IVCurrentRangeMode >= 1 && Form1.AllSessions[Form1.Selected].IVCurrentRangeMode <= 3)
-                    PGxunit = "(mA)";
+                { PGxunit = "(mA)"; Amode = 1000; }
                 else if (Form1.AllSessions[Form1.Selected].IVCurrentRangeMode >= 4 && Form1.AllSessions[Form1.Selected].IVCurrentRangeMode <= 6)
-                    PGxunit = "(uA)";
+                { PGxunit = "(uA)"; Amode = 1000000; }
                 else if (Form1.AllSessions[Form1.Selected].IVCurrentRangeMode == 7)
-                    PGxunit = "(nA)";
+                { PGxunit = "(nA)"; Amode = 1000000000; }
                 label15.Text = PGxunit;
                 label3.Text = "Current";
+                range = (decimal)((1.5) / Math.Pow(10, Form1.AllSessions[Form1.Selected].IVCurrentRangeMode)) * Amode;
+                v1.Maximum = range; v1.Minimum = -range; v1.Increment = range / 15;
+                v2.Maximum = range; v2.Minimum = -range; v2.Increment = range / 15;
+                v3.Maximum = range; v3.Minimum = -range; v3.Increment = range / 15;
+                v4.Maximum = range; v4.Minimum = -range; v4.Increment = range / 15;
+                v5.Maximum = range; v5.Minimum = -range; v5.Increment = range / 15;
+                v6.Maximum = range; v6.Minimum = -range; v6.Increment = range / 15;
+                v7.Maximum = range; v7.Minimum = -range; v7.Increment = range / 15;
+                v8.Maximum = range; v8.Minimum = -range; v8.Increment = range / 15;
+                v9.Maximum = range; v9.Minimum = -range; v9.Increment = range / 15;
+                v10.Maximum = range; v10.Minimum = -range; v10.Increment = range / 15;
+            }
+            else
+            {
+                
+                decimal range = (decimal)1.5;
+                range = (decimal)((1.5) * ((Form1.AllSessions[Form1.Selected].IVVoltageRangeMode) == 0 ? (5.0):(1.0)));
+                v1.Maximum = range; v1.Minimum = -range; v1.Increment = range / 15;
+                v2.Maximum = range; v2.Minimum = -range; v2.Increment = range / 15;
+                v3.Maximum = range; v3.Minimum = -range; v3.Increment = range / 15;
+                v4.Maximum = range; v4.Minimum = -range; v4.Increment = range / 15;
+                v5.Maximum = range; v5.Minimum = -range; v5.Increment = range / 15;
+                v6.Maximum = range; v6.Minimum = -range; v6.Increment = range / 15;
+                v7.Maximum = range; v7.Minimum = -range; v7.Increment = range / 15;
+                v8.Maximum = range; v8.Minimum = -range; v8.Increment = range / 15;
+                v9.Maximum = range; v9.Minimum = -range; v9.Increment = range / 15;
+                v10.Maximum = range; v10.Minimum = -range; v10.Increment = range / 15;
             }
             
             

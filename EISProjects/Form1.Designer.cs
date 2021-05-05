@@ -59,6 +59,7 @@ namespace EISProjects
             this.button1 = new System.Windows.Forms.Button();
             this.BtnDiagram = new System.Windows.Forms.Button();
             this.TabTools = new System.Windows.Forms.TabPage();
+            this.button_clm = new System.Windows.Forms.Button();
             this.button_earth = new System.Windows.Forms.Button();
             this.button_notch = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -273,6 +274,8 @@ namespace EISProjects
             this.IVTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.GBAdminLog = new System.Windows.Forms.GroupBox();
+            this.label_clm = new System.Windows.Forms.Label();
+            this.label81 = new System.Windows.Forms.Label();
             this.label_iacdac = new System.Windows.Forms.Label();
             this.label82 = new System.Windows.Forms.Label();
             this.label_false = new System.Windows.Forms.Label();
@@ -320,9 +323,8 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label81 = new System.Windows.Forms.Label();
-            this.label_clm = new System.Windows.Forms.Label();
-            this.button_clm = new System.Windows.Forms.Button();
+            this.comboBox_Post = new System.Windows.Forms.ComboBox();
+            this.label83 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -718,16 +720,29 @@ namespace EISProjects
             this.TabTools.Text = "Measurement";
             this.TabTools.UseVisualStyleBackColor = true;
             // 
+            // button_clm
+            // 
+            this.button_clm.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button_clm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.button_clm.Location = new System.Drawing.Point(1055, 3);
+            this.button_clm.Margin = new System.Windows.Forms.Padding(2);
+            this.button_clm.Name = "button_clm";
+            this.button_clm.Size = new System.Drawing.Size(100, 60);
+            this.button_clm.TabIndex = 19;
+            this.button_clm.Text = "Current Limit (Auto)";
+            this.button_clm.UseVisualStyleBackColor = true;
+            this.button_clm.Click += new System.EventHandler(this.button12_Click);
+            // 
             // button_earth
             // 
             this.button_earth.Dock = System.Windows.Forms.DockStyle.Left;
             this.button_earth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_earth.Location = new System.Drawing.Point(949, 3);
+            this.button_earth.Location = new System.Drawing.Point(955, 3);
             this.button_earth.Margin = new System.Windows.Forms.Padding(2);
             this.button_earth.Name = "button_earth";
             this.button_earth.Size = new System.Drawing.Size(100, 60);
             this.button_earth.TabIndex = 14;
-            this.button_earth.Text = "Floated Ground";
+            this.button_earth.Text = "Grounded";
             this.button_earth.UseVisualStyleBackColor = true;
             this.button_earth.Click += new System.EventHandler(this.button_earth_Click);
             // 
@@ -735,12 +750,12 @@ namespace EISProjects
             // 
             this.button_notch.Dock = System.Windows.Forms.DockStyle.Left;
             this.button_notch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_notch.Location = new System.Drawing.Point(849, 3);
+            this.button_notch.Location = new System.Drawing.Point(855, 3);
             this.button_notch.Margin = new System.Windows.Forms.Padding(2);
             this.button_notch.Name = "button_notch";
             this.button_notch.Size = new System.Drawing.Size(100, 60);
             this.button_notch.TabIndex = 13;
-            this.button_notch.Text = "50Hz Notch Filter";
+            this.button_notch.Text = "50Hz Notch Filter (OFF)";
             this.button_notch.UseVisualStyleBackColor = true;
             this.button_notch.Click += new System.EventHandler(this.button_notch_Click);
             // 
@@ -749,7 +764,7 @@ namespace EISProjects
             this.button11.BackColor = System.Drawing.Color.Transparent;
             this.button11.Dock = System.Windows.Forms.DockStyle.Left;
             this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button11.Location = new System.Drawing.Point(749, 3);
+            this.button11.Location = new System.Drawing.Point(755, 3);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(100, 60);
             this.button11.TabIndex = 12;
@@ -763,7 +778,7 @@ namespace EISProjects
             this.BtnFindOCP.Dock = System.Windows.Forms.DockStyle.Left;
             this.BtnFindOCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnFindOCP.ForeColor = System.Drawing.Color.Black;
-            this.BtnFindOCP.Location = new System.Drawing.Point(649, 3);
+            this.BtnFindOCP.Location = new System.Drawing.Point(655, 3);
             this.BtnFindOCP.Name = "BtnFindOCP";
             this.BtnFindOCP.Size = new System.Drawing.Size(100, 60);
             this.BtnFindOCP.TabIndex = 8;
@@ -773,7 +788,7 @@ namespace EISProjects
             // 
             // splitter2
             // 
-            this.splitter2.Location = new System.Drawing.Point(646, 3);
+            this.splitter2.Location = new System.Drawing.Point(652, 3);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(3, 60);
             this.splitter2.TabIndex = 17;
@@ -785,7 +800,7 @@ namespace EISProjects
             this.groupBox15.Controls.Add(this.BtnRun);
             this.groupBox15.Controls.Add(this.BtnPauseContinue);
             this.groupBox15.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox15.Location = new System.Drawing.Point(409, 3);
+            this.groupBox15.Location = new System.Drawing.Point(415, 3);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Size = new System.Drawing.Size(237, 60);
             this.groupBox15.TabIndex = 11;
@@ -831,7 +846,7 @@ namespace EISProjects
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(406, 3);
+            this.splitter1.Location = new System.Drawing.Point(412, 3);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(3, 60);
             this.splitter1.TabIndex = 16;
@@ -845,9 +860,9 @@ namespace EISProjects
             this.DummyOnBtn.ForeColor = System.Drawing.Color.Red;
             this.DummyOnBtn.Location = new System.Drawing.Point(306, 3);
             this.DummyOnBtn.Name = "DummyOnBtn";
-            this.DummyOnBtn.Size = new System.Drawing.Size(100, 60);
+            this.DummyOnBtn.Size = new System.Drawing.Size(106, 60);
             this.DummyOnBtn.TabIndex = 7;
-            this.DummyOnBtn.Text = "Dummy On";
+            this.DummyOnBtn.Text = "Dummy (OFF)";
             this.DummyOnBtn.UseVisualStyleBackColor = false;
             this.DummyOnBtn.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -861,7 +876,7 @@ namespace EISProjects
             this.SampleOnBtn.Name = "SampleOnBtn";
             this.SampleOnBtn.Size = new System.Drawing.Size(100, 60);
             this.SampleOnBtn.TabIndex = 6;
-            this.SampleOnBtn.Text = "Probe On";
+            this.SampleOnBtn.Text = "Probe (OFF)";
             this.SampleOnBtn.UseVisualStyleBackColor = false;
             this.SampleOnBtn.Click += new System.EventHandler(this.SampleOnBtn_Click);
             // 
@@ -2662,6 +2677,8 @@ namespace EISProjects
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label83);
+            this.groupBox8.Controls.Add(this.comboBox_Post);
             this.groupBox8.Controls.Add(this.IVChronoVFilter);
             this.groupBox8.Controls.Add(this.label77);
             this.groupBox8.Controls.Add(this.label33);
@@ -2683,7 +2700,7 @@ namespace EISProjects
             "Medim",
             "Low speed",
             "Auto"});
-            this.IVChronoVFilter.Location = new System.Drawing.Point(289, 34);
+            this.IVChronoVFilter.Location = new System.Drawing.Point(289, 19);
             this.IVChronoVFilter.Name = "IVChronoVFilter";
             this.IVChronoVFilter.Size = new System.Drawing.Size(88, 21);
             this.IVChronoVFilter.TabIndex = 23;
@@ -2692,7 +2709,7 @@ namespace EISProjects
             // label77
             // 
             this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(256, 37);
+            this.label77.Location = new System.Drawing.Point(256, 22);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(32, 13);
             this.label77.TabIndex = 22;
@@ -2701,7 +2718,7 @@ namespace EISProjects
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(44, 52);
+            this.label33.Location = new System.Drawing.Point(44, 49);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(65, 13);
             this.label33.TabIndex = 20;
@@ -2714,7 +2731,7 @@ namespace EISProjects
             this.CBIVVoltageRangeMode.Items.AddRange(new object[] {
             "[-5 (V) .. 5 (V)]",
             "[-1 (V) .. 1 (V)]"});
-            this.CBIVVoltageRangeMode.Location = new System.Drawing.Point(116, 34);
+            this.CBIVVoltageRangeMode.Location = new System.Drawing.Point(116, 19);
             this.CBIVVoltageRangeMode.Name = "CBIVVoltageRangeMode";
             this.CBIVVoltageRangeMode.Size = new System.Drawing.Size(126, 21);
             this.CBIVVoltageRangeMode.TabIndex = 17;
@@ -2731,7 +2748,7 @@ namespace EISProjects
             "[-160 (V) .. 160 (V)]",
             "[-320 (V) .. 320 (V)]",
             "[-640 (V) .. 640 (V)]"});
-            this.VMLP.Location = new System.Drawing.Point(116, 50);
+            this.VMLP.Location = new System.Drawing.Point(116, 46);
             this.VMLP.Name = "VMLP";
             this.VMLP.Size = new System.Drawing.Size(126, 21);
             this.VMLP.TabIndex = 21;
@@ -2741,7 +2758,7 @@ namespace EISProjects
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(12, 37);
+            this.label27.Location = new System.Drawing.Point(12, 22);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(100, 13);
             this.label27.TabIndex = 18;
@@ -3131,6 +3148,24 @@ namespace EISProjects
             this.GBAdminLog.TabIndex = 0;
             this.GBAdminLog.TabStop = false;
             this.GBAdminLog.Text = "Admin Log";
+            // 
+            // label_clm
+            // 
+            this.label_clm.AutoSize = true;
+            this.label_clm.Location = new System.Drawing.Point(182, 171);
+            this.label_clm.Name = "label_clm";
+            this.label_clm.Size = new System.Drawing.Size(35, 15);
+            this.label_clm.TabIndex = 36;
+            this.label_clm.Text = "-------";
+            // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(108, 167);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(74, 15);
+            this.label81.TabIndex = 35;
+            this.label81.Text = "current limit:";
             // 
             // label_iacdac
             // 
@@ -3586,36 +3621,29 @@ namespace EISProjects
             this.panel1.Size = new System.Drawing.Size(1225, 100);
             this.panel1.TabIndex = 8;
             // 
-            // label81
+            // comboBox_Post
             // 
-            this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(108, 167);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(74, 15);
-            this.label81.TabIndex = 35;
-            this.label81.Text = "current limit:";
+            this.comboBox_Post.FormattingEnabled = true;
+            this.comboBox_Post.Items.AddRange(new object[] {
+            "Auto",
+            "50Hz",
+            "500Hz",
+            "5kHz",
+            "50kHz"});
+            this.comboBox_Post.Location = new System.Drawing.Point(289, 46);
+            this.comboBox_Post.Name = "comboBox_Post";
+            this.comboBox_Post.Size = new System.Drawing.Size(88, 21);
+            this.comboBox_Post.TabIndex = 24;
+            this.comboBox_Post.SelectedIndexChanged += new System.EventHandler(this.comboBox_Post_SelectedIndexChanged);
             // 
-            // label_clm
+            // label83
             // 
-            this.label_clm.AutoSize = true;
-            this.label_clm.Location = new System.Drawing.Point(182, 171);
-            this.label_clm.Name = "label_clm";
-            this.label_clm.Size = new System.Drawing.Size(35, 15);
-            this.label_clm.TabIndex = 36;
-            this.label_clm.Text = "-------";
-            // 
-            // button_clm
-            // 
-            this.button_clm.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button_clm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_clm.Location = new System.Drawing.Point(1049, 3);
-            this.button_clm.Margin = new System.Windows.Forms.Padding(2);
-            this.button_clm.Name = "button_clm";
-            this.button_clm.Size = new System.Drawing.Size(100, 60);
-            this.button_clm.TabIndex = 19;
-            this.button_clm.Text = "Current Limit OFF";
-            this.button_clm.UseVisualStyleBackColor = true;
-            this.button_clm.Click += new System.EventHandler(this.button12_Click);
+            this.label83.AutoSize = true;
+            this.label83.Location = new System.Drawing.Point(256, 41);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(32, 26);
+            this.label83.TabIndex = 25;
+            this.label83.Text = "Post \r\nFilter:";
             // 
             // Form1
             // 
@@ -4002,6 +4030,8 @@ namespace EISProjects
         private System.Windows.Forms.Label label_clm;
         private System.Windows.Forms.Label label81;
         private System.Windows.Forms.Button button_clm;
+        private System.Windows.Forms.Label label83;
+        private System.Windows.Forms.ComboBox comboBox_Post;
     }
 
 
@@ -4353,7 +4383,7 @@ namespace EISProjects
         public double ACFrqTo = 100000.0;
         public int ACFrqNStep = 100;
 
-        public int IVCurrentRangeMode = 0;
+        public int IVCurrentRangeMode = 3;
         public int IVVmlp = 0;
         public int IVImlp = 0;
         public double IVVoltageFrom = -0.5;

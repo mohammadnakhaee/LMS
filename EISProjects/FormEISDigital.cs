@@ -57,7 +57,7 @@ namespace EISProjects
         }
 
         private void PlotEISIV_t(int npoints, Chart chart1, Chart chart2, double[] xArray, double[] FittedxArray, double[] ReZArray, double[] ImZArray, double[] FittedReZArray, double[] FittedImZArray
-            , int nFirstZone, double[] FirstZonetArray, double[] FirstZoneIntVData, double[] FirstZoneIntIData)
+            , int nFirstZone, double[] FirstZonetArray, double[] FirstZoneIntVData, double[] FirstZoneIntIData, double V_Error, double I_Error)
         {
             ClearPlot(chart1);
             ClearPlot(chart2);
@@ -67,8 +67,8 @@ namespace EISProjects
 
             AddSeries(chart1, "Voltage data", "t", "V(t)", Color.Green);
             AddSeries(chart2, "Current data", "t", "I(t)", Color.Green);
-            AddSeries(chart1, "V(t)", "t", "V(t)", Color.Blue);
-            AddSeries(chart2, "I(t)", "t", "I(t)", Color.Red);
+            AddSeries(chart1, "V(t)", "t", "V(t)", V_Error < 10 ? Color.Blue : Color.DarkRed);
+            AddSeries(chart2, "I(t)", "t", "I(t)", I_Error < 10 ? Color.Blue : Color.DarkRed);
             //AddSeries(chart1, "first zone V(t)", "t", "V(t)", Color.Black);
             //AddSeries(chart2, "first zone I(t)", "t", "I(t)", Color.Black);
 
@@ -128,24 +128,105 @@ namespace EISProjects
         }
 
         public void UpdateEISDiagram(int nData, double[] tArray, double[] FittedtArray, double[] VArray, double[] IArray, double[] FittedVArray, double[] FittedIArray
-            ,int nFirstZone , double[] FirstZonetArray, double[] FirstZoneIntVData, double[] FirstZoneIntIData)
+            ,int nFirstZone , double[] FirstZonetArray, double[] FirstZoneIntVData, double[] FirstZoneIntIData,double V_Error,double I_Error)
         {
-            PlotEISIV_t(nData, chart1, chart2, tArray, FittedtArray, VArray, IArray, FittedVArray, FittedIArray, nFirstZone, FirstZonetArray, FirstZoneIntVData, FirstZoneIntIData);
+            PlotEISIV_t(nData, chart1, chart2, tArray, FittedtArray, VArray, IArray, FittedVArray, FittedIArray, nFirstZone, FirstZonetArray, FirstZoneIntVData, FirstZoneIntIData,  V_Error,  I_Error);
             chart1.Update();
             chart2.Update();
         }
 
         private void FormEISDigital_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try { 
+            e.Cancel = true;
+            this.Hide();
+            Form1.isFormEISDScope = false;
+            //if (flowLayoutPanel1.Visible == false) return;
+            try
+            {
+                Form1.Port.Write(";");
+                Form1.Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+               
+
+            }
+            catch (Exception ee) { }
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.DiscardOutBuffer();
+            try
+            {
+            
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("idcselect " + status.Default.iselect.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("vdcselect " + status.Default.vselect.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("idcfilter " + status.Default.ifilter.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("vfilter " + status.Default.vfilter.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("sampleon " + (status.Default.probe ? "1" : "0"));
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("dummyon " + (status.Default.dummy ? "1" : "0"));
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("notch " + (status.Default.notch ? "1" : "0"));
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("earth " + (status.Default.floated ? "1" : "0"));
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("clmauto " + (status.Default.clm_auto ? "1" : "0"));
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("iIs " + status.Default.iIs.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            if (status.Default.AC)
+                Form1.Port.WriteLine("ACpreget");
+            else
+                Form1.Port.WriteLine("DCpreget");
+            Form1.Port.ReadLine();
+
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("ivset " + status.Default.dc_dac.ToString());
+                Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte();
+                Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte();
+                System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("vacdac " + status.Default.vnull_dac.ToString());
+            Form1.Port.ReadLine();
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.WriteLine("iacdac " + status.Default.inull_dac.ToString());
+            Form1.Port.ReadLine();
+
+     
+             
             Form1.Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
             Form1.Port.Write(";");
-            e.Cancel = true;
-            Form1.isFormEISDScope = false;
-            this.Hide();
+           
+            
+            
             }
             catch
             { }
+            
         }
 
         private void FormEISDigital_Resize(object sender, EventArgs e)
@@ -228,27 +309,32 @@ namespace EISProjects
         private void DataReceivedHandler(object sender, EventArgs e)
         {
             Int16 v, i;
-            SerialPort p = (SerialPort)sender;
-            v = (Int16)(((UInt16)p.ReadByte()) | (((UInt16)p.ReadByte()) << 8));
-            i =(Int16)(((byte)p.ReadByte()) | (((byte)p.ReadByte()) << 8));
-            Va[index] = v;
-            Ia[index] = i;
-            index++;
-            if (index >= 100) index = 0;
-            // V.Dequeue();
-            //  I.Dequeue();
-            // V.Enqueue(v);
-            //I.Enqueue(i);
-            //for (int i = 0; i < 100; i++)
-           // int n = 0, pp;
-            if(index == 0)
-            for (int n = 0; n < 100; n++)
+            try
             {
-               // pp = index + n + 1;
-              //  if (pp >= 100) pp -= 100;
-                chart1.Series[0].Points[n].YValues[0] = Va[n];
-                chart2.Series[0].Points[n].YValues[0] = Ia[n];
+                SerialPort p = (SerialPort)sender;
+                v = (Int16)(((UInt16)p.ReadByte()) | (((UInt16)p.ReadByte()) << 8));
+                i = (Int16)(((byte)p.ReadByte()) | (((byte)p.ReadByte()) << 8));
+                Va[index] = v;
+                Ia[index] = i;
+                index++;
+                if (index >= 100) index = 0;
+                // V.Dequeue();
+                //  I.Dequeue();
+                // V.Enqueue(v);
+                //I.Enqueue(i);
+                //for (int i = 0; i < 100; i++)
+                // int n = 0, pp;
+                if (index == 0)
+                    for (int n = 0; n < 100; n++)
+                    {
+                        // pp = index + n + 1;
+                        //  if (pp >= 100) pp -= 100;
+                        chart1.Series[0].Points[n].YValues[0] = Va[n];
+                        chart2.Series[0].Points[n].YValues[0] = Ia[n];
+                    }
             }
+            catch 
+            { }
             //backgroundWorker1.RunWorkerAsync();
             //chart1.Series.Invalidate();
         }
@@ -277,8 +363,18 @@ namespace EISProjects
 
         private void refresh(object sender, EventArgs e)
         {
-            button2_Click(sender, null);
-            System.Threading.Thread.Sleep(200);
+            if (button2.Text == "stop")
+                button2_Click(sender, null);
+            try
+            {
+                Form1.Port.DataReceived -= new SerialDataReceivedEventHandler(DataReceivedHandler);
+                Form1.Port.Write(";");
+
+            }
+            catch (Exception ee) { }
+            System.Threading.Thread.Sleep(50);
+            Form1.Port.DiscardInBuffer();
+            Form1.Port.DiscardOutBuffer();
             try
             {
                 Form1.Port.DiscardInBuffer();
@@ -313,13 +409,63 @@ namespace EISProjects
                     Form1.Port.WriteLine("vdcselect " + comboBox2.SelectedIndex.ToString());
                     Form1.Port.ReadLine();
                 }
-               // Form1.Port.DiscardInBuffer();
+                if (sender.Equals(comboBox_iIs))
+                {
+                    Form1.Port.WriteLine("iIs " + comboBox_iIs.SelectedIndex.ToString());
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(checkBox_notch))
+                {
+                    Form1.Port.WriteLine("notch " + (checkBox_notch.Checked ? "1" : "0"));
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(checkBox_float))
+                {
+                    Form1.Port.WriteLine("earth " + (checkBox_float.Checked ? "1" : "0"));
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(checkBox_clm))
+                {
+                    Form1.Port.WriteLine("clmauto " + (checkBox_clm.Checked ? "1" : "0"));
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(checkBox_AC))
+                {
+                    if(checkBox_AC.Checked)
+                    Form1.Port.WriteLine("ACpreget");
+                    else
+                    Form1.Port.WriteLine("DCpreget");
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(numericUpDown_dac))
+                {
+                    Form1.Port.WriteLine("ivset " + (2047 + 20.47 * (double)numericUpDown_dac.Value));
+                    System.Threading.Thread.Sleep(50);
+                    Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte();
+                    Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte(); Form1.Port.ReadByte();
+                }
+                if (sender.Equals(numericUpDown_vacdac))
+                {
+                    Form1.Port.WriteLine("vacdac " + (2047 + 20.47*(double)numericUpDown_vacdac.Value));
+                    Form1.Port.ReadLine();
+                }
+                if (sender.Equals(numericUpDown_iacdac))
+                {
+                    Form1.Port.WriteLine("iacdac " + (2047 + 20.47 * (double)numericUpDown_iacdac.Value));
+                    Form1.Port.ReadLine();
+                }
+                // Form1.Port.DiscardInBuffer();
                 //Form1.Port.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-               // Form1.Port.WriteLine("scope 799");
+                // Form1.Port.WriteLine("scope 799");
             }
             catch (Exception ee) { }
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(50);
             button2_Click(sender, null);
+        }
+
+        private void checkBox_notch_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

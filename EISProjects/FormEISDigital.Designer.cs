@@ -33,7 +33,6 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,32 +50,35 @@
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkBox_notch = new System.Windows.Forms.CheckBox();
+            this.checkBox_float = new System.Windows.Forms.CheckBox();
+            this.checkBox_clm = new System.Windows.Forms.CheckBox();
+            this.checkBox_AC = new System.Windows.Forms.CheckBox();
+            this.numericUpDown_dac = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_vacdac = new System.Windows.Forms.NumericUpDown();
+            this.comboBox_iIs = new System.Windows.Forms.ComboBox();
+            this.numericUpDown_iacdac = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.GBVoltage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.GBCurrent.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_dac)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_vacdac)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_iacdac)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 298);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1114, 0);
-            this.panel1.TabIndex = 3;
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Right;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(754, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1114, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(126, 472);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -85,13 +87,13 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(113, 19);
+            this.toolsToolStripMenuItem.Text = "    Tools   ";
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
@@ -109,21 +111,19 @@
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
             legend3.Name = "Legend1";
             this.chart1.Legends.Add(legend3);
-            this.chart1.Location = new System.Drawing.Point(4, 25);
-            this.chart1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chart1.Location = new System.Drawing.Point(3, 20);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(1106, 241);
+            this.chart1.Size = new System.Drawing.Size(748, 196);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(919, 1);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(3, 365);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(55, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
+            this.button1.Text = "Clear";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -133,11 +133,9 @@
             this.GBVoltage.Controls.Add(this.chart1);
             this.GBVoltage.Dock = System.Windows.Forms.DockStyle.Top;
             this.GBVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GBVoltage.Location = new System.Drawing.Point(0, 28);
-            this.GBVoltage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GBVoltage.Location = new System.Drawing.Point(0, 0);
             this.GBVoltage.Name = "GBVoltage";
-            this.GBVoltage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.GBVoltage.Size = new System.Drawing.Size(1114, 270);
+            this.GBVoltage.Size = new System.Drawing.Size(754, 219);
             this.GBVoltage.TabIndex = 1;
             this.GBVoltage.TabStop = false;
             this.GBVoltage.Text = "V(t)    Voltage";
@@ -156,10 +154,9 @@
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
             legend4.Name = "Legend1";
             this.chart2.Legends.Add(legend4);
-            this.chart2.Location = new System.Drawing.Point(4, 25);
-            this.chart2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chart2.Location = new System.Drawing.Point(3, 20);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(1106, 241);
+            this.chart2.Size = new System.Drawing.Size(748, 196);
             this.chart2.TabIndex = 5;
             this.chart2.Text = "chart2";
             // 
@@ -168,21 +165,19 @@
             this.GBCurrent.Controls.Add(this.chart2);
             this.GBCurrent.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.GBCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GBCurrent.Location = new System.Drawing.Point(0, 298);
-            this.GBCurrent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GBCurrent.Location = new System.Drawing.Point(0, 253);
             this.GBCurrent.Name = "GBCurrent";
-            this.GBCurrent.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.GBCurrent.Size = new System.Drawing.Size(1114, 270);
+            this.GBCurrent.Size = new System.Drawing.Size(754, 219);
             this.GBCurrent.TabIndex = 2;
             this.GBCurrent.TabStop = false;
             this.GBCurrent.Text = "I(t)      Current";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(228, 3);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Location = new System.Drawing.Point(2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(56, 19);
             this.button2.TabIndex = 6;
             this.button2.Text = "start";
             this.button2.UseVisualStyleBackColor = true;
@@ -200,10 +195,10 @@
             "10uA",
             "1uA",
             "100nA"});
-            this.comboBox1.Location = new System.Drawing.Point(308, 3);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBox1.Location = new System.Drawing.Point(2, 159);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(56, 24);
+            this.comboBox1.Size = new System.Drawing.Size(41, 21);
             this.comboBox1.TabIndex = 7;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.refresh);
             // 
@@ -215,10 +210,10 @@
             "V1",
             "V2",
             "V3"});
-            this.comboBox2.Location = new System.Drawing.Point(369, 3);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBox2.Location = new System.Drawing.Point(2, 184);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(53, 24);
+            this.comboBox2.Size = new System.Drawing.Size(41, 21);
             this.comboBox2.TabIndex = 8;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.refresh);
             // 
@@ -238,10 +233,10 @@
             "if0",
             "if1",
             "if2"});
-            this.comboBox3.Location = new System.Drawing.Point(427, 3);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBox3.Location = new System.Drawing.Point(2, 209);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(53, 24);
+            this.comboBox3.Size = new System.Drawing.Size(41, 21);
             this.comboBox3.TabIndex = 9;
             this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.refresh);
             // 
@@ -252,20 +247,20 @@
             "vf0",
             "vf1",
             "vf2"});
-            this.comboBox4.Location = new System.Drawing.Point(484, 3);
-            this.comboBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBox4.Location = new System.Drawing.Point(2, 234);
+            this.comboBox4.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(53, 24);
+            this.comboBox4.Size = new System.Drawing.Size(41, 21);
             this.comboBox4.TabIndex = 10;
             this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.refresh);
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(545, 5);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox1.Location = new System.Drawing.Point(2, 46);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(67, 21);
+            this.checkBox1.Size = new System.Drawing.Size(53, 17);
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "probe";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -274,34 +269,148 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(618, 5);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBox2.Location = new System.Drawing.Point(2, 25);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(75, 21);
+            this.checkBox2.Size = new System.Drawing.Size(59, 17);
             this.checkBox2.TabIndex = 12;
             this.checkBox2.Text = "dummy";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.refresh);
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.button2);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox2);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox1);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_notch);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_float);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_clm);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_AC);
+            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
+            this.flowLayoutPanel1.Controls.Add(this.comboBox2);
+            this.flowLayoutPanel1.Controls.Add(this.comboBox3);
+            this.flowLayoutPanel1.Controls.Add(this.comboBox4);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown_dac);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown_vacdac);
+            this.flowLayoutPanel1.Controls.Add(this.comboBox_iIs);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown_iacdac);
+            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(813, 20);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(64, 393);
+            this.flowLayoutPanel1.TabIndex = 14;
+            // 
+            // checkBox_notch
+            // 
+            this.checkBox_notch.AutoSize = true;
+            this.checkBox_notch.Location = new System.Drawing.Point(3, 68);
+            this.checkBox_notch.Name = "checkBox_notch";
+            this.checkBox_notch.Size = new System.Drawing.Size(53, 17);
+            this.checkBox_notch.TabIndex = 13;
+            this.checkBox_notch.Text = "notch";
+            this.checkBox_notch.UseVisualStyleBackColor = true;
+            this.checkBox_notch.CheckedChanged += new System.EventHandler(this.refresh);
+            // 
+            // checkBox_float
+            // 
+            this.checkBox_float.AutoSize = true;
+            this.checkBox_float.Location = new System.Drawing.Point(3, 91);
+            this.checkBox_float.Name = "checkBox_float";
+            this.checkBox_float.Size = new System.Drawing.Size(46, 17);
+            this.checkBox_float.TabIndex = 14;
+            this.checkBox_float.Text = "float";
+            this.checkBox_float.UseVisualStyleBackColor = true;
+            this.checkBox_float.CheckedChanged += new System.EventHandler(this.refresh);
+            // 
+            // checkBox_clm
+            // 
+            this.checkBox_clm.AutoSize = true;
+            this.checkBox_clm.Location = new System.Drawing.Point(3, 114);
+            this.checkBox_clm.Name = "checkBox_clm";
+            this.checkBox_clm.Size = new System.Drawing.Size(50, 17);
+            this.checkBox_clm.TabIndex = 15;
+            this.checkBox_clm.Text = "Climit";
+            this.checkBox_clm.UseVisualStyleBackColor = true;
+            this.checkBox_clm.CheckedChanged += new System.EventHandler(this.refresh);
+            // 
+            // checkBox_AC
+            // 
+            this.checkBox_AC.AutoSize = true;
+            this.checkBox_AC.Location = new System.Drawing.Point(3, 137);
+            this.checkBox_AC.Name = "checkBox_AC";
+            this.checkBox_AC.Size = new System.Drawing.Size(40, 17);
+            this.checkBox_AC.TabIndex = 16;
+            this.checkBox_AC.Text = "AC";
+            this.checkBox_AC.UseVisualStyleBackColor = true;
+            this.checkBox_AC.CheckedChanged += new System.EventHandler(this.refresh);
+            // 
+            // numericUpDown_dac
+            // 
+            this.numericUpDown_dac.Location = new System.Drawing.Point(3, 260);
+            this.numericUpDown_dac.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_dac.Name = "numericUpDown_dac";
+            this.numericUpDown_dac.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown_dac.TabIndex = 17;
+            this.numericUpDown_dac.ValueChanged += new System.EventHandler(this.refresh);
+            // 
+            // numericUpDown_vacdac
+            // 
+            this.numericUpDown_vacdac.Location = new System.Drawing.Point(3, 286);
+            this.numericUpDown_vacdac.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_vacdac.Name = "numericUpDown_vacdac";
+            this.numericUpDown_vacdac.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown_vacdac.TabIndex = 18;
+            this.numericUpDown_vacdac.ValueChanged += new System.EventHandler(this.refresh);
+            // 
+            // comboBox_iIs
+            // 
+            this.comboBox_iIs.FormattingEnabled = true;
+            this.comboBox_iIs.Items.AddRange(new object[] {
+            "iIs0",
+            "iIs1",
+            "iIs2",
+            "iIs3"});
+            this.comboBox_iIs.Location = new System.Drawing.Point(3, 312);
+            this.comboBox_iIs.Name = "comboBox_iIs";
+            this.comboBox_iIs.Size = new System.Drawing.Size(40, 21);
+            this.comboBox_iIs.TabIndex = 20;
+            this.comboBox_iIs.SelectedIndexChanged += new System.EventHandler(this.refresh);
+            // 
+            // numericUpDown_iacdac
+            // 
+            this.numericUpDown_iacdac.Location = new System.Drawing.Point(3, 339);
+            this.numericUpDown_iacdac.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_iacdac.Name = "numericUpDown_iacdac";
+            this.numericUpDown_iacdac.Size = new System.Drawing.Size(40, 20);
+            this.numericUpDown_iacdac.TabIndex = 19;
+            this.numericUpDown_iacdac.ValueChanged += new System.EventHandler(this.refresh);
+            // 
             // FormEISDigital
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1114, 568);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(880, 472);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.GBCurrent);
             this.Controls.Add(this.GBVoltage);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormEISDigital";
             this.Text = "Scope";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEISDigital_FormClosing);
@@ -312,14 +421,17 @@
             this.GBVoltage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.GBCurrent.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_dac)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_vacdac)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_iacdac)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -336,5 +448,15 @@
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox_notch;
+        private System.Windows.Forms.CheckBox checkBox_float;
+        private System.Windows.Forms.CheckBox checkBox_clm;
+        private System.Windows.Forms.CheckBox checkBox_AC;
+        private System.Windows.Forms.NumericUpDown numericUpDown_dac;
+        private System.Windows.Forms.NumericUpDown numericUpDown_vacdac;
+        private System.Windows.Forms.ComboBox comboBox_iIs;
+        private System.Windows.Forms.NumericUpDown numericUpDown_iacdac;
+        internal System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        internal System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
