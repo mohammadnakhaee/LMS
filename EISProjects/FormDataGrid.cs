@@ -72,7 +72,7 @@ namespace EISProjects
                         {
                             SsnGridView.Columns.Add("Frequency [Hz]", "Frequency [Hz]  ");
                             SsnGridView.Columns.Add("Re(Z) [Ohm]", "Re(Z) [Ohm]     ");
-                            SsnGridView.Columns.Add("Im(Z) [Ohm]", "Im(Z) [Ohm]     ");
+                            SsnGridView.Columns.Add("-Im(Z) [Ohm]", "-Im(Z) [Ohm]     ");
                             SsnGridView.Columns.Add("R [Ohm]", "R [Ohm]         ");
                             SsnGridView.Columns.Add("Theta [Degree]", "Theta [Degree]  ");
                             for (int f = 0; f < Form1.AllSessionsData[DGSelectedSession].ReceivedDataCount; f++)
@@ -80,7 +80,7 @@ namespace EISProjects
                                 SsnGridView.Rows.Add("");
                                 SsnGridView.Rows[f].Cells[0].Value = Form1.AllSessionsData[DGSelectedSession].Frq[f];
                                 SsnGridView.Rows[f].Cells[1].Value = Form1.AllSessionsData[DGSelectedSession].ReZ[f];
-                                SsnGridView.Rows[f].Cells[2].Value = Form1.AllSessionsData[DGSelectedSession].Imz[f];
+                                SsnGridView.Rows[f].Cells[2].Value = -Form1.AllSessionsData[DGSelectedSession].Imz[f];
                                 SsnGridView.Rows[f].Cells[3].Value = (Math.Sqrt(Math.Pow(Form1.AllSessionsData[DGSelectedSession].ReZ[f], 2.0) + Math.Pow(Form1.AllSessionsData[DGSelectedSession].Imz[f], 2.0)));
                                 SsnGridView.Rows[f].Cells[4].Value = (Math.Atan2(Form1.AllSessionsData[DGSelectedSession].Imz[f], Form1.AllSessionsData[DGSelectedSession].ReZ[f]));
                             }
@@ -235,7 +235,7 @@ namespace EISProjects
 
                 for (int i = 0; i < SD.ReceivedDataCount; i++)
                 {
-                    if (S.Mode == 0) FileProtocol.Write(SD.Frq[i].ToString() + "   " + (SD.ReZ[i] * Yfactor).ToString() + "   " + (SD.Imz[i] * Yfactor).ToString() + "\n");
+                    if (S.Mode == 0) FileProtocol.Write(SD.Frq[i].ToString() + "   " + (SD.ReZ[i] * Yfactor).ToString() + "   " + (-SD.Imz[i] * Yfactor).ToString() + "\n");
                     if (S.Mode == 1) FileProtocol.Write(SD.Vlt[i].ToString() + "   " + (SD.ReZ[i] * Yfactor).ToString() + "   " + (SD.Imz[i] * Yfactor).ToString() + "\n");
                     //if (S.Mode == 2) FileProtocol.Write(SD.Amp[i].ToString() + "   " + (SD.ReZ[i] * Yfactor).ToString() + "   " + (SD.ImZ[i] * Yfactor).ToString() + "\n");
                     if (S.Mode == 2 || S.Mode == 3 || S.Mode == 4) FileProtocol.Write(SD.Vlt[i].ToString() + "   " + (SD.Amp[i] * Yfactor).ToString() + "   " + (SD.ReZ[i] * Yfactor).ToString() + "   " + (SD.Imz[i] * Yfactor).ToString() + "\n");
