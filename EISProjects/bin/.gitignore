@@ -1,0 +1,14 @@
+# Ignore everything
+*
+!*/
+
+# But
+!.gitignore
+!microsettings.bin
+!settings.bin
+!settings_Backup.bin
+!testcb.dll
+
+# if the files to be tracked are in subdirectories
+# !*/Debug/*
+# !*/Release/*

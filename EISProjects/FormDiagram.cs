@@ -680,12 +680,13 @@ public class SampleTicks : FrameChart {
                     {
                         CBXAxis.Items.Add("Frequency [Hz]");
                         CBXAxis.Items.Add("Re(Z) [Ohm]");
-                        CBXAxis.Items.Add("Im(Z) [Ohm]");
+                        CBXAxis.Items.Add("-Im(Z) [Ohm]");
                         CBXAxis.Items.Add("r [Ohm]");
                         CBXAxis.Items.Add("Theta [Degree]");
+
                         CBYAxis.Items.Add("Re(Z) & Im(Z) [Ohm]");
                         CBYAxis.Items.Add("Re(Z) [Ohm]");
-                        CBYAxis.Items.Add("Im(Z) [Ohm]");
+                        CBYAxis.Items.Add("-Im(Z) [Ohm]");
                         CBYAxis.Items.Add("r [Ohm]");
                         CBYAxis.Items.Add("Theta [Degree]");
                         //CBIUnit.Items.Add("Ohm");
@@ -752,6 +753,11 @@ public class SampleTicks : FrameChart {
 
                     }
 
+                    if (Form1.AllSessions[PlotIndex].Mode == 3)
+                    {
+                        CBYAxis.Items.Add("Log(I)");
+                        CBYAxis.Items.Add("Log(t)");
+                    }
 
                     CBXAxis.SelectedIndex = 0;
                     CBYAxis.SelectedIndex = 0;
@@ -1082,15 +1088,29 @@ public class SampleTicks : FrameChart {
                     {
                         xArray = new double[nDate];
                         yArray = new double[nDate];
-                        if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i];
-                        if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i];
-                        if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i];
-                        if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i];
+                        if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
+                        if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
+                        if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
+                        if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i]; //NormalSetVoltPGSetCurrent
 
-                        if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i];
-                        if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i];
-                        if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i];
-                        if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i];
+                        if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
+                        if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
+                        if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
+                        if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i]; //NormalSetVoltPGSetCurrent
+                        if (YAxisIndex == 4)
+                            for (int i = 0; i < nDate; i++)
+                            {
+                                double x = Form1.AllSessionsData[PlotIndex].Amp[i];
+                                if (x == 0) x = 0.00001;
+                                yArray[i] = Math.Log(Math.Abs(x)); //Log(NormalCurrentPGVolt)
+                            }
+                        if (YAxisIndex == 5)
+                            for (int i = 0; i < nDate; i++)
+                            {
+                                double x = Form1.AllSessionsData[PlotIndex].ReZ[i];
+                                if (x == 0) x = 0.00001;
+                                yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
+                            }
 
                         int narray = Form1.AllSessionsData[EIS.RunningSession].ReZ.Length;
                         if (XAxisIndex == 2) MinX = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
@@ -1167,7 +1187,7 @@ public class SampleTicks : FrameChart {
                             xArray = new double[nDate];
                             for (int i = 0; i < nDate; i++)
                             {
-                                xArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i];
+                                xArray[i] = -Form1.AllSessionsData[PlotIndex].Imz[i];
                             }
                         }
 
@@ -1239,7 +1259,11 @@ public class SampleTicks : FrameChart {
 
                         if (YAxisIndex == 2)
                         {
-                            if (Form1.AllSessions[PlotIndex].Mode == 0) PlotImpedanceIm(chart1, Form1.AllSessionsData[PlotIndex].overflow, xArray, Form1.AllSessionsData[PlotIndex].Imz,
+                            double[] MinusImZ = new double[Form1.AllSessionsData[PlotIndex].Imz.Length];
+                            for (int i = 0; i < Form1.AllSessionsData[PlotIndex].Imz.Length; i++)
+                                MinusImZ[i] = -Form1.AllSessionsData[PlotIndex].Imz[i];
+
+                            if (Form1.AllSessions[PlotIndex].Mode == 0) PlotImpedanceIm(chart1, Form1.AllSessionsData[PlotIndex].overflow, xArray, MinusImZ,
                             nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
 
                             if (Form1.AllSessions[PlotIndex].Mode == 1) PlotImpedanceRe(chart1, Form1.AllSessionsData[PlotIndex].overflow, xArray, Form1.AllSessionsData[PlotIndex].ReZ,
@@ -1847,7 +1871,7 @@ public class SampleTicks : FrameChart {
                         {
                             SsnGridView.Columns.Add("Frequency [Hz]", "Frequency [Hz]  ");
                             SsnGridView.Columns.Add("Re(Z) [Ohm]", "Re(Z) [Ohm]     ");
-                            SsnGridView.Columns.Add("Im(Z) [Ohm]", "Im(Z) [Ohm]     ");
+                            SsnGridView.Columns.Add("-Im(Z) [Ohm]", "-Im(Z) [Ohm]     ");
                             SsnGridView.Columns.Add("R [Ohm]", "R [Ohm]         ");
                             SsnGridView.Columns.Add("Theta [Degree]", "Theta [Degree]  ");
                             for (int f = 0; f < SessD.ReceivedDataCount; f++)
@@ -1855,7 +1879,7 @@ public class SampleTicks : FrameChart {
                                 SsnGridView.Rows.Add("");
                                 SsnGridView.Rows[f].Cells[0].Value = SessD.Frq[f];
                                 SsnGridView.Rows[f].Cells[1].Value = SessD.ReZ[f];
-                                SsnGridView.Rows[f].Cells[2].Value = SessD.Imz[f];
+                                SsnGridView.Rows[f].Cells[2].Value = -SessD.Imz[f];
                                 SsnGridView.Rows[f].Cells[3].Value = (Math.Sqrt(Math.Pow(SessD.ReZ[f], 2.0) + Math.Pow(SessD.Imz[f], 2.0)));
                                 SsnGridView.Rows[f].Cells[4].Value = (Math.Atan2(SessD.Imz[f], SessD.ReZ[f]));
                             }
@@ -2071,6 +2095,22 @@ public class SampleTicks : FrameChart {
 
             Process.Start(@".\data.dat");
             //process.Start();"explorer.exe",
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            chart1.Series.Clear();
+            YAxisIndex = CBYAxis.SelectedIndex;
+            nPlottedData = 0;
+            UpdateDiagram();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            chart1.Series.Clear();
+            YAxisIndex = CBYAxis.SelectedIndex;
+            nPlottedData = 0;
+            UpdateDiagram();
         }
     }
 }

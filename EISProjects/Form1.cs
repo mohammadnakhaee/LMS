@@ -4116,7 +4116,7 @@ namespace EISProjects
                     //    volt = ChronoTimeStep * cnt / 1000.0;
                     //}
 
-
+                    if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
                     if (AllSessions[EIS.RunningSession].RelRef)
                     {
                         volt = -volt;
@@ -4519,7 +4519,7 @@ namespace EISProjects
                     //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " i=" + cnt.ToString()); //logchanged
 
 
-
+                    if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
                     if (AllSessions[EIS.RunningSession].RelRef)
                     {
                         volt = -volt;

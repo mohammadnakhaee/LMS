@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.SessionName = new System.Windows.Forms.ComboBox();
             this.FigureTimer = new System.Windows.Forms.Timer(this.components);
             this.CheckStartTimer = new System.Windows.Forms.Timer(this.components);
@@ -171,10 +171,10 @@
             // 
             this.ChSeries.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChSeries.FormattingEnabled = true;
-            this.ChSeries.Location = new System.Drawing.Point(0, 103);
+            this.ChSeries.Location = new System.Drawing.Point(0, 109);
             this.ChSeries.Margin = new System.Windows.Forms.Padding(2);
             this.ChSeries.Name = "ChSeries";
-            this.ChSeries.Size = new System.Drawing.Size(183, 362);
+            this.ChSeries.Size = new System.Drawing.Size(183, 356);
             this.ChSeries.TabIndex = 6;
             this.ChSeries.Visible = false;
             this.ChSeries.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ChSeries_ItemCheck);
@@ -194,13 +194,13 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(183, 103);
+            this.groupBox1.Size = new System.Drawing.Size(183, 109);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(28, 73);
+            this.button1.Location = new System.Drawing.Point(28, 81);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 19);
@@ -268,37 +268,37 @@
             // chart1
             // 
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.AxisX.LabelStyle.Format = "{0:0.00}";
-            chartArea2.AxisX.LabelStyle.TruncatedLabels = true;
-            chartArea2.AxisX.MajorGrid.Interval = 0D;
-            chartArea2.AxisX.MajorGrid.IntervalOffset = 0D;
-            chartArea2.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea2.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisX.MajorTickMark.Interval = 0D;
-            chartArea2.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea2.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea2.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea2.AxisX.MinorGrid.Enabled = true;
-            chartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisX.MinorTickMark.Enabled = true;
-            chartArea2.AxisY.LabelStyle.Format = "{0:0.00}";
-            chartArea2.AxisY.LabelStyle.TruncatedLabels = true;
-            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea2.AxisY.MinorGrid.Enabled = true;
-            chartArea2.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea2.AxisY.MinorTickMark.Enabled = true;
-            chartArea2.CursorX.Interval = 1E-08D;
-            chartArea2.CursorX.IsUserEnabled = true;
-            chartArea2.CursorX.IsUserSelectionEnabled = true;
-            chartArea2.CursorY.Interval = 1E-08D;
-            chartArea2.CursorY.IsUserEnabled = true;
-            chartArea2.CursorY.IsUserSelectionEnabled = true;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.LabelStyle.Format = "{0:0.00}";
+            chartArea4.AxisX.LabelStyle.TruncatedLabels = true;
+            chartArea4.AxisX.MajorGrid.Interval = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea4.AxisX.MajorTickMark.Interval = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffset = 0D;
+            chartArea4.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea4.AxisX.MinorGrid.Enabled = true;
+            chartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisX.MinorTickMark.Enabled = true;
+            chartArea4.AxisY.LabelStyle.Format = "{0:0.00}";
+            chartArea4.AxisY.LabelStyle.TruncatedLabels = true;
+            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.DimGray;
+            chartArea4.AxisY.MinorGrid.Enabled = true;
+            chartArea4.AxisY.MinorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisY.MinorTickMark.Enabled = true;
+            chartArea4.CursorX.Interval = 1E-08D;
+            chartArea4.CursorX.IsUserEnabled = true;
+            chartArea4.CursorX.IsUserSelectionEnabled = true;
+            chartArea4.CursorY.Interval = 1E-08D;
+            chartArea4.CursorY.IsUserEnabled = true;
+            chartArea4.CursorY.IsUserSelectionEnabled = true;
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(799, 425);
@@ -352,6 +352,5 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button BtnMakeReport;
         private System.Windows.Forms.Button OpenInExcel;
-
     }
 }
