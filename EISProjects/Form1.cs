@@ -2870,8 +2870,12 @@ namespace EISProjects
                     {
                         IVChronoVset = AllSessions[EIS.RunningSession].Chrono_v1;
                         IVChronoDVset = 0;
-                    }
+                    }//havasam nabood dokme khmoos pc ro zadam
                 }
+
+                if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) cvvltstart = cvvltstart + AllSessions[EIS.RunningSession].V_OCT;
+                if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) ivvltfrom = ivvltfrom + AllSessions[EIS.RunningSession].V_OCT;
+                if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) ivvltto = ivvltto + AllSessions[EIS.RunningSession].V_OCT;
 
                 if (AllSessions[EIS.RunningSession].RelRef)
                 {
@@ -2879,6 +2883,7 @@ namespace EISProjects
                     ivvltfrom = -ivvltfrom;
                     ivvltto = -ivvltto;
                 }
+
                 int ivltStart = SetDCVConvert(cvvltstart, AllSessions[EIS.RunningSession].IVVoltageRangeMode, AllSessions[EIS.RunningSession].IVCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
                 int ivltFrom = SetDCVConvert(ivvltfrom, AllSessions[EIS.RunningSession].IVVoltageRangeMode, AllSessions[EIS.RunningSession].IVCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
                 int ivltTo = SetDCVConvert(ivvltto, AllSessions[EIS.RunningSession].IVVoltageRangeMode, AllSessions[EIS.RunningSession].IVCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
@@ -3972,6 +3977,7 @@ namespace EISProjects
 
         private void IVTimer_Tick(object sender, EventArgs e)
         {
+            //if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
             if (Port.BytesToRead == 0) return;
             IVTimer_TickProc();
         }
@@ -4116,7 +4122,6 @@ namespace EISProjects
                     //    volt = ChronoTimeStep * cnt / 1000.0;
                     //}
 
-                    if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
                     if (AllSessions[EIS.RunningSession].RelRef)
                     {
                         volt = -volt;
@@ -4278,6 +4283,8 @@ namespace EISProjects
                                             IVChronoDVset = IVChronoDVsetSign * Math.Abs(IVChronoDVset);
                                         }
 
+                                        if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) ivvltfrom = ivvltfrom + AllSessions[EIS.RunningSession].V_OCT;
+                                        if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) ivvltto = ivvltto + AllSessions[EIS.RunningSession].V_OCT;
                                         if (AllSessions[EIS.RunningSession].RelRef)
                                         {
                                             ivvltfrom = -ivvltfrom;
@@ -4519,7 +4526,6 @@ namespace EISProjects
                     //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " i=" + cnt.ToString()); //logchanged
 
 
-                    if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
                     if (AllSessions[EIS.RunningSession].RelRef)
                     {
                         volt = -volt;
