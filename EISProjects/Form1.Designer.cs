@@ -33,9 +33,9 @@ namespace EISProjects
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabFile = new System.Windows.Forms.TabPage();
             this.BtnImport = new System.Windows.Forms.Button();
@@ -233,6 +233,8 @@ namespace EISProjects
             this.CBIVRange = new System.Windows.Forms.ComboBox();
             this.IMLP = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label83 = new System.Windows.Forms.Label();
+            this.comboBox_Post = new System.Windows.Forms.ComboBox();
             this.IVChronoVFilter = new System.Windows.Forms.ComboBox();
             this.label77 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
@@ -323,8 +325,6 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBox_Post = new System.Windows.Forms.ComboBox();
-            this.label83 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -1640,17 +1640,17 @@ namespace EISProjects
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(5, 18);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(388, 123);
             this.chart1.TabIndex = 28;
             this.chart1.Text = "chart1";
@@ -2692,6 +2692,30 @@ namespace EISProjects
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Voltage Range:";
             // 
+            // label83
+            // 
+            this.label83.AutoSize = true;
+            this.label83.Location = new System.Drawing.Point(256, 41);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(32, 26);
+            this.label83.TabIndex = 25;
+            this.label83.Text = "Post \r\nFilter:";
+            // 
+            // comboBox_Post
+            // 
+            this.comboBox_Post.FormattingEnabled = true;
+            this.comboBox_Post.Items.AddRange(new object[] {
+            "Auto",
+            "50Hz",
+            "500Hz",
+            "5kHz",
+            "50kHz"});
+            this.comboBox_Post.Location = new System.Drawing.Point(289, 46);
+            this.comboBox_Post.Name = "comboBox_Post";
+            this.comboBox_Post.Size = new System.Drawing.Size(88, 21);
+            this.comboBox_Post.TabIndex = 24;
+            this.comboBox_Post.SelectedIndexChanged += new System.EventHandler(this.comboBox_Post_SelectedIndexChanged);
+            // 
             // IVChronoVFilter
             // 
             this.IVChronoVFilter.FormattingEnabled = true;
@@ -3065,26 +3089,26 @@ namespace EISProjects
             this.duplicateToolStripMenuItem,
             this.exportDataToolStripMenuItem});
             this.CMSSession.Name = "CMSSession";
-            this.CMSSession.Size = new System.Drawing.Size(135, 70);
+            this.CMSSession.Size = new System.Drawing.Size(136, 70);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // duplicateToolStripMenuItem
             // 
             this.duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.duplicateToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.duplicateToolStripMenuItem.Text = "Duplicate";
             this.duplicateToolStripMenuItem.Click += new System.EventHandler(this.duplicateToolStripMenuItem_Click);
             // 
             // exportDataToolStripMenuItem
             // 
             this.exportDataToolStripMenuItem.Name = "exportDataToolStripMenuItem";
-            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exportDataToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exportDataToolStripMenuItem.Text = "Export Data";
             this.exportDataToolStripMenuItem.Click += new System.EventHandler(this.exportDataToolStripMenuItem_Click);
             // 
@@ -3620,30 +3644,6 @@ namespace EISProjects
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1225, 100);
             this.panel1.TabIndex = 8;
-            // 
-            // comboBox_Post
-            // 
-            this.comboBox_Post.FormattingEnabled = true;
-            this.comboBox_Post.Items.AddRange(new object[] {
-            "Auto",
-            "50Hz",
-            "500Hz",
-            "5kHz",
-            "50kHz"});
-            this.comboBox_Post.Location = new System.Drawing.Point(289, 46);
-            this.comboBox_Post.Name = "comboBox_Post";
-            this.comboBox_Post.Size = new System.Drawing.Size(88, 21);
-            this.comboBox_Post.TabIndex = 24;
-            this.comboBox_Post.SelectedIndexChanged += new System.EventHandler(this.comboBox_Post_SelectedIndexChanged);
-            // 
-            // label83
-            // 
-            this.label83.AutoSize = true;
-            this.label83.Location = new System.Drawing.Point(256, 41);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(32, 26);
-            this.label83.TabIndex = 25;
-            this.label83.Text = "Post \r\nFilter:";
             // 
             // Form1
             // 

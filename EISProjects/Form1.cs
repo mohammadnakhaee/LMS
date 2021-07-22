@@ -83,7 +83,7 @@ namespace EISProjects
         public static System.Windows.Forms.Timer DigitalEISTimer;
         public static bool isDigitalEISStepCompleted = true;
         public static int DigitalEISStepUnSuccessCounter = 0;
-        public static int DigitalEISTimerMinInterval = 200;
+        public static int DigitalEISTimerMinInterval = 300;
         public static bool AllowToTick = true;
         public static bool isDataReceived = false;
         public static int IVnData = 512;
@@ -412,6 +412,8 @@ namespace EISProjects
         private double FFreq=10;
         private double I_Error;
         private double V_Error;
+        private double iacdac_current;
+        private int current_iacdac;
 
         public int clm { get; private set; }
 
@@ -2487,19 +2489,23 @@ namespace EISProjects
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
 
-                Izero(-TheCurrentisset);
+                Izero(-TheCurrentisset, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
 
 
                 Port.Write("iIs " + (iIsv).ToString() + WriteReadToChar);
                 Thread.Sleep(100);
                 ans = Port.ReadTo(ReadToChar);
+
                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:100006 Command:iIs");
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " iIs:" + (iIsv).ToString());
+                iIs = iIsv;
                 SetLabel(ref label_iIs, (iIsv));
 
                 //////////////////////////////////////////
 
                 ///////////////////////////////////////////
+                
+                /*
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
                 Port.Write("aczero" + WriteReadToChar);
@@ -2516,7 +2522,7 @@ namespace EISProjects
                 ans = Port.ReadTo(ReadToChar);
                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:100009 Command:aczero");
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " AC_zero ");
-
+                */
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
                 Port.Write("vaczero" + WriteReadToChar);
@@ -2633,12 +2639,14 @@ namespace EISProjects
                 Port.Write("iacdac 2047" + WriteReadToChar);  
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
+                current_iacdac = 2047;
                 SetLabel(ref label_iacdac, 2047);
                 Port.DiscardOutBuffer();
                  Port.DiscardInBuffer();
                 Port.Write("iIs 3" + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
+                iIs = 3;
                 SetLabel(ref label_iIs, 3);
                 Thread.Sleep(10);
                 Port.DiscardOutBuffer(); //Clear Buffer
@@ -3374,13 +3382,14 @@ namespace EISProjects
                 Port.Write("iacdac 2047" + WriteReadToChar);
                 Thread.Sleep(250);
                 ans = Port.ReadTo(ReadToChar);
+                current_iacdac = 2047;
                 SetLabel(ref label_iacdac, 2047);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
                 Port.Write("iIs 3" + WriteReadToChar);
                 Thread.Sleep(200);
                 ans = Port.ReadTo(ReadToChar);
-
+                iIs = 3;
                 SetLabel(ref label_iIs, 3);
                 Thread.Sleep(100);
                 Port.DiscardOutBuffer(); //Clear Buffer
@@ -4752,7 +4761,7 @@ namespace EISProjects
                                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:800001 Command:ddsclk");
                                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ddsclk:" + ddsClock.ToString());
                                 isDataReceived = false;
-                                Thread.Sleep(100);
+                                Thread.Sleep(10);
                                 isDigitalEISStepCompleted = false;
                                 SetEISFilter(AllSessions[EIS.RunningSession].EISfilterMode, 1 / frq, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea, AllSessions[EIS.RunningSession].EISVoltageRangeMode);
 
@@ -4765,7 +4774,7 @@ namespace EISProjects
                                 Port.Write("eisd " + nClock.ToString() + WriteReadToChar);
                                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " eisd " + nClock.ToString());
 
-                                Thread.Sleep(100);
+                                Thread.Sleep(10);
                                 SetLabel(ref Label_frq, frq, "Hz");
                                 SetLabel(ref iLabel_frq, nClock);
                                 if (isFrequencyChanged)
@@ -4866,8 +4875,8 @@ namespace EISProjects
                                         word = word - 2048 - 61440;
                                 }
                                 IntIdata[iData] = word;
-                                iacmean += word/ nData;
-                                
+                                iacmean += ((double)word)/ nData;
+                                 
                                 //EISGetIConvert(double iamp, int ISelect, int Imlp)
                                 double ACRange = 1;          //Added
                                 if (AllSessions[EIS.RunningSession].EISACCurrentRangeMode == 0) //Added
@@ -4931,11 +4940,11 @@ namespace EISProjects
                                 //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " I_AC_zero ");
                                 //     SetLabel(ref Label_ISelect, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
                                 //     Thread.Sleep(10);
-                                Izero(iacmean*0.9);
+                                Izero(iacmean*0.9, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
                             }
 
                             double[] fztArray = new double[nData - 0];
-                            double[] fzVdata = new double[nData - 0];
+                            double[] fzVdata = new double[nData - 0];  
                             double[] fzIdata = new double[nData - 0];
                             double[] fzIntVdata = new double[nData - 0];
                             double[] fzIntIdata = new double[nData - 0];
@@ -5190,7 +5199,7 @@ namespace EISProjects
                                                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:800005 Command:idcselect");
                                                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " change idcselect from " + PreviuseDCISelect.ToString() + " to " + AllSessions[EIS.RunningSession].EISDCCurrentRangeModea.ToString());
                                                 SetLabel(ref Label_ISelect, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
-                                                Thread.Sleep(100);
+                                                Thread.Sleep(50);
 
                                                 SetEISFilter(AllSessions[EIS.RunningSession].EISfilterMode, tPeriod, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea, AllSessions[EIS.RunningSession].EISVoltageRangeMode);
                                                 isIAmpApplyed = true;
@@ -5263,6 +5272,7 @@ namespace EISProjects
                                         DEISCurrentImlp = Newmlp;
                                         if (Newmlp == 0)
                                         {
+                                            /*
                                             Port.DiscardOutBuffer(); //Clear Buffer
                                             Port.DiscardInBuffer(); //Clear Buffer
                                             Port.Write("aczero" + WriteReadToChar);
@@ -5270,6 +5280,8 @@ namespace EISProjects
                                             ans = Port.ReadTo(ReadToChar);
                                             if (ans != "OK") throw new Exception("The command OK is not received.\r error number:800008 Command:aczero");
                                             DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " I_AC_zero ");
+                                            */
+                                            //Izero()
                                             SetLabel(ref Label_ISelect, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
                                         }
                                     }
@@ -5546,7 +5558,7 @@ namespace EISProjects
             }
 
         }//
-        private void Izero(double i)
+        private void _Izero(double i)
         {
 
             int iIsv=iIs;
@@ -5588,8 +5600,105 @@ namespace EISProjects
             Thread.Sleep(100);
             ans = Port.ReadTo(ReadToChar);
             SetLabel(ref label_iacdac, iacdac);
+            label_iacdac.Text += " " + i + "|" + i_zero;
             //Port.DiscardOutBuffer();
              Port.DiscardInBuffer();
+            Port.Write("iIs " + iIs.ToString() + WriteReadToChar);
+            Thread.Sleep(100);
+            ans = Port.ReadTo(ReadToChar);
+            SetLabel(ref label_iIs, iIs);
+            Thread.Sleep(10);
+        }
+        
+        void iaczero_to_iaczerodac(double i_zero,double domain5, ref int iis,ref int izdac)
+        {
+            double domain;
+
+            if (Math.Abs(i_zero) < (domain5 / 10000000))
+            {
+                iis = 3;
+                domain = 4096.0 * 1000000;
+            }
+            else if (Math.Abs(i_zero) < (domain5 / 100000))
+            {
+                iis = 2;
+                domain = 4096.0 * 10000;
+            }
+            else if (Math.Abs(i_zero) < (domain5 / 1000))
+            {
+                iis = 1;
+                domain = 4096.0 * 100;
+            }
+            else
+            {
+                iis = 0;
+                domain = 4096.0 * 2.2;
+            }
+
+            izdac = (int)(i_zero * domain  + 2047);
+
+        }
+        void iaczerodac_to_iaczero(ref double i_zero, double domain5, int iis, int izdac,double V_O4)
+        {
+            double R;
+            double v_i_null = 0;
+            v_i_null = (izdac - 2048) / 2048.0 * 5.0;
+            if (iis == 3)
+            {
+               
+                R = 10000000;
+            }
+            else if (iis == 2)
+            {
+        
+                R = 100000;
+            }
+            else if (iis == 1)
+            {
+                
+                R =  1000;
+            }
+            else
+            {
+                
+                R =  22;
+            }
+
+            i_zero = ((v_i_null+V_O4) / R );
+
+        }
+        private void Izero(double i,int Irange)
+        {
+            double V_O4 = 0;
+            if (Irange == 0)
+                V_O4 = i * 1;
+            if (Irange == 1)
+                V_O4 = i * 10;
+
+            int iIsv = iIs;
+            double domain=4096, domain5,current_iz=0;
+            domain5 = 4.5 + iIschanged / 3.0;
+            string ans;
+
+            iaczerodac_to_iaczero(ref current_iz, domain5, iIs, current_iacdac, V_O4);
+            iaczero_to_iaczerodac(current_iz + i, domain5, ref iIs, ref iacdac);
+
+            if (iacdac > 4095) iacdac = 4095;
+            if (iacdac < 0) iacdac = 0;
+
+            if (iIs == iIsv) iIschanged = 0;
+            else if (iIs > iIsv) iIschanged = 1;
+            else if (iIs < iIsv) iIschanged = -1;
+            Port.DiscardOutBuffer();
+            Port.DiscardInBuffer();
+            Port.Write("iacdac " + iacdac.ToString() + WriteReadToChar);
+            Thread.Sleep(100);
+            ans = Port.ReadTo(ReadToChar);
+            SetLabel(ref label_iacdac, iacdac);
+            current_iacdac = iacdac;
+            label_iacdac.Text += " " + i + "|" + i_zero;
+            //Port.DiscardOutBuffer();
+            Port.DiscardInBuffer();
             Port.Write("iIs " + iIs.ToString() + WriteReadToChar);
             Thread.Sleep(100);
             ans = Port.ReadTo(ReadToChar);
@@ -9205,10 +9314,12 @@ namespace EISProjects
                     Port.Write("iacdac 2047" + WriteReadToChar);
                     Thread.Sleep(10);
                     ans = Port.ReadTo(ReadToChar);
+                    current_iacdac = 2047;
                     SetLabel(ref label_iacdac, 2047);
                     Port.DiscardOutBuffer();
                     Port.DiscardInBuffer();
                     Port.Write("iIs 3" + WriteReadToChar);
+                    iIs = 3;
                     Thread.Sleep(10);
                     ans = Port.ReadTo(ReadToChar);
                     SetLabel(ref label_iIs, 3);
@@ -9769,6 +9880,7 @@ namespace EISProjects
                 Port.Write("iacdac 2047" + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
+                current_iacdac = 2047;
                 SetLabel(ref label_iacdac, 2047);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
@@ -9776,6 +9888,7 @@ namespace EISProjects
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
                 SetLabel(ref label_iIs, 3);
+                iIs = 3;
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
                 Port.Write("vfilter 2" + WriteReadToChar);
@@ -11038,12 +11151,14 @@ namespace EISProjects
                 Port.Write("iacdac 2047" + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
+                current_iacdac = 2047;
                 SetLabel(ref label_iacdac, 2047);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
                 Port.Write("iIs 3" + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
+                iIs = 3;
                 SetLabel(ref label_iIs, 3);
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
