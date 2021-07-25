@@ -35,7 +35,7 @@ namespace EISProjects
         bool isDisconnectedFromSessionSource = false;
         Sessions SelfStandingSession;
         SessionOutputData SelfStandingSessionData;
-        public int DensityOfPointsPlots = 5; //1 means all
+        public int DensityOfPointsPlots = 3; //1 means all
         ////////////////////////////////////////
         public FormDiagram()
         {
@@ -514,21 +514,26 @@ public class SampleTicks : FrameChart {
                         AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
                         chart.Series[0].ChartType = SeriesChartType.Point;
                         chart.Series[0].MarkerStyle = MarkerStyle.Circle;
+                        AddPoint(chart, 0, Vlt[0], Amp[0] * Yfactor);
+                        nPlottedData = 1;
                     }//baname jadid ro rikhtan u001
-                  /* if (isSelfStanding)
-                     {
-                         chart.ChartAreas[0].AxisX.IsMarginVisible = false;
-                         chart.ChartAreas[0].AxisX.Maximum = MaxX;
-                         chart.ChartAreas[0].AxisX.Minimum = MinX;
-                         chart.ChartAreas[0].AxisY.Maximum = MaxY * Yfactor;
-                         chart.ChartAreas[0].AxisY.Minimum = MinY * Yfactor;
-                     }*/
+                     /* if (isSelfStanding)
+                        {
+                            chart.ChartAreas[0].AxisX.IsMarginVisible = false;
+                            chart.ChartAreas[0].AxisX.Maximum = MaxX;
+                            chart.ChartAreas[0].AxisX.Minimum = MinX;
+                            chart.ChartAreas[0].AxisY.Maximum = MaxY * Yfactor;
+                            chart.ChartAreas[0].AxisY.Minimum = MinY * Yfactor;
+                        }*/
+           
+                    if (nPlottedData + DensityOfPointsPlots > npoints - 1) return;
 
-                    for (int i = nPlottedData; i < npoints; i=i+DensityOfPointsPlots)
+                    int i;
+                    for (i = nPlottedData; i < npoints; i+=DensityOfPointsPlots)
                     {
                         AddPoint(chart, 0, Vlt[i], Amp[i] * Yfactor);
                     }
-                    nPlottedData = npoints;
+                    nPlottedData = i;
                 }
                 else
                 {
