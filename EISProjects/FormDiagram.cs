@@ -35,7 +35,7 @@ namespace EISProjects
         bool isDisconnectedFromSessionSource = false;
         Sessions SelfStandingSession;
         SessionOutputData SelfStandingSessionData;
-
+        public int DensityOfPointsPlots = 5; //1 means all
         ////////////////////////////////////////
         public FormDiagram()
         {
@@ -524,7 +524,7 @@ public class SampleTicks : FrameChart {
                          chart.ChartAreas[0].AxisY.Minimum = MinY * Yfactor;
                      }*/
 
-                    for (int i = nPlottedData; i < npoints; i++)
+                    for (int i = nPlottedData; i < npoints; i=i+DensityOfPointsPlots)
                     {
                         AddPoint(chart, 0, Vlt[i], Amp[i] * Yfactor);
                     }
