@@ -3988,7 +3988,17 @@ namespace EISProjects
         {
             //if (AllSessions[EIS.RunningSession].isOCP && AllSessions[EIS.RunningSession].EISOCMode == 1) volt = volt + AllSessions[EIS.RunningSession].V_OCT;
             if (Port.BytesToRead == 0) return;
-            IVTimer_TickProc();
+
+            int nReadBuffer;
+            if ((AllSessions[EIS.RunningSession].Mode == 2 && (!AllSessions[EIS.RunningSession].Chrono_isfast)) || AllSessions[EIS.RunningSession].Mode == 3)
+                nReadBuffer = (int)(Port.BytesToRead / 8);
+            else
+                nReadBuffer = (int)(Port.BytesToRead / 4);
+
+            for (int i = 0; i < nReadBuffer; i++)
+            {
+                IVTimer_TickProc();
+            }
         }
 
         private void IVTimer_TickProc()
@@ -7934,7 +7944,7 @@ namespace EISProjects
 
         private void TBIVVoltageStep_TextChanged(object sender, EventArgs e)
         {
-            int Maxim = 9999;
+            int Maxim = 9998;
             if (AllSessions[Selected].Mode == 2 && AllSessions[Selected].Chrono_isfast) Maxim = 512;
             IntDigitTextChange(ref AllSessions[Selected].IVVoltageNStepp, TBIVVoltageStep, 2, Maxim);
             TBIVVelosity_Validated(null, null);
@@ -11778,14 +11788,14 @@ namespace EISProjects
                 min = 0;
                 max = AllSessions[Selected].ChronoEndTime;
             }
-            if (Math.Abs(dV) < Math.Abs((max - min) / (9999-1))) dV = (max - min) / (9999 - 1);
+            if (Math.Abs(dV) < Math.Abs((max - min) / (9998-1))) dV = (max - min) / (9998 - 1);
             this.TBIVVoltagedV.Validated -= new System.EventHandler(this.TBIVVoltagedV_Validated);
             TBIVVoltagedV.Text = dV.ToString("0.00000000");
             this.TBIVVoltagedV.Validated += new System.EventHandler(this.TBIVVoltagedV_Validated);
             n = (int)Math.Round((max - min) / dV);
             n++;
             if (n < 2) n = 2;
-            if (n > 9999) n = 9999;
+            if (n > 9998) n = 9998;
             TBIVVoltageStep.Text = n.ToString();
             TBIVVoltageStep_TextChanged(null,null);
             

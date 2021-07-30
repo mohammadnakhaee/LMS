@@ -35,7 +35,7 @@ namespace EISProjects
         bool isDisconnectedFromSessionSource = false;
         Sessions SelfStandingSession;
         SessionOutputData SelfStandingSessionData;
-        public int DensityOfPointsPlots = 3; //1 means all
+        public int DensityOfPointsPlots = 1; //1 means all
         ////////////////////////////////////////
         public FormDiagram()
         {

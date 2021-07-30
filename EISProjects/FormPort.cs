@@ -353,6 +353,8 @@ namespace EISProjects
                     if (CheckPort.IsOpen) CheckPort.Close();
                     if (isFounded)
                     {
+                        Form1.Port.ReadBufferSize = 2^16; //2^12
+                        //Form1.Port.WriteBufferSize = 2147483647;
                         Form1.Port.WriteTimeout = Form1.FactoryDefault.PortTimeout; Form1.Port.ReadTimeout = Form1.FactoryDefault.PortTimeout;
                         if (Form1.Port.IsOpen) Form1.Port.Close();
                         Form1.Port.PortName = FoundedPort;
