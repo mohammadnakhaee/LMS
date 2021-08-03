@@ -1192,7 +1192,7 @@ namespace EISProjects
             // 
             // PBAllSessions
             // 
-            this.PBAllSessions.Location = new System.Drawing.Point(130, 2);
+            this.PBAllSessions.Location = new System.Drawing.Point(140, 3);
             this.PBAllSessions.Name = "PBAllSessions";
             this.PBAllSessions.Size = new System.Drawing.Size(267, 18);
             this.PBAllSessions.Step = 1;

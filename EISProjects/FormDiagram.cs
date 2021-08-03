@@ -373,11 +373,21 @@ public class SampleTicks : FrameChart {
                 AddSeries(chart, "I(V)", XAxisName, YAxisName, Color.Blue);
                 AddSeries(chart, "X Axis", "", "", Color.Red); AddPoint(chart, 1, MinX * 10, 0); AddPoint(chart, 1, MaxX * 10, 0);
                 AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
-                for (int i = 0; i < npoints; i++)
+
+                /*for (int i = 0; i < npoints; i++)
                 {
                     //AddPoint(chart, 0, SortVlt[i], SortAmp[i] * Yfactor);
                     AddPoint(chart, 0, Vlt[i], Amp[i] * Yfactor);
+                }*/
+                nPlottedData = 0;
+                if (nPlottedData + DensityOfPointsPlots > npoints - 1) return;
+
+                int i;
+                for (i = nPlottedData; i < npoints; i += DensityOfPointsPlots)
+                {
+                    AddPoint(chart, 0, Vlt[i], Amp[i] * Yfactor);
                 }
+                nPlottedData = i;
             }
             else
             {
@@ -454,7 +464,7 @@ public class SampleTicks : FrameChart {
                     else
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
-                    AddSeries(chart, "I(V) " + (ic + 2).ToString(), XAxisName, YAxisName, GetCVColor(ic + 1));
+                    AddSeries(chart, "I(V) " + (ic + 1).ToString(), XAxisName, YAxisName, GetCVColor(ic + 1));
                     for (int i = 0; i < 2 * n1; i++)
                     {
                         //AddPoint(chart, chart.Series.Count - 1, VC[i], IC[i] * Yfactor);
@@ -513,7 +523,7 @@ public class SampleTicks : FrameChart {
                         AddSeries(chart, "X Axis", "", "", Color.Red); AddPoint(chart, 1, MinX * 10, 0); AddPoint(chart, 1, MaxX * 10, 0);
                         AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
                         chart.Series[0].ChartType = SeriesChartType.Point;
-                        chart.Series[0].MarkerStyle = MarkerStyle.Circle;
+                        chart.Series[0].MarkerStyle = MarkerStyle.None;
                         AddPoint(chart, 0, Vlt[0], Amp[0] * Yfactor);
                         nPlottedData = 1;
                     }//baname jadid ro rikhtan u001
@@ -547,7 +557,7 @@ public class SampleTicks : FrameChart {
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                     AddSeries(chart, "I(V) 1", XAxisName, YAxisName, GetCVColor(1));
                     chart.Series[0].ChartType = SeriesChartType.Point;
-                    chart.Series[0].MarkerStyle = MarkerStyle.Circle;
+                    chart.Series[0].MarkerStyle = MarkerStyle.None;
 
                     for (int i = 0; i < npoints0; i++)
                     {
@@ -578,9 +588,9 @@ public class SampleTicks : FrameChart {
                             else
                                 chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
-                            AddSeries(chart, "I(V) " + (ic + 2).ToString(), XAxisName, YAxisName, GetCVColor(ic + 1));
+                            AddSeries(chart, "I(V) " + (ic + 1).ToString(), XAxisName, YAxisName, GetCVColor(ic + 1));
                             chart.Series[chart.Series.Count - 1].ChartType = SeriesChartType.Point;
-                            chart.Series[chart.Series.Count - 1].MarkerStyle = MarkerStyle.Circle;
+                            chart.Series[chart.Series.Count - 1].MarkerStyle = MarkerStyle.None;
                             for (int i = 0; i < 2 * n1; i++)
                             {
                                 AddPoint(chart, chart.Series.Count - 1, Vlt[CVnFirst + (2 * ic - 1) * n1 + i], Amp[CVnFirst + (2 * ic - 1) * n1 + i] * Yfactor);
@@ -1360,7 +1370,7 @@ public class SampleTicks : FrameChart {
                     AddSeries(chart, "", "", "", Color.Red); AddPoint(chart, 1, MinX * 10, 0); AddPoint(chart, 1, MaxX * 10, 0);
                     AddSeries(chart, "", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
                     chart.Series[0].ChartType = SeriesChartType.Point;
-                    chart.Series[0].MarkerStyle = MarkerStyle.Circle;
+                    chart.Series[0].MarkerStyle = MarkerStyle.None;
                     /* if (isSelfStanding)
                      {
                          chart.ChartAreas[0].AxisX.IsMarginVisible = false;
@@ -1384,7 +1394,7 @@ public class SampleTicks : FrameChart {
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                     AddSeries(chart, "I(V) 1", XAxisName, YAxisName, Color.Blue);
                     chart.Series[0].ChartType = SeriesChartType.Point;
-                    chart.Series[0].MarkerStyle = MarkerStyle.Circle;
+                    chart.Series[0].MarkerStyle = MarkerStyle.None;
 
                     for (int i = 0; i < CVnFirst; i++)
                     {
@@ -1405,9 +1415,9 @@ public class SampleTicks : FrameChart {
                                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
                                 else
                                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
-                                AddSeries(chart, "I(V) " + (it + 2).ToString(), XAxisName, YAxisName, GetCVColor(ic));
+                                AddSeries(chart, "I(V) " + (it + 1).ToString(), XAxisName, YAxisName, GetCVColor(ic));
                                 chart.Series[it].ChartType = SeriesChartType.Point;
-                                chart.Series[it].MarkerStyle = MarkerStyle.Circle;
+                                chart.Series[it].MarkerStyle = MarkerStyle.None;
                                 /* if (isSelfStanding)
                                  {
                                      chart.ChartAreas[0].AxisX.IsMarginVisible = false;

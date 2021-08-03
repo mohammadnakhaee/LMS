@@ -348,7 +348,7 @@ namespace EISProjects
         private void dt_ValueChanged(object sender, EventArgs e)
         {
             int maxper = (int)(9998 * (double)dt1.Value / 1000.0);
-            if ((double)dt1.Value < 1000) maxper = (int)(maxper / 19);
+            //if ((double)dt1.Value < 1000) maxper = (int)(maxper / 19);
             //if (maxper)
             maxperiod.Text = "Maximum period of each part: " + maxper.ToString() + "(sec)";
             t1.Maximum = maxper;
