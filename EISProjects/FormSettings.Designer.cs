@@ -181,22 +181,22 @@
             this.SetDCV_Select1 = new System.Windows.Forms.TextBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.GetACI_Select3 = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.GetACI_Select1 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.GetACI_Select0 = new System.Windows.Forms.TextBox();
-            this.GetACI_Select2 = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
             this.SetACI_Select3 = new System.Windows.Forms.TextBox();
+            this.GetACI_Select3 = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
             this.SetACI_Select0 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
+            this.GetACI_Select1 = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.SetACI_Select2 = new System.Windows.Forms.TextBox();
+            this.GetACI_Select0 = new System.Windows.Forms.TextBox();
             this.SetACI_Select1 = new System.Windows.Forms.TextBox();
+            this.GetACI_Select2 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.label70 = new System.Windows.Forms.Label();
@@ -251,6 +251,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.isCharge = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -1354,6 +1355,7 @@
             // 
             // groupBox30
             // 
+            this.groupBox30.Controls.Add(this.isCharge);
             this.groupBox30.Controls.Add(this.isCV);
             this.groupBox30.Controls.Add(this.isPulse);
             this.groupBox30.Controls.Add(this.isIV);
@@ -1851,74 +1853,6 @@
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Zero set";
             // 
-            // GetACI_Select3
-            // 
-            this.GetACI_Select3.Location = new System.Drawing.Point(112, 97);
-            this.GetACI_Select3.Name = "GetACI_Select3";
-            this.GetACI_Select3.Size = new System.Drawing.Size(79, 20);
-            this.GetACI_Select3.TabIndex = 11;
-            this.GetACI_Select3.TextChanged += new System.EventHandler(this.GetACI_Select3_TextChanged);
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(57, 100);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(49, 13);
-            this.label49.TabIndex = 10;
-            this.label49.Text = "Select 3:";
-            // 
-            // GetACI_Select1
-            // 
-            this.GetACI_Select1.Location = new System.Drawing.Point(112, 45);
-            this.GetACI_Select1.Name = "GetACI_Select1";
-            this.GetACI_Select1.Size = new System.Drawing.Size(79, 20);
-            this.GetACI_Select1.TabIndex = 7;
-            this.GetACI_Select1.TextChanged += new System.EventHandler(this.GetACI_Select1_TextChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(57, 48);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Select 1:";
-            // 
-            // GetACI_Select0
-            // 
-            this.GetACI_Select0.Location = new System.Drawing.Point(112, 19);
-            this.GetACI_Select0.Name = "GetACI_Select0";
-            this.GetACI_Select0.Size = new System.Drawing.Size(79, 20);
-            this.GetACI_Select0.TabIndex = 5;
-            this.GetACI_Select0.TextChanged += new System.EventHandler(this.GetACI_Select0_TextChanged);
-            // 
-            // GetACI_Select2
-            // 
-            this.GetACI_Select2.Location = new System.Drawing.Point(112, 71);
-            this.GetACI_Select2.Name = "GetACI_Select2";
-            this.GetACI_Select2.Size = new System.Drawing.Size(79, 20);
-            this.GetACI_Select2.TabIndex = 9;
-            this.GetACI_Select2.TextChanged += new System.EventHandler(this.GetACI_Select2_TextChanged);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(57, 22);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(49, 13);
-            this.label26.TabIndex = 4;
-            this.label26.Text = "Select 0:";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(57, 74);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(49, 13);
-            this.label27.TabIndex = 8;
-            this.label27.Text = "Select 2:";
-            // 
             // SetACI_Select3
             // 
             this.SetACI_Select3.Location = new System.Drawing.Point(112, 201);
@@ -1926,6 +1860,14 @@
             this.SetACI_Select3.Size = new System.Drawing.Size(79, 20);
             this.SetACI_Select3.TabIndex = 11;
             this.SetACI_Select3.TextChanged += new System.EventHandler(this.SetACI_Select3_TextChanged);
+            // 
+            // GetACI_Select3
+            // 
+            this.GetACI_Select3.Location = new System.Drawing.Point(112, 97);
+            this.GetACI_Select3.Name = "GetACI_Select3";
+            this.GetACI_Select3.Size = new System.Drawing.Size(79, 20);
+            this.GetACI_Select3.TabIndex = 11;
+            this.GetACI_Select3.TextChanged += new System.EventHandler(this.GetACI_Select3_TextChanged);
             // 
             // label46
             // 
@@ -1935,6 +1877,15 @@
             this.label46.Size = new System.Drawing.Size(49, 13);
             this.label46.TabIndex = 10;
             this.label46.Text = "Select 7:";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(57, 100);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(49, 13);
+            this.label49.TabIndex = 10;
+            this.label49.Text = "Select 3:";
             // 
             // SetACI_Select0
             // 
@@ -1953,6 +1904,14 @@
             this.label28.TabIndex = 6;
             this.label28.Text = "Select 5:";
             // 
+            // GetACI_Select1
+            // 
+            this.GetACI_Select1.Location = new System.Drawing.Point(112, 45);
+            this.GetACI_Select1.Name = "GetACI_Select1";
+            this.GetACI_Select1.Size = new System.Drawing.Size(79, 20);
+            this.GetACI_Select1.TabIndex = 7;
+            this.GetACI_Select1.TextChanged += new System.EventHandler(this.GetACI_Select1_TextChanged);
+            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -1962,6 +1921,15 @@
             this.label30.TabIndex = 4;
             this.label30.Text = "Select 4:";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(57, 48);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Select 1:";
+            // 
             // SetACI_Select2
             // 
             this.SetACI_Select2.Location = new System.Drawing.Point(112, 175);
@@ -1969,6 +1937,14 @@
             this.SetACI_Select2.Size = new System.Drawing.Size(79, 20);
             this.SetACI_Select2.TabIndex = 9;
             this.SetACI_Select2.TextChanged += new System.EventHandler(this.SetACI_Select2_TextChanged);
+            // 
+            // GetACI_Select0
+            // 
+            this.GetACI_Select0.Location = new System.Drawing.Point(112, 19);
+            this.GetACI_Select0.Name = "GetACI_Select0";
+            this.GetACI_Select0.Size = new System.Drawing.Size(79, 20);
+            this.GetACI_Select0.TabIndex = 5;
+            this.GetACI_Select0.TextChanged += new System.EventHandler(this.GetACI_Select0_TextChanged);
             // 
             // SetACI_Select1
             // 
@@ -1978,6 +1954,14 @@
             this.SetACI_Select1.TabIndex = 7;
             this.SetACI_Select1.TextChanged += new System.EventHandler(this.SetACI_Select1_TextChanged);
             // 
+            // GetACI_Select2
+            // 
+            this.GetACI_Select2.Location = new System.Drawing.Point(112, 71);
+            this.GetACI_Select2.Name = "GetACI_Select2";
+            this.GetACI_Select2.Size = new System.Drawing.Size(79, 20);
+            this.GetACI_Select2.TabIndex = 9;
+            this.GetACI_Select2.TextChanged += new System.EventHandler(this.GetACI_Select2_TextChanged);
+            // 
             // label31
             // 
             this.label31.AutoSize = true;
@@ -1986,6 +1970,24 @@
             this.label31.Size = new System.Drawing.Size(49, 13);
             this.label31.TabIndex = 8;
             this.label31.Text = "Select 6:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(57, 22);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(49, 13);
+            this.label26.TabIndex = 4;
+            this.label26.Text = "Select 0:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(57, 74);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(49, 13);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "Select 2:";
             // 
             // groupBox12
             // 
@@ -2537,6 +2539,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Set Data";
             // 
+            // isCharge
+            // 
+            this.isCharge.AutoSize = true;
+            this.isCharge.Location = new System.Drawing.Point(204, 67);
+            this.isCharge.Name = "isCharge";
+            this.isCharge.Size = new System.Drawing.Size(155, 24);
+            this.isCharge.TabIndex = 6;
+            this.isCharge.Text = "Charge-Decharge";
+            this.isCharge.UseVisualStyleBackColor = true;
+            this.isCharge.CheckedChanged += new System.EventHandler(this.isCharge_CheckedChanged);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2846,5 +2859,6 @@
         private System.Windows.Forms.TextBox FilterC_V1;
         private System.Windows.Forms.CheckBox isPulse;
         private System.Windows.Forms.CheckBox isCV;
+        private System.Windows.Forms.CheckBox isCharge;
     }
 }

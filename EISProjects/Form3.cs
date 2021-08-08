@@ -214,8 +214,8 @@ namespace EISProjects
             if (CBVoltammetryMode.SelectedIndex != 2) AddPoint(chart1, 0, TotalPeriod + (n - 1) * TotalPeriod, PulseLevel + n * LevelStep);
 
             double Thereshold = 0;
-            if (Form1.AllSessions[Form1.Selected].PulseVoltageRangeMode == 0) Thereshold = 5;
-            if (Form1.AllSessions[Form1.Selected].PulseVoltageRangeMode == 1) Thereshold = 1;
+            if (Form1.AllSessions[Form1.Selected].PulseVoltagerangeMode == 0) Thereshold = 5;
+            if (Form1.AllSessions[Form1.Selected].PulseVoltagerangeMode == 1) Thereshold = 1;
 
 
             double xmin = -t2;

@@ -100,6 +100,36 @@ namespace EISProjects
             this.PBAllSessions = new System.Windows.Forms.ProgressBar();
             this.Panel101 = new System.Windows.Forms.Panel();
             this.PanelProperties = new System.Windows.Forms.Panel();
+            this.GBCharge = new System.Windows.Forms.GroupBox();
+            this.label99 = new System.Windows.Forms.Label();
+            this.CBCharge_dt = new System.Windows.Forms.NumericUpDown();
+            this.label98 = new System.Windows.Forms.Label();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.label93 = new System.Windows.Forms.Label();
+            this.label94 = new System.Windows.Forms.Label();
+            this.CBCharge_CurrentRangeMode = new System.Windows.Forms.ComboBox();
+            this.CBCharge_Imlp = new System.Windows.Forms.ComboBox();
+            this.groupBox20 = new System.Windows.Forms.GroupBox();
+            this.CBCharge_VFilter = new System.Windows.Forms.ComboBox();
+            this.label95 = new System.Windows.Forms.Label();
+            this.label96 = new System.Windows.Forms.Label();
+            this.CBCharge_VoltageRangeMode = new System.Windows.Forms.ComboBox();
+            this.CBCharge_Vmlp = new System.Windows.Forms.ComboBox();
+            this.label97 = new System.Windows.Forms.Label();
+            this.CBCharge_NumberOfCycles = new System.Windows.Forms.NumericUpDown();
+            this.label92 = new System.Windows.Forms.Label();
+            this.CBCharge_VoltageMin = new System.Windows.Forms.NumericUpDown();
+            this.label88 = new System.Windows.Forms.Label();
+            this.label89 = new System.Windows.Forms.Label();
+            this.CBCharge_VoltageMax = new System.Windows.Forms.NumericUpDown();
+            this.label90 = new System.Windows.Forms.Label();
+            this.label91 = new System.Windows.Forms.Label();
+            this.CBCharge_CurrentDischarge = new System.Windows.Forms.NumericUpDown();
+            this.label84 = new System.Windows.Forms.Label();
+            this.label87 = new System.Windows.Forms.Label();
+            this.CBCharge_CurrentCharge = new System.Windows.Forms.NumericUpDown();
+            this.label85 = new System.Windows.Forms.Label();
+            this.label86 = new System.Windows.Forms.Label();
             this.GBPostprocessing = new System.Windows.Forms.GroupBox();
             this.ChBPostProcProbOff = new System.Windows.Forms.CheckBox();
             this.label65 = new System.Windows.Forms.Label();
@@ -325,6 +355,9 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label100 = new System.Windows.Forms.Label();
+            this.CBCharge_TotalTime = new System.Windows.Forms.NumericUpDown();
+            this.label101 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -337,6 +370,15 @@ namespace EISProjects
             this.StatusPanel.SuspendLayout();
             this.Panel101.SuspendLayout();
             this.PanelProperties.SuspendLayout();
+            this.GBCharge.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_dt)).BeginInit();
+            this.groupBox19.SuspendLayout();
+            this.groupBox20.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_NumberOfCycles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_VoltageMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_VoltageMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_CurrentDischarge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_CurrentCharge)).BeginInit();
             this.GBPostprocessing.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.GBExport.SuspendLayout();
@@ -369,6 +411,7 @@ namespace EISProjects
             this.groupBox14.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_TotalTime)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -385,7 +428,7 @@ namespace EISProjects
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1225, 100);
+            this.tabControl1.Size = new System.Drawing.Size(1732, 100);
             this.tabControl1.TabIndex = 0;
             // 
             // TabFile
@@ -403,7 +446,7 @@ namespace EISProjects
             this.TabFile.Location = new System.Drawing.Point(4, 28);
             this.TabFile.Name = "TabFile";
             this.TabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.TabFile.Size = new System.Drawing.Size(1217, 68);
+            this.TabFile.Size = new System.Drawing.Size(1724, 68);
             this.TabFile.TabIndex = 0;
             this.TabFile.Text = "File";
             // 
@@ -531,7 +574,7 @@ namespace EISProjects
             this.TabEdit.Name = "TabEdit";
             this.TabEdit.Padding = new System.Windows.Forms.Padding(3);
             this.TabEdit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.TabEdit.Size = new System.Drawing.Size(1217, 68);
+            this.TabEdit.Size = new System.Drawing.Size(1724, 68);
             this.TabEdit.TabIndex = 1;
             this.TabEdit.Text = "Edit";
             // 
@@ -576,7 +619,7 @@ namespace EISProjects
             this.TabWindow.Location = new System.Drawing.Point(4, 28);
             this.TabWindow.Name = "TabWindow";
             this.TabWindow.Padding = new System.Windows.Forms.Padding(3);
-            this.TabWindow.Size = new System.Drawing.Size(1217, 68);
+            this.TabWindow.Size = new System.Drawing.Size(1724, 68);
             this.TabWindow.TabIndex = 2;
             this.TabWindow.Text = "Window";
             this.TabWindow.UseVisualStyleBackColor = true;
@@ -715,7 +758,7 @@ namespace EISProjects
             this.TabTools.Location = new System.Drawing.Point(4, 28);
             this.TabTools.Name = "TabTools";
             this.TabTools.Padding = new System.Windows.Forms.Padding(3);
-            this.TabTools.Size = new System.Drawing.Size(1217, 68);
+            this.TabTools.Size = new System.Drawing.Size(1724, 68);
             this.TabTools.TabIndex = 4;
             this.TabTools.Text = "Measurement";
             this.TabTools.UseVisualStyleBackColor = true;
@@ -928,7 +971,7 @@ namespace EISProjects
             this.TabOffset.Location = new System.Drawing.Point(4, 28);
             this.TabOffset.Name = "TabOffset";
             this.TabOffset.Padding = new System.Windows.Forms.Padding(3);
-            this.TabOffset.Size = new System.Drawing.Size(1217, 68);
+            this.TabOffset.Size = new System.Drawing.Size(1724, 68);
             this.TabOffset.TabIndex = 6;
             this.TabOffset.Text = "Offset";
             this.TabOffset.UseVisualStyleBackColor = true;
@@ -1025,7 +1068,7 @@ namespace EISProjects
             this.TabHelp.Location = new System.Drawing.Point(4, 28);
             this.TabHelp.Name = "TabHelp";
             this.TabHelp.Padding = new System.Windows.Forms.Padding(3);
-            this.TabHelp.Size = new System.Drawing.Size(1217, 68);
+            this.TabHelp.Size = new System.Drawing.Size(1724, 68);
             this.TabHelp.TabIndex = 3;
             this.TabHelp.Text = "Help";
             this.TabHelp.UseVisualStyleBackColor = true;
@@ -1068,7 +1111,7 @@ namespace EISProjects
             this.TabLogin.Location = new System.Drawing.Point(4, 28);
             this.TabLogin.Name = "TabLogin";
             this.TabLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.TabLogin.Size = new System.Drawing.Size(1217, 68);
+            this.TabLogin.Size = new System.Drawing.Size(1724, 68);
             this.TabLogin.TabIndex = 5;
             this.TabLogin.Text = "Log in";
             this.TabLogin.UseVisualStyleBackColor = true;
@@ -1133,9 +1176,9 @@ namespace EISProjects
             this.StatusPanel.Controls.Add(this.ProbWarningLabel);
             this.StatusPanel.Controls.Add(this.PBAllSessions);
             this.StatusPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.StatusPanel.Location = new System.Drawing.Point(0, 535);
+            this.StatusPanel.Location = new System.Drawing.Point(0, 991);
             this.StatusPanel.Name = "StatusPanel";
-            this.StatusPanel.Size = new System.Drawing.Size(1225, 70);
+            this.StatusPanel.Size = new System.Drawing.Size(1732, 70);
             this.StatusPanel.TabIndex = 1;
             // 
             // label_per
@@ -1203,15 +1246,16 @@ namespace EISProjects
             this.Panel101.Controls.Add(this.PanelProperties);
             this.Panel101.Controls.Add(this.Prop);
             this.Panel101.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Panel101.Location = new System.Drawing.Point(790, 100);
+            this.Panel101.Location = new System.Drawing.Point(1297, 100);
             this.Panel101.Name = "Panel101";
-            this.Panel101.Size = new System.Drawing.Size(435, 435);
+            this.Panel101.Size = new System.Drawing.Size(435, 891);
             this.Panel101.TabIndex = 3;
             // 
             // PanelProperties
             // 
             this.PanelProperties.AutoScroll = true;
             this.PanelProperties.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PanelProperties.Controls.Add(this.GBCharge);
             this.PanelProperties.Controls.Add(this.GBPostprocessing);
             this.PanelProperties.Controls.Add(this.GBPulse);
             this.PanelProperties.Controls.Add(this.label4);
@@ -1225,10 +1269,402 @@ namespace EISProjects
             this.PanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelProperties.Location = new System.Drawing.Point(0, 22);
             this.PanelProperties.Name = "PanelProperties";
-            this.PanelProperties.Size = new System.Drawing.Size(435, 413);
+            this.PanelProperties.Size = new System.Drawing.Size(435, 869);
             this.PanelProperties.TabIndex = 1;
             this.PanelProperties.Visible = false;
             this.PanelProperties.MouseEnter += new System.EventHandler(this.PanelProperties_MouseEnter);
+            // 
+            // GBCharge
+            // 
+            this.GBCharge.Controls.Add(this.label100);
+            this.GBCharge.Controls.Add(this.CBCharge_TotalTime);
+            this.GBCharge.Controls.Add(this.label101);
+            this.GBCharge.Controls.Add(this.label99);
+            this.GBCharge.Controls.Add(this.CBCharge_dt);
+            this.GBCharge.Controls.Add(this.label98);
+            this.GBCharge.Controls.Add(this.groupBox19);
+            this.GBCharge.Controls.Add(this.groupBox20);
+            this.GBCharge.Controls.Add(this.CBCharge_NumberOfCycles);
+            this.GBCharge.Controls.Add(this.label92);
+            this.GBCharge.Controls.Add(this.CBCharge_VoltageMin);
+            this.GBCharge.Controls.Add(this.label88);
+            this.GBCharge.Controls.Add(this.label89);
+            this.GBCharge.Controls.Add(this.CBCharge_VoltageMax);
+            this.GBCharge.Controls.Add(this.label90);
+            this.GBCharge.Controls.Add(this.label91);
+            this.GBCharge.Controls.Add(this.CBCharge_CurrentDischarge);
+            this.GBCharge.Controls.Add(this.label84);
+            this.GBCharge.Controls.Add(this.label87);
+            this.GBCharge.Controls.Add(this.CBCharge_CurrentCharge);
+            this.GBCharge.Controls.Add(this.label85);
+            this.GBCharge.Controls.Add(this.label86);
+            this.GBCharge.Location = new System.Drawing.Point(8, 1891);
+            this.GBCharge.Name = "GBCharge";
+            this.GBCharge.Size = new System.Drawing.Size(399, 441);
+            this.GBCharge.TabIndex = 32;
+            this.GBCharge.TabStop = false;
+            this.GBCharge.Text = "Charge-Discharge";
+            // 
+            // label99
+            // 
+            this.label99.AutoSize = true;
+            this.label99.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label99.Location = new System.Drawing.Point(345, 201);
+            this.label99.Name = "label99";
+            this.label99.Size = new System.Drawing.Size(30, 13);
+            this.label99.TabIndex = 42;
+            this.label99.Text = "(sec)";
+            // 
+            // CBCharge_dt
+            // 
+            this.CBCharge_dt.Location = new System.Drawing.Point(258, 199);
+            this.CBCharge_dt.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.CBCharge_dt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CBCharge_dt.Name = "CBCharge_dt";
+            this.CBCharge_dt.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_dt.TabIndex = 41;
+            this.CBCharge_dt.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label98
+            // 
+            this.label98.AutoSize = true;
+            this.label98.Location = new System.Drawing.Point(237, 202);
+            this.label98.Name = "label98";
+            this.label98.Size = new System.Drawing.Size(19, 13);
+            this.label98.TabIndex = 40;
+            this.label98.Text = "dt:";
+            // 
+            // groupBox19
+            // 
+            this.groupBox19.Controls.Add(this.label93);
+            this.groupBox19.Controls.Add(this.label94);
+            this.groupBox19.Controls.Add(this.CBCharge_CurrentRangeMode);
+            this.groupBox19.Controls.Add(this.CBCharge_Imlp);
+            this.groupBox19.Location = new System.Drawing.Point(6, 351);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Size = new System.Drawing.Size(387, 76);
+            this.groupBox19.TabIndex = 39;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "Current Range:";
+            // 
+            // label93
+            // 
+            this.label93.AutoSize = true;
+            this.label93.Location = new System.Drawing.Point(44, 49);
+            this.label93.Name = "label93";
+            this.label93.Size = new System.Drawing.Size(65, 13);
+            this.label93.TabIndex = 22;
+            this.label93.Text = "Fine Range:";
+            // 
+            // label94
+            // 
+            this.label94.AutoSize = true;
+            this.label94.Location = new System.Drawing.Point(29, 19);
+            this.label94.Name = "label94";
+            this.label94.Size = new System.Drawing.Size(78, 13);
+            this.label94.TabIndex = 24;
+            this.label94.Text = "Course Range:";
+            // 
+            // CBCharge_CurrentRangeMode
+            // 
+            this.CBCharge_CurrentRangeMode.FormattingEnabled = true;
+            this.CBCharge_CurrentRangeMode.Items.AddRange(new object[] {
+            "1 ampere",
+            "100 miliampere",
+            "10 miliampere",
+            "1 miliampere",
+            "100 microampere",
+            "10 microampere",
+            "1 micrommpere",
+            "100 nanoampere"});
+            this.CBCharge_CurrentRangeMode.Location = new System.Drawing.Point(116, 16);
+            this.CBCharge_CurrentRangeMode.Name = "CBCharge_CurrentRangeMode";
+            this.CBCharge_CurrentRangeMode.Size = new System.Drawing.Size(126, 21);
+            this.CBCharge_CurrentRangeMode.TabIndex = 8;
+            this.CBCharge_CurrentRangeMode.SelectedIndexChanged += new System.EventHandler(this.CBCharge_CurrentRangeMode_SelectedIndexChanged);
+            // 
+            // CBCharge_Imlp
+            // 
+            this.CBCharge_Imlp.FormattingEnabled = true;
+            this.CBCharge_Imlp.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "4",
+            "8",
+            "16",
+            "32",
+            "64"});
+            this.CBCharge_Imlp.Location = new System.Drawing.Point(116, 46);
+            this.CBCharge_Imlp.Name = "CBCharge_Imlp";
+            this.CBCharge_Imlp.Size = new System.Drawing.Size(126, 21);
+            this.CBCharge_Imlp.TabIndex = 23;
+            this.CBCharge_Imlp.SelectedIndexChanged += new System.EventHandler(this.CBCharge_Imlp_SelectedIndexChanged);
+            // 
+            // groupBox20
+            // 
+            this.groupBox20.Controls.Add(this.CBCharge_VFilter);
+            this.groupBox20.Controls.Add(this.label95);
+            this.groupBox20.Controls.Add(this.label96);
+            this.groupBox20.Controls.Add(this.CBCharge_VoltageRangeMode);
+            this.groupBox20.Controls.Add(this.CBCharge_Vmlp);
+            this.groupBox20.Controls.Add(this.label97);
+            this.groupBox20.Location = new System.Drawing.Point(6, 260);
+            this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Size = new System.Drawing.Size(387, 82);
+            this.groupBox20.TabIndex = 38;
+            this.groupBox20.TabStop = false;
+            this.groupBox20.Text = "Voltage Range:";
+            // 
+            // CBCharge_VFilter
+            // 
+            this.CBCharge_VFilter.FormattingEnabled = true;
+            this.CBCharge_VFilter.Items.AddRange(new object[] {
+            "High speed",
+            "Medim",
+            "Low speed",
+            "Auto"});
+            this.CBCharge_VFilter.Location = new System.Drawing.Point(289, 20);
+            this.CBCharge_VFilter.Name = "CBCharge_VFilter";
+            this.CBCharge_VFilter.Size = new System.Drawing.Size(88, 21);
+            this.CBCharge_VFilter.TabIndex = 25;
+            this.CBCharge_VFilter.SelectedIndexChanged += new System.EventHandler(this.CBCharge_VFilter_SelectedIndexChanged);
+            // 
+            // label95
+            // 
+            this.label95.AutoSize = true;
+            this.label95.Location = new System.Drawing.Point(256, 23);
+            this.label95.Name = "label95";
+            this.label95.Size = new System.Drawing.Size(32, 13);
+            this.label95.TabIndex = 24;
+            this.label95.Text = "Filter:";
+            // 
+            // label96
+            // 
+            this.label96.AutoSize = true;
+            this.label96.Location = new System.Drawing.Point(44, 52);
+            this.label96.Name = "label96";
+            this.label96.Size = new System.Drawing.Size(65, 13);
+            this.label96.TabIndex = 20;
+            this.label96.Text = "Fine Range:";
+            // 
+            // CBCharge_VoltageRangeMode
+            // 
+            this.CBCharge_VoltageRangeMode.FormattingEnabled = true;
+            this.CBCharge_VoltageRangeMode.Items.AddRange(new object[] {
+            "[-5 (V) .. 5 (V)]",
+            "[-1 (V) .. 1 (V)]"});
+            this.CBCharge_VoltageRangeMode.Location = new System.Drawing.Point(116, 20);
+            this.CBCharge_VoltageRangeMode.Name = "CBCharge_VoltageRangeMode";
+            this.CBCharge_VoltageRangeMode.Size = new System.Drawing.Size(126, 21);
+            this.CBCharge_VoltageRangeMode.TabIndex = 17;
+            this.CBCharge_VoltageRangeMode.SelectedIndexChanged += new System.EventHandler(this.CBCharge_VoltageRangeMode_SelectedIndexChanged);
+            // 
+            // CBCharge_Vmlp
+            // 
+            this.CBCharge_Vmlp.FormattingEnabled = true;
+            this.CBCharge_Vmlp.Items.AddRange(new object[] {
+            "[-10 (V) .. 10 (V)]",
+            "[-20 (V) .. 20 (V)]",
+            "[-40 (V) .. 40 (V)]",
+            "[-80 (V) .. 80 (V)]",
+            "[-160 (V) .. 160 (V)]",
+            "[-320 (V) .. 320 (V)]",
+            "[-640 (V) .. 640 (V)]"});
+            this.CBCharge_Vmlp.Location = new System.Drawing.Point(116, 50);
+            this.CBCharge_Vmlp.Name = "CBCharge_Vmlp";
+            this.CBCharge_Vmlp.Size = new System.Drawing.Size(126, 21);
+            this.CBCharge_Vmlp.TabIndex = 21;
+            this.CBCharge_Vmlp.SelectedIndexChanged += new System.EventHandler(this.CBCharge_Vmlp_SelectedIndexChanged);
+            // 
+            // label97
+            // 
+            this.label97.AutoSize = true;
+            this.label97.Location = new System.Drawing.Point(12, 23);
+            this.label97.Name = "label97";
+            this.label97.Size = new System.Drawing.Size(100, 13);
+            this.label97.TabIndex = 18;
+            this.label97.Text = "Set Voltage Range:";
+            // 
+            // CBCharge_NumberOfCycles
+            // 
+            this.CBCharge_NumberOfCycles.Location = new System.Drawing.Point(103, 199);
+            this.CBCharge_NumberOfCycles.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.CBCharge_NumberOfCycles.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CBCharge_NumberOfCycles.Name = "CBCharge_NumberOfCycles";
+            this.CBCharge_NumberOfCycles.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_NumberOfCycles.TabIndex = 37;
+            this.CBCharge_NumberOfCycles.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label92
+            // 
+            this.label92.AutoSize = true;
+            this.label92.Location = new System.Drawing.Point(9, 201);
+            this.label92.Name = "label92";
+            this.label92.Size = new System.Drawing.Size(92, 13);
+            this.label92.TabIndex = 36;
+            this.label92.Text = "Number of cycles:";
+            // 
+            // CBCharge_VoltageMin
+            // 
+            this.CBCharge_VoltageMin.DecimalPlaces = 1;
+            this.CBCharge_VoltageMin.Location = new System.Drawing.Point(103, 157);
+            this.CBCharge_VoltageMin.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CBCharge_VoltageMin.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            -2147483648});
+            this.CBCharge_VoltageMin.Name = "CBCharge_VoltageMin";
+            this.CBCharge_VoltageMin.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_VoltageMin.TabIndex = 35;
+            // 
+            // label88
+            // 
+            this.label88.AutoSize = true;
+            this.label88.Location = new System.Drawing.Point(35, 159);
+            this.label88.Name = "label88";
+            this.label88.Size = new System.Drawing.Size(65, 13);
+            this.label88.TabIndex = 33;
+            this.label88.Text = "Voltage min:";
+            // 
+            // label89
+            // 
+            this.label89.AutoSize = true;
+            this.label89.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label89.Location = new System.Drawing.Point(187, 159);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(31, 13);
+            this.label89.TabIndex = 34;
+            this.label89.Text = "(Volt)";
+            // 
+            // CBCharge_VoltageMax
+            // 
+            this.CBCharge_VoltageMax.DecimalPlaces = 1;
+            this.CBCharge_VoltageMax.Location = new System.Drawing.Point(103, 121);
+            this.CBCharge_VoltageMax.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.CBCharge_VoltageMax.Name = "CBCharge_VoltageMax";
+            this.CBCharge_VoltageMax.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_VoltageMax.TabIndex = 32;
+            // 
+            // label90
+            // 
+            this.label90.AutoSize = true;
+            this.label90.Location = new System.Drawing.Point(32, 123);
+            this.label90.Name = "label90";
+            this.label90.Size = new System.Drawing.Size(68, 13);
+            this.label90.TabIndex = 30;
+            this.label90.Text = "Voltage max:";
+            // 
+            // label91
+            // 
+            this.label91.AutoSize = true;
+            this.label91.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label91.Location = new System.Drawing.Point(187, 123);
+            this.label91.Name = "label91";
+            this.label91.Size = new System.Drawing.Size(31, 13);
+            this.label91.TabIndex = 31;
+            this.label91.Text = "(Volt)";
+            // 
+            // CBCharge_CurrentDischarge
+            // 
+            this.CBCharge_CurrentDischarge.DecimalPlaces = 1;
+            this.CBCharge_CurrentDischarge.Location = new System.Drawing.Point(103, 78);
+            this.CBCharge_CurrentDischarge.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.CBCharge_CurrentDischarge.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.CBCharge_CurrentDischarge.Name = "CBCharge_CurrentDischarge";
+            this.CBCharge_CurrentDischarge.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_CurrentDischarge.TabIndex = 29;
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.Location = new System.Drawing.Point(9, 80);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(93, 13);
+            this.label84.TabIndex = 27;
+            this.label84.Text = "Current discharge:";
+            // 
+            // label87
+            // 
+            this.label87.AutoSize = true;
+            this.label87.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label87.Location = new System.Drawing.Point(187, 80);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(28, 13);
+            this.label87.TabIndex = 28;
+            this.label87.Text = "(mA)";
+            // 
+            // CBCharge_CurrentCharge
+            // 
+            this.CBCharge_CurrentCharge.DecimalPlaces = 1;
+            this.CBCharge_CurrentCharge.Location = new System.Drawing.Point(103, 42);
+            this.CBCharge_CurrentCharge.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.CBCharge_CurrentCharge.Name = "CBCharge_CurrentCharge";
+            this.CBCharge_CurrentCharge.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_CurrentCharge.TabIndex = 26;
+            // 
+            // label85
+            // 
+            this.label85.AutoSize = true;
+            this.label85.Location = new System.Drawing.Point(21, 44);
+            this.label85.Name = "label85";
+            this.label85.Size = new System.Drawing.Size(80, 13);
+            this.label85.TabIndex = 23;
+            this.label85.Text = "Current charge:";
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label86.Location = new System.Drawing.Point(187, 44);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(28, 13);
+            this.label86.TabIndex = 25;
+            this.label86.Text = "(mA)";
             // 
             // GBPostprocessing
             // 
@@ -1237,7 +1673,7 @@ namespace EISProjects
             this.GBPostprocessing.Controls.Add(this.TBIdealVoltage);
             this.GBPostprocessing.Controls.Add(this.groupBox13);
             this.GBPostprocessing.Controls.Add(this.GBExport);
-            this.GBPostprocessing.Location = new System.Drawing.Point(8, 1894);
+            this.GBPostprocessing.Location = new System.Drawing.Point(8, 2351);
             this.GBPostprocessing.Name = "GBPostprocessing";
             this.GBPostprocessing.Size = new System.Drawing.Size(399, 235);
             this.GBPostprocessing.TabIndex = 31;
@@ -1795,7 +2231,8 @@ namespace EISProjects
             "Mott Schottky",
             "Chronoamperometry",
             "I-V and C-V",
-            "Pulse"});
+            "Pulse",
+            "Charge-Discharge"});
             this.CBMode.Location = new System.Drawing.Point(91, 36);
             this.CBMode.Name = "CBMode";
             this.CBMode.Size = new System.Drawing.Size(129, 21);
@@ -3127,7 +3564,7 @@ namespace EISProjects
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 100);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(286, 435);
+            this.panel2.Size = new System.Drawing.Size(286, 891);
             this.panel2.TabIndex = 6;
             // 
             // GBAdminLog
@@ -3630,7 +4067,7 @@ namespace EISProjects
             this.Desktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Desktop.Location = new System.Drawing.Point(286, 100);
             this.Desktop.Name = "Desktop";
-            this.Desktop.Size = new System.Drawing.Size(504, 435);
+            this.Desktop.Size = new System.Drawing.Size(1011, 891);
             this.Desktop.TabIndex = 4;
             this.Desktop.MouseEnter += new System.EventHandler(this.Desktop_MouseEnter);
             this.Desktop.MouseLeave += new System.EventHandler(this.Desktop_MouseLeave);
@@ -3642,15 +4079,56 @@ namespace EISProjects
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1225, 100);
+            this.panel1.Size = new System.Drawing.Size(1732, 100);
             this.panel1.TabIndex = 8;
+            // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label100.Location = new System.Drawing.Point(345, 227);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(30, 13);
+            this.label100.TabIndex = 45;
+            this.label100.Text = "(sec)";
+            // 
+            // CBCharge_TotalTime
+            // 
+            this.CBCharge_TotalTime.Location = new System.Drawing.Point(258, 225);
+            this.CBCharge_TotalTime.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.CBCharge_TotalTime.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CBCharge_TotalTime.Name = "CBCharge_TotalTime";
+            this.CBCharge_TotalTime.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_TotalTime.TabIndex = 44;
+            this.CBCharge_TotalTime.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label101
+            // 
+            this.label101.AutoSize = true;
+            this.label101.Location = new System.Drawing.Point(197, 228);
+            this.label101.Name = "label101";
+            this.label101.Size = new System.Drawing.Size(60, 13);
+            this.label101.TabIndex = 43;
+            this.label101.Text = "Total Time:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1225, 605);
+            this.ClientSize = new System.Drawing.Size(1732, 1061);
             this.Controls.Add(this.Desktop);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Panel101);
@@ -3678,6 +4156,18 @@ namespace EISProjects
             this.Panel101.ResumeLayout(false);
             this.PanelProperties.ResumeLayout(false);
             this.PanelProperties.PerformLayout();
+            this.GBCharge.ResumeLayout(false);
+            this.GBCharge.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_dt)).EndInit();
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox19.PerformLayout();
+            this.groupBox20.ResumeLayout(false);
+            this.groupBox20.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_NumberOfCycles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_VoltageMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_VoltageMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_CurrentDischarge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_CurrentCharge)).EndInit();
             this.GBPostprocessing.ResumeLayout(false);
             this.GBPostprocessing.PerformLayout();
             this.groupBox13.ResumeLayout(false);
@@ -3737,6 +4227,7 @@ namespace EISProjects
             this.groupBox14.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.CBCharge_TotalTime)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -4032,6 +4523,39 @@ namespace EISProjects
         private System.Windows.Forms.Button button_clm;
         private System.Windows.Forms.Label label83;
         private System.Windows.Forms.ComboBox comboBox_Post;
+        private System.Windows.Forms.GroupBox GBCharge;
+        private System.Windows.Forms.Label label85;
+        private System.Windows.Forms.NumericUpDown CBCharge_NumberOfCycles;
+        private System.Windows.Forms.Label label92;
+        private System.Windows.Forms.NumericUpDown CBCharge_VoltageMin;
+        private System.Windows.Forms.Label label88;
+        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.NumericUpDown CBCharge_VoltageMax;
+        private System.Windows.Forms.Label label90;
+        private System.Windows.Forms.Label label91;
+        private System.Windows.Forms.NumericUpDown CBCharge_CurrentDischarge;
+        private System.Windows.Forms.Label label84;
+        private System.Windows.Forms.Label label87;
+        private System.Windows.Forms.NumericUpDown CBCharge_CurrentCharge;
+        private System.Windows.Forms.Label label86;
+        private System.Windows.Forms.GroupBox groupBox19;
+        private System.Windows.Forms.Label label93;
+        private System.Windows.Forms.Label label94;
+        private System.Windows.Forms.ComboBox CBCharge_CurrentRangeMode;
+        private System.Windows.Forms.ComboBox CBCharge_Imlp;
+        private System.Windows.Forms.GroupBox groupBox20;
+        private System.Windows.Forms.ComboBox CBCharge_VFilter;
+        private System.Windows.Forms.Label label95;
+        private System.Windows.Forms.Label label96;
+        private System.Windows.Forms.ComboBox CBCharge_VoltageRangeMode;
+        private System.Windows.Forms.ComboBox CBCharge_Vmlp;
+        private System.Windows.Forms.Label label97;
+        private System.Windows.Forms.NumericUpDown CBCharge_dt;
+        private System.Windows.Forms.Label label98;
+        private System.Windows.Forms.Label label99;
+        private System.Windows.Forms.Label label100;
+        private System.Windows.Forms.NumericUpDown CBCharge_TotalTime;
+        private System.Windows.Forms.Label label101;
     }
 
 
@@ -4176,6 +4700,7 @@ namespace EISProjects
         public bool isIV0 = false;
         public bool isChrono = false;
         public bool isPulse = false;
+        public bool isCharge = false;
 
         public int Version;
         public bool IsIVReceiverUnsigned;
@@ -4342,12 +4867,25 @@ namespace EISProjects
         public int IVChrono_VFilter = 0;
         public int Pulse_VFilter = 0;
 
-        public int PulseVoltageRangeMode = 0;
+        public int PulseVoltagerangeMode = 0;
         public int PulseCurrentRangeMode = 0;
         public int PulseVmlp = 0;
         public int PulseImlpp = 0;
         public int PulseReadingEdgemode = 0;
         public int PulseVoltammetryMode = 0;
+
+        public double Charge_CurrentCharge = 0;
+        public double Charge_CurrentDischarge = 0;
+        public double Charge_VoltageMax = 0;
+        public double Charge_VoltageMin = 0;
+        public double Charge_TotalTime = 0;
+        public int Charge_NumberofCycles = 0;
+        public int Charge_VoltageRangeMode = 0;
+        public int Charge_CurrentRangeMode = 0;
+        public int Charge_Vmlp = 0;
+        public int Charge_Imlp = 0;
+        public int Charge_VFilter = 0;
+        public int Charge_dt = 0;
 
         public int nCircuits = 0;
         public List<Circuit> Circuits = new List<Circuit> { };
@@ -4457,12 +4995,25 @@ namespace EISProjects
         public int IVChrono_VFilter = 3;
         public int Pulse_VFilter = 3;
 
-        public int PulseVoltageRangeMode = 1;
+        public int PulseVoltagerangeMode = 1;
         public int PulseCurrentRangeMode = 0;
         public int PulseVmlp = 0;
         public int PulseImlpp = 0;
         public int PulseReadingEdgemode = 1;
         public int PulseVoltammetryMode = 0;
+
+        public double Charge_CurrentCharge = 100;
+        public double Charge_CurrentDischarge = -100;
+        public double Charge_VoltageMax = 1;
+        public double Charge_VoltageMin = -1;
+        public double Charge_TotalTime = 10; //sec
+        public int Charge_NumberofCycles = 10;
+        public int Charge_VoltageRangeMode = 1;
+        public int Charge_CurrentRangeMode = 0;
+        public int Charge_Vmlp = 0;
+        public int Charge_Imlp = 0;
+        public int Charge_VFilter = 0;
+        public int Charge_dt = 1;//sec
 
         public int CheckPortTimeoutSec = 100;
         public int PortTimeout = 5000;
@@ -4543,6 +5094,7 @@ namespace EISProjects
         public bool isIV0 = true;
         public bool isChrono = false;
         public bool isPulse = false;
+        public bool isCharge = false;
 
         public bool isIVReceiverUnsigned = false;
         public bool isDigitalEISReceiverUnsigned = false;
@@ -4605,6 +5157,11 @@ namespace EISProjects
         public double[] ReZ;
         public double[] Imz;
         public bool[] overflow;
+
+        public int Charge_n;
+        public double[] Charge_V;
+        public double[] Charge_I;
+        public double[] Charge_t;
 
         public double OpenCircuitVoltage = 0.0;
     }

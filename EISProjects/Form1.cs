@@ -18,7 +18,7 @@ namespace EISProjects
     public partial class Form1 : Form
     {
         ////////////////////////////////////////
-        public static int Version = 1024;
+        public static int Version = 1025;
         public static int SettingsVersion = 8;
         public static SettingsData Settings = new SettingsData();
         public static RichTextBox Status = new RichTextBox();
@@ -62,7 +62,8 @@ namespace EISProjects
         public static double deltaV, deltaI, frqMultStep;
         public static int IVnDataTotal;
         public static int PulsenDataTotal;
-        public static bool isPulseTimerTickInProcess = false;
+        public static bool isPulse_TimerTickInProcess = false;
+        public static bool isCharge_TimerTickInProcess = false;
         public static double[] IVVDataTotal;
         public static double[] IVIDataTotal;
         public static double[] IVtDataTotal;
@@ -71,9 +72,11 @@ namespace EISProjects
         public static double[] PulsetDataTotal;
         public static bool isDataReceivedSet = false;
         public static bool isIVTimerTickSet = false;
-        public static bool isPulseTimerTickSet = false;
+        public static bool isPulse_TimerTickSet = false;
+        public static bool isCharge_TimerTickSet = false;
         public static System.Windows.Forms.Timer IVTimer1;
-        public static System.Windows.Forms.Timer PulseTimer1;
+        public static System.Windows.Forms.Timer Pulse_Timer1;
+        public static System.Windows.Forms.Timer Charge_Timer1;
         public static bool isAnalogEISTimerTickSet = false;
         public static System.Windows.Forms.Timer AnalogEISTimer;
         public static bool isAnalogEISStepCompleted = true;
@@ -109,16 +112,23 @@ namespace EISProjects
         public static bool isCBIVRangeCompleted = true;
         public static bool isCBPulseVoltageRangeCompleted = true;
         public static bool isCBPulseRangeCompleted = true;
+        public static bool isCBCharge_VoltageRangeCompleted = true;
+        public static bool isCBCharge_RangeCompleted = true;
         public static bool isVmlpCompleted = true;
         public static bool isImlpCompleted = true;
         public static bool isPulseVmlpCompleted = true;
         public static bool isPulseImlpCompleted = true;
+        public static bool isCharge_VmlpCompleted = true;
+        public static bool isCharge_ImlpCompleted = true;
         public static double ThisIV_Ioffset = 0;
         public static double ThisIV_Voffset = 0;
         public static double ThisPulse_Ioffset = 0;
         public static double ThisPulse_Voffset = 0;
+        public static double ThisCharge_Ioffset = 0;
+        public static double ThisCharge_Voffset = 0;
         public static bool isIVRangesChanged = true;
         public static bool isPulseRangesChanged = true;
+        public static bool isCharge_RangesChanged = true;
         public static bool isAdminLoged = false;
         public static bool isPreProccessingCompleted = false;
         public static bool isformPID = false;
@@ -141,8 +151,10 @@ namespace EISProjects
         public static int BoardType = 1;
         public static double IVMaxFineCurrent = 1.0;
         public static double PulseMaxFineCurrent = 1.0;
+        public static double Charge_MaxFineCurrent = 1.0;
         public static double IVChronoTimeStep = 0.0;
-        public static double PulseTimeStep = 0;
+        public static double Pulse_TimeStep = 0;
+        public static double Charge_TimeStep = 0;
         public static double IVChronoVset = 0.0;
         public static double IVChronoDVset = 0.0;
         public static int IVVsetcnt = 0;
@@ -157,6 +169,13 @@ namespace EISProjects
         public static double CV_newExactdelta = 0;
         public static double i_zero = 0;
         public static int iIs = 3, iacdac, iIschanged = 0;
+
+        Size GBPreprocessingSize0;
+        Size GBEISSize0;
+        Size GBIVSize0;
+        Size GBPulseSize0;
+        Size GBChargeSize0;
+        Size GBPostprocessingSize0;
 
         //public static System.Timers.Timer IVTimer1;
         //public static void loadSetting(ref SettingsData Settings);
@@ -225,8 +244,13 @@ namespace EISProjects
     new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Icon = ((System.Drawing.Icon)(global::EISProjects.Properties.Resources.LMS));
 
-
-
+            GBPreprocessingSize0 = GBPreprocessing.Size; ;
+            GBEISSize0 = GBEIS.Size;
+            GBIVSize0 = GBIV.Size;
+            GBPulseSize0 = GBPulse.Size;
+            GBChargeSize0 = GBCharge.Size;
+            GBPostprocessingSize0 = GBPostprocessing.Size;
+            
         }
 
         private void SetButtonStyles()
@@ -668,7 +692,7 @@ namespace EISProjects
             if (AllSessions[Selected].PGmode == 3)
             {
                 AllSessions[Selected].IVVoltageRangeMode = 1;
-                AllSessions[Selected].PulseVoltageRangeMode = 1;
+                AllSessions[Selected].PulseVoltagerangeMode = 1;
                 AllSessions[Selected].EISVoltageRangeMode = 1;
                 CBIVVoltageRangeMode.Enabled = false;
                 CBPulseVoltageRangeMode.Enabled = false;
@@ -754,11 +778,23 @@ namespace EISProjects
             IVChronoVFilter.SelectedIndex = AllSessions[Selected].IVChrono_VFilter;
             PlseVFilter.SelectedIndex = AllSessions[Selected].Pulse_VFilter;
 
-            CBPulseVoltageRangeMode.SelectedIndex = AllSessions[Selected].PulseVoltageRangeMode;
+            CBPulseVoltageRangeMode.SelectedIndex = AllSessions[Selected].PulseVoltagerangeMode;
             CBPulseCurrentRangeMode.SelectedIndex = AllSessions[Selected].PulseCurrentRangeMode;
             CBPulseVmlp.SelectedIndex = AllSessions[Selected].PulseVmlp;
             CBPulseImlp.SelectedIndex = AllSessions[Selected].PulseImlpp;
 
+            CBCharge_CurrentCharge.Value = Convert.ToDecimal(AllSessions[Selected].Charge_CurrentCharge);
+            CBCharge_CurrentDischarge.Value = Convert.ToDecimal(AllSessions[Selected].Charge_CurrentDischarge);
+            CBCharge_VoltageMax.Value = Convert.ToDecimal(AllSessions[Selected].Charge_VoltageMax);
+            CBCharge_VoltageMin.Value = Convert.ToDecimal(AllSessions[Selected].Charge_VoltageMin);
+            CBCharge_TotalTime.Value = Convert.ToDecimal(AllSessions[Selected].Charge_TotalTime);
+            CBCharge_NumberOfCycles.Value = Convert.ToDecimal(AllSessions[Selected].Charge_NumberofCycles);
+            CBCharge_VoltageRangeMode.SelectedIndex = AllSessions[Selected].Charge_VoltageRangeMode;
+            CBCharge_CurrentRangeMode.SelectedIndex = AllSessions[Selected].Charge_CurrentRangeMode;
+            CBCharge_Vmlp.SelectedIndex = AllSessions[Selected].Charge_Vmlp;
+            CBCharge_Imlp.SelectedIndex = AllSessions[Selected].Charge_Imlp;
+            CBCharge_VFilter.SelectedIndex = AllSessions[Selected].Charge_VFilter;
+            CBCharge_dt.Value = Convert.ToDecimal(AllSessions[Selected].Charge_dt);
 
             if (AllSessions[Selected].PulseReadingEdgemode == 0)
             {
@@ -898,8 +934,6 @@ namespace EISProjects
             isVmlpCompleted = true;
             isImlpCompleted = true;
 
-
-
             isPulseVmlpCompleted = false;
             isPulseImlpCompleted = false;
 
@@ -1002,7 +1036,7 @@ namespace EISProjects
             GBPulse.Enabled = false;
             GBCV.Enabled = false;
             GBIV.Enabled = false;
-
+            GBCharge.Enabled = false;
 
             if (AllSessions[Selected].Mode == 0 || AllSessions[Selected].Mode == 1)
             {
@@ -1027,12 +1061,12 @@ namespace EISProjects
                 Size s = GBPreprocessing.Size;
 
                 p.Y = CBMode.Location.Y + CBMode.Size.Height + 15;
-                s.Height = 263;
+                s.Height = GBPreprocessingSize0.Height;
                 GBPreprocessing.Location = p;
                 GBPreprocessing.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 547;
+                s.Height = GBEISSize0.Height;
                 GBEIS.Location = p;
                 GBEIS.Size = s;
 
@@ -1047,7 +1081,12 @@ namespace EISProjects
                 GBIV.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 213;
+                s.Height = 20;
+                GBCharge.Location = p;
+                GBCharge.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = GBPostprocessingSize0.Height;
                 GBPostprocessing.Location = p;
                 GBPostprocessing.Size = s;
             }
@@ -1061,7 +1100,7 @@ namespace EISProjects
                 Size s = GBPreprocessing.Size;
 
                 p.Y = CBMode.Location.Y + CBMode.Size.Height + 15;
-                s.Height = 263;
+                s.Height = GBPreprocessingSize0.Height;
                 GBPreprocessing.Location = p;
                 GBPreprocessing.Size = s;
 
@@ -1071,7 +1110,7 @@ namespace EISProjects
                 GBEIS.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 420;
+                s.Height = GBPulseSize0.Height;
                 GBPulse.Location = p;
                 GBPulse.Size = s;
 
@@ -1081,7 +1120,12 @@ namespace EISProjects
                 GBIV.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 213;
+                s.Height = 20;
+                GBCharge.Location = p;
+                GBCharge.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = GBPostprocessingSize0.Height;
                 GBPostprocessing.Location = p;
                 GBPostprocessing.Size = s;
             }
@@ -1093,7 +1137,7 @@ namespace EISProjects
                 Size s = GBPreprocessing.Size;
 
                 p.Y = CBMode.Location.Y + CBMode.Size.Height + 15;
-                s.Height = 263;
+                s.Height = GBPreprocessingSize0.Height;
                 GBPreprocessing.Location = p;
                 GBPreprocessing.Size = s;
 
@@ -1108,7 +1152,7 @@ namespace EISProjects
                 GBPulse.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 213;
+                s.Height = GBPostprocessingSize0.Height;
                 GBPostprocessing.Size = s;
                 if (AllSessions[Selected].Mode == 3)
                     s.Height = 507;
@@ -1225,14 +1269,59 @@ namespace EISProjects
                     }
                 }
 
-
                 GBIV.Location = p;
                 GBIV.Size = s;
 
                 p.Y = p.Y + s.Height + 10;
-                s.Height = 213;
+                s.Height = 20;
+                GBCharge.Location = p;
+                GBCharge.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = GBPostprocessingSize0.Height;
                 GBPostprocessing.Location = p;
                 GBPostprocessing.Size = s;
+            }
+
+            if (AllSessions[Selected].Mode == 5)
+            {
+                GBCharge.Enabled = true;
+
+                Point p = GBPreprocessing.Location;
+                Size s = GBPreprocessing.Size;
+
+                p.Y = CBMode.Location.Y + CBMode.Size.Height + 15;
+                s.Height = GBPreprocessingSize0.Height;
+                GBPreprocessing.Location = p;
+                GBPreprocessing.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = 20;
+                GBEIS.Location = p;
+                GBEIS.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = 20;
+                GBPulse.Location = p;
+                GBPulse.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = 20;
+                GBIV.Location = p;
+                GBIV.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = GBChargeSize0.Height;
+                GBCharge.Location = p;
+                GBCharge.Size = s;
+
+                p.Y = p.Y + s.Height + 10;
+                s.Height = GBPostprocessingSize0.Height;
+                GBPostprocessing.Location = p;
+                GBPostprocessing.Size = s;
+
+                CB_PGMode.SelectedIndex = 3;
+                CB_PGMode.Enabled = false;
             }
 
             if (AllSessions[Selected].Mode == 1) GBPulse.Enabled = true;
@@ -1281,6 +1370,7 @@ namespace EISProjects
             if (theFirstOpenMode == -1 && Settings.isChrono) theFirstOpenMode = 2;
             if (theFirstOpenMode == -1 && (Settings.isIV0 || Settings.isCV)) theFirstOpenMode = 3;
             if (theFirstOpenMode == -1 && Settings.isPulse) theFirstOpenMode = 4;
+            if (theFirstOpenMode == -1 && Settings.isCharge) theFirstOpenMode = 5;
 
             if (theFirstOpenMode != -1)
             {
@@ -1313,12 +1403,25 @@ namespace EISProjects
                 NewSession.Pulse_VFilter = FactoryDefault.Pulse_VFilter;
 
 
-                NewSession.PulseVoltageRangeMode = FactoryDefault.PulseVoltageRangeMode;
+                NewSession.PulseVoltagerangeMode = FactoryDefault.PulseVoltagerangeMode;
                 NewSession.PulseCurrentRangeMode = FactoryDefault.PulseCurrentRangeMode;
                 NewSession.PulseVmlp = FactoryDefault.PulseVmlp;
                 NewSession.PulseImlpp = FactoryDefault.PulseImlpp;
                 NewSession.PulseReadingEdgemode = FactoryDefault.PulseReadingEdgemode;
                 NewSession.PulseVoltammetryMode = FactoryDefault.PulseVoltammetryMode;
+
+                NewSession.Charge_CurrentCharge = FactoryDefault.Charge_CurrentCharge;
+                NewSession.Charge_CurrentDischarge = FactoryDefault.Charge_CurrentDischarge;
+                NewSession.Charge_VoltageMax = FactoryDefault.Charge_VoltageMax;
+                NewSession.Charge_VoltageMin = FactoryDefault.Charge_VoltageMin;
+                NewSession.Charge_TotalTime = FactoryDefault.Charge_TotalTime;
+                NewSession.Charge_NumberofCycles = FactoryDefault.Charge_NumberofCycles;
+                NewSession.Charge_VoltageRangeMode = FactoryDefault.Charge_VoltageRangeMode;
+                NewSession.Charge_CurrentRangeMode = FactoryDefault.Charge_CurrentRangeMode;
+                NewSession.Charge_Vmlp = FactoryDefault.Charge_Vmlp;
+                NewSession.Charge_Imlp = FactoryDefault.Charge_Imlp;
+                NewSession.Charge_VFilter = FactoryDefault.Charge_VFilter;
+                NewSession.Charge_dt = FactoryDefault.Charge_dt;
 
                 NewSession.DCVoltageConstant = FactoryDefault.DCVoltageConstant;
                 NewSession.DCVoltageFrom = FactoryDefault.DCVoltageFrom;
@@ -1646,11 +1749,18 @@ namespace EISProjects
                 isIVTimerTickSet = false;
             }
 
-            if (isPulseTimerTickSet)
+            if (isPulse_TimerTickSet)
             {
-                PulseTimer1.Stop();
-                PulseTimer1.Dispose();
-                isPulseTimerTickSet = false;
+                Pulse_Timer1.Stop();
+                Pulse_Timer1.Dispose();
+                isPulse_TimerTickSet = false;
+            }
+
+            if (isCharge_TimerTickSet)
+            {
+                Charge_Timer1.Stop();
+                Charge_Timer1.Dispose();
+                isCharge_TimerTickSet = false;
             }
 
             if (isDataReceivedSet)
@@ -1892,6 +2002,13 @@ namespace EISProjects
                 Dimention = S.Chrono_n;
             }
 
+            if (S.Mode == 5)
+            {
+                //if (S.PulseReadingEdgeMode == 2)
+                //    Dimention = S.Chrono_n - 1;
+                //else
+                Dimention = (int)(S.Charge_TotalTime/S.Charge_dt) + 1;
+            }
 
             return Dimention;
         }
@@ -2032,6 +2149,15 @@ namespace EISProjects
                         AllSessionsData[EIS.RunningSession].Imz = new double[VltCnt];
                     }
 
+                    if (AllSessions[EIS.RunningSession].Mode == 5)
+                    {
+                        int Cnt = (int)(AllSessions[EIS.RunningSession].Charge_TotalTime / AllSessions[EIS.RunningSession].Charge_dt) + 1;
+                        AllSessionsData[EIS.RunningSession].Charge_n = Cnt;
+                        AllSessionsData[EIS.RunningSession].Charge_V = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Charge_I = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Charge_t = new double[Cnt];
+                    }
+
                     AllSessionsData[EIS.RunningSession].ReceivedDataCount = 0;
                     isRunStart = true;
                     BtnPauseContinue.Enabled = true;
@@ -2084,6 +2210,8 @@ namespace EISProjects
                         Start_IV_Chrono();
                     else if (AllSessions[EIS.RunningSession].Mode == 4)
                         Start_Pulse();
+                    else if (AllSessions[EIS.RunningSession].Mode == 5)
+                        Start_Charge();
                     ///////////////////////////////////////////////////////////////////
                 }
                 else
@@ -3552,11 +3680,11 @@ namespace EISProjects
 
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
-                Port.Write("setselect " + AllSessions[EIS.RunningSession].PulseVoltageRangeMode.ToString() + WriteReadToChar);
+                Port.Write("setselect " + AllSessions[EIS.RunningSession].PulseVoltagerangeMode.ToString() + WriteReadToChar);
                 Thread.Sleep(100);
                 ans = Port.ReadTo(ReadToChar);
                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200002 Command:setselect");
-                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Setselect=" + AllSessions[EIS.RunningSession].PulseVoltageRangeMode.ToString());
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Setselect=" + AllSessions[EIS.RunningSession].PulseVoltagerangeMode.ToString());
 
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
@@ -3570,7 +3698,7 @@ namespace EISProjects
                 SetLabel(ref Label_vac, 0, "V");
 
                 int zeroset;
-                if (AllSessions[EIS.RunningSession].PulseVoltageRangeMode == 0)
+                if (AllSessions[EIS.RunningSession].PulseVoltagerangeMode == 0)
                     zeroset = Settings.Zeroset0;
                 else
                     zeroset = Settings.Zeroset1;
@@ -3627,7 +3755,7 @@ namespace EISProjects
 
 
 
-                int ivlt = SetDCVConvert(setvolt0, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                int ivlt = SetDCVConvert(setvolt0, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset=" + ivlt.ToString() + " vset=" + setvolt0.ToString());
@@ -3660,7 +3788,7 @@ namespace EISProjects
                     //FormEISDScope.UpdateIVDiagram(IVnDataTotal, IVtDataTotal, IVVDataTotal, IVIDataTotal);
 
                     //double TheVoltageisset = GetDCVConvertWithNewOffset(Vmean, AllSessions[EIS.RunningSession].PulseVmlp, ThisPulse_Voffset, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
-                    double TheVoltageisset = GetDCVConvert(Vmean, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
+                    double TheVoltageisset = GetDCVConvert(Vmean, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltagerangeMode);
 
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " The Voltage is set:" + TheVoltageisset.ToString());
 
@@ -3710,7 +3838,7 @@ namespace EISProjects
                     //ivvltto = -ivvltto;
                 }
 
-                int ivltFrom = SetDCVConvert(ivvltfrom, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                int ivltFrom = SetDCVConvert(ivvltfrom, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
                 //int ivltTo = SetDCVConvert(ivvltto, AllSessions[EIS.RunningSession].IVvoltageRangeMode, AllSessions[EIS.RunningSession].IVCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
 
 
@@ -3723,8 +3851,8 @@ namespace EISProjects
                     int iPulse_Period = (int)((Pulse_Period * 31.250 - 1) / 2.0);
                     int iLevelPeriod = (int)(((Total_Period - Pulse_Period) * 31.250 - 1) / 2.0);
                     if (iLevelPeriod < 1) iLevelPeriod = 1;
-                    PulseTimeStep = Total_Period;
-                    SetIVFilter(0, ((double)Pulse_Period) / 1000.0, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
+                    Pulse_TimeStep = Total_Period;
+                    SetIVFilter(0, ((double)Pulse_Period) / 1000.0, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseVoltagerangeMode);
 
                     if (AllSessions[Selected].Pulse_VFilter < 3)
                     {
@@ -3760,10 +3888,10 @@ namespace EISProjects
                         pulselevel = pulselevel - sw;
                     }
 
-                    int Pulse_Level = SetDCVConvert(pulselevel, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
-                    int Pulse_Amplitude = SetDCVConvert(pulselevel + amplitude, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
-                    int Level_Step = SetDCVConvert(PulseRelRef * AllSessions[EIS.RunningSession].Chrono_Level_Step, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode) - 2047;
-                    int Amplitude_Step = SetDCVConvert(PulseRelRef * AllSessions[EIS.RunningSession].Chrono_Amplitude_step, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode) - 2047;
+                    int Pulse_Level = SetDCVConvert(pulselevel, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                    int Pulse_Amplitude = SetDCVConvert(pulselevel + amplitude, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                    int Level_Step = SetDCVConvert(PulseRelRef * AllSessions[EIS.RunningSession].Chrono_Level_Step, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode) - 2047;
+                    int Amplitude_Step = SetDCVConvert(PulseRelRef * AllSessions[EIS.RunningSession].Chrono_Amplitude_step, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode) - 2047;
 
 
                     Port.DiscardOutBuffer(); Port.DiscardInBuffer();
@@ -3874,19 +4002,19 @@ namespace EISProjects
 
                 //if (AllSessions[EIS.RunningSession].Chrono_Total_Period > 0)
                 {
-                    if (!isPulseTimerTickSet)
+                    if (!isPulse_TimerTickSet)
                     {
-                        isPulseTimerTickSet = true;
-                        PulseTimer1 = new System.Windows.Forms.Timer();
+                        isPulse_TimerTickSet = true;
+                        Pulse_Timer1 = new System.Windows.Forms.Timer();
                         int interval = 0;
                         interval = (int)(AllSessions[EIS.RunningSession].Chrono_Total_Period);
                         if (interval < 1) interval = 1;
-                        PulseTimer1.Interval = interval;
+                        Pulse_Timer1.Interval = interval;
                         //PulseTimer1.Interval = 50;//check
-                        isPulseTimerTickInProcess = false;
-                        PulseTimer1.Tick += new System.EventHandler(PulseTimer_Tick);
-                        PulseTimer1.Enabled = true;
-                        PulseTimer1.Start();
+                        isPulse_TimerTickInProcess = false;
+                        Pulse_Timer1.Tick += new System.EventHandler(PulseTimer_Tick);
+                        Pulse_Timer1.Enabled = true;
+                        Pulse_Timer1.Start();
                     }
                 }
 
@@ -3901,6 +4029,155 @@ namespace EISProjects
             return isError;
         }
 
+
+        private bool Start_Charge()
+        {
+            bool isError = true;
+            try
+            {
+                if (isDataReceivedSet)
+                {
+                    Port.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(this.EISPort_DataReceived);
+                    isDataReceivedSet = false;
+                }
+
+                string ans;
+
+                Port.Write(";");
+                System.Threading.Thread.Sleep(50);
+                Port.DiscardOutBuffer();
+                Port.DiscardInBuffer();
+                Port.Write("clmauto " + clm.ToString() + WriteReadToChar);
+                Thread.Sleep(10);
+                ans = Port.ReadTo(ReadToChar);
+                SetLabel(ref label_clm, clm);
+                Port.DiscardOutBuffer();
+                Port.DiscardInBuffer();
+                Port.Write("iacdac 2047" + WriteReadToChar);
+                Thread.Sleep(250);
+                ans = Port.ReadTo(ReadToChar);
+                current_iacdac = 2047;
+                SetLabel(ref label_iacdac, 2047);
+                Port.DiscardOutBuffer();
+                Port.DiscardInBuffer();
+                Port.Write("iIs 3" + WriteReadToChar);
+                Thread.Sleep(200);
+                ans = Port.ReadTo(ReadToChar);
+                iIs = 3;
+                SetLabel(ref label_iIs, 3);
+                Thread.Sleep(100);
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+
+                Port.Write("idcselect " + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200001 Command:idcselect");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Idcselect=" + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString());
+
+                if (AllSessions[EIS.RunningSession].Charge_CurrentRangeMode <= 1 && AllSessions[EIS.RunningSession].PGmode == 1)
+                {
+                    Port.DiscardOutBuffer();
+                    Port.DiscardInBuffer();
+                    Port.Write("PGmode 0" + WriteReadToChar);
+                    Thread.Sleep(100);
+                    ans = Port.ReadTo(ReadToChar);
+                    if (ans != "OK") throw new Exception("The command OK is not received.\r error number:m10001 Command:PGmode");
+                }
+
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("setselect " + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200002 Command:setselect");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Setselect=" + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString());
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("acset 0" + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200003 Command:acset");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " acset: 0");
+                SetLabel(ref iLabel_vac, 0);
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Vac: 0.0");
+                SetLabel(ref Label_vac, 0, "V");
+
+                int zeroset;
+                if (AllSessions[EIS.RunningSession].Charge_VoltageRangeMode == 0)
+                    zeroset = Settings.Zeroset0;
+                else
+                    zeroset = Settings.Zeroset1;
+
+                if (AllSessions[EIS.RunningSession].PGmode == 3)
+                    zeroset = GetGalvanostatZerosetOffset(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode);
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("zeroset " + zeroset.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                isDataReceived = false;
+                Thread.Sleep(100);
+                isDigitalEISStepCompleted = false;
+                AllowToTick = true;
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200004 Command:zeroset");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset=" + zeroset.ToString());
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("vdcmlp " + AllSessions[EIS.RunningSession].Charge_Vmlp.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200005 Command:vdcmlp");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " vdcmlp=" + AllSessions[EIS.RunningSession].Charge_Vmlp.ToString());
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("idcmlp " + AllSessions[EIS.RunningSession].Charge_Imlp.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200006 Command:idcmlp");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " idcmlp=" + AllSessions[EIS.RunningSession].Charge_Imlp.ToString());
+
+
+                if (isCharge_RangesChanged)
+                {
+                    CalculateSpecificIVOffsets(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode, AllSessions[EIS.RunningSession].Charge_Imlp, AllSessions[EIS.RunningSession].Charge_Vmlp, ref ThisCharge_Ioffset, ref ThisCharge_Voffset);
+                    GetVOffsetFromSettings(AllSessions[EIS.RunningSession].Charge_Vmlp, ref ThisCharge_Voffset);
+                    isCharge_RangesChanged = false;
+                }
+
+                //if (AllSessions[EIS.RunningSession].Chrono_Total_Period > 0)
+                {
+                    if (!isCharge_TimerTickSet)
+                    {
+                        isCharge_TimerTickSet = true;
+                        Charge_Timer1 = new System.Windows.Forms.Timer();
+                        int interval = 0;
+                        interval = (int)(AllSessions[EIS.RunningSession].Chrono_Total_Period);
+                        if (interval < 1) interval = 1;
+                        Charge_Timer1.Interval = interval;
+                        //Charge_Timer1.Interval = 50;//check
+                        isCharge_TimerTickInProcess = false;
+                        Charge_Timer1.Tick += new System.EventHandler(Charge_Timer_Tick);
+                        Charge_Timer1.Enabled = true;
+                        Charge_Timer1.Start();
+                    }
+                }
+
+                isError = false;
+            }
+            catch (Exception ex)
+            {
+                isError = true;
+                StopRun();
+                MessageBox.Show("Run is Stoped because of error:\r" + ex.Message + "\rin Function:Start_Charge()");
+            }
+            return isError;
+        }
 
 
 
@@ -4543,8 +4820,8 @@ namespace EISProjects
 
         private void PulseTimer_Tick(object sender, EventArgs e)
         {
-            if (isPulseTimerTickInProcess) return;
-            isPulseTimerTickInProcess = true;
+            if (isPulse_TimerTickInProcess) return;
+            isPulse_TimerTickInProcess = true;
             int cnt = AllSessionsData[EIS.RunningSession].ReceivedDataCount;
             int cntMax = AllSessions[EIS.RunningSession].Chrono_n;
             //int CVnFirst = (int)((AllSessions[EIS.RunningSession].IVvoltageTo - AllSessions[EIS.RunningSession].CVStartpoint) / (AllSessions[EIS.RunningSession].IVvoltageTo - AllSessions[EIS.RunningSession].IVVoltageFrom) * (AllSessions[EIS.RunningSession].IVVoltageNStepp - 1)) + 1;
@@ -4558,7 +4835,7 @@ namespace EISProjects
                 int word0 = 0;
                 if (Port.BytesToRead == 0)
                 {
-                    isPulseTimerTickInProcess = false;
+                    isPulse_TimerTickInProcess = false;
                     return;
                 }
 
@@ -4579,7 +4856,7 @@ namespace EISProjects
                 else
                 {
                     PulseiDataAchieved++;
-                    isPulseTimerTickInProcess = false;
+                    isPulse_TimerTickInProcess = false;
                     return;
                 }
                 */
@@ -4669,14 +4946,14 @@ namespace EISProjects
 
                     //volt = GetDCVConvertWithNewOffset(Vmean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, ThisPulse_Voffset, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
                     //current = GetDCIConvertWithNewOffset(Imean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp, ThisPulse_Ioffset);
-                    volt = GetDCVConvert(Vmean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
+                    volt = GetDCVConvert(Vmean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltagerangeMode);
                     current = GetDCIConvert(Imean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp);
 
                     if (isDiff)
                     {
                         //volt0 = GetDCVConvertWithNewOffset(Vmean0 / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, ThisPulse_Voffset, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
                         //current0 = GetDCIConvertWithNewOffset(Imean0 / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp, ThisPulse_Ioffset);
-                        volt0 = GetDCVConvert(Vmean0 / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
+                        volt0 = GetDCVConvert(Vmean0 / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltagerangeMode);
                         current0 = GetDCIConvert(Imean0 / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp);
 
                     }
@@ -4714,11 +4991,11 @@ namespace EISProjects
 
                     AllSessionsData[EIS.RunningSession].Vlt[cnt] = volt;
                     AllSessionsData[EIS.RunningSession].Amp[cnt] = current;
-                    AllSessionsData[EIS.RunningSession].ReZ[cnt] = PulseTimeStep * cnt / 1000.0;
+                    AllSessionsData[EIS.RunningSession].ReZ[cnt] = Pulse_TimeStep * cnt / 1000.0;
                     AllSessionsData[EIS.RunningSession].Imz[cnt] = volt;
 
                     AllSessionsData[EIS.RunningSession].ReZ[0] = 0;
-                    AllSessionsData[EIS.RunningSession].ReZ[cntMax - 1] = PulseTimeStep * (cntMax - 1) / 1000.0;
+                    AllSessionsData[EIS.RunningSession].ReZ[cntMax - 1] = Pulse_TimeStep * (cntMax - 1) / 1000.0;
                     //Corrected till This line
                     try
                     {
@@ -4727,11 +5004,11 @@ namespace EISProjects
                         SetPBAllSessions(PBAllSessionsValue);
                         if (AllSessionsData[EIS.RunningSession].ReceivedDataCount == AllSessions[EIS.RunningSession].Chrono_n)
                         {
-                            if (isPulseTimerTickSet)
+                            if (isPulse_TimerTickSet)
                             {
-                                PulseTimer1.Stop();
-                                PulseTimer1.Dispose();
-                                isPulseTimerTickSet = false;
+                                Pulse_Timer1.Stop();
+                                Pulse_Timer1.Dispose();
+                                isPulse_TimerTickSet = false;
                             }
                             AllSessions[EIS.RunningSession].isFinished = true;
 
@@ -4746,7 +5023,7 @@ namespace EISProjects
                             {
                                 try
                                 {
-                                    int iVlt = SetDCVConvert(AllSessions[EIS.RunningSession].IdealVoltage, AllSessions[EIS.RunningSession].PulseVoltageRangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                                    int iVlt = SetDCVConvert(AllSessions[EIS.RunningSession].IdealVoltage, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
                                     Port.DiscardOutBuffer(); //Clear Buffer
                                     Port.DiscardInBuffer(); //Clear Buffer
                                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
@@ -4773,9 +5050,140 @@ namespace EISProjects
                 }
                 catch { }
             }
-            isPulseTimerTickInProcess = false;
+            isPulse_TimerTickInProcess = false;
         }
 
+        private void Charge_Timer_Tick(object sender, EventArgs e)
+        {
+            if (isCharge_TimerTickInProcess) return;
+            isCharge_TimerTickInProcess = true;
+            int cnt = AllSessionsData[EIS.RunningSession].ReceivedDataCount;
+            int cntMax = AllSessions[EIS.RunningSession].Chrono_n;
+            //int CVnFirst = (int)((AllSessions[EIS.RunningSession].IVvoltageTo - AllSessions[EIS.RunningSession].CVStartpoint) / (AllSessions[EIS.RunningSession].IVvoltageTo - AllSessions[EIS.RunningSession].IVVoltageFrom) * (AllSessions[EIS.RunningSession].IVVoltageNStepp - 1)) + 1;
+            //if ((AllSessions[EIS.RunningSession].isCVEnable) && (AllSessions[EIS.RunningSession].Mode == 3)) cntMax = cntMax * (AllSessions[EIS.RunningSession].CVItteration * 2) + CVnFirst;
+            if (cnt < cntMax)
+            {
+                try
+                {
+                    int word = 0;
+                    double Vmean = 0;
+                    double Imean = 0;
+
+                    int StartPoint = 0;
+                    //if (AllSessions[EIS.RunningSession].PulseReadingEdgemode == 1 || AllSessions[EIS.RunningSession].PulseReadingEdgemode == 2) StartPoint = PulsenData;
+
+                    double volt = 0;
+                    double current = 0;
+
+                    for (int iData = StartPoint; iData < PulsenData + StartPoint; iData++)
+                    {
+                        // In the case of differensial data first read the second data (iData = StartPoint)
+                        word = PulseAllBytesAchieved[iData + 0, 0] + PulseAllBytesAchieved[iData + 0, 1] * 256;
+
+                        if (Settings.isDigitalEISReceiverUnsigned) // In Pulse we read data as the same as EIS
+                            word = 0;
+                        else
+                        {
+                            if (word >= 0 && word < 2048)
+                                word = word + 2048;
+                            else
+                                word = word - 2048 - 61440;
+                        }
+                        Vmean = Vmean + (double)word;
+
+                        word = PulseAllBytesAchieved[iData + 0, 2] + PulseAllBytesAchieved[iData + 0, 3] * 256;
+                        if (Settings.isDigitalEISReceiverUnsigned)
+                            word = 0;
+                        else
+                        {
+                            if (word >= 0 && word < 2048)
+                                word = word + 2048;
+                            else
+                                word = word - 2048 - 61440;
+                        }
+                        Imean = Imean + (double)word;
+
+                    }
+
+
+                    //volt = GetDCVConvertWithNewOffset(Vmean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, ThisPulse_Voffset, AllSessions[EIS.RunningSession].PulseVoltageRangeMode);
+                    //current = GetDCIConvertWithNewOffset(Imean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp, ThisPulse_Ioffset);
+                    volt = GetDCVConvert(Vmean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseVmlp, AllSessions[EIS.RunningSession].PulseVoltagerangeMode);
+                    current = GetDCIConvert(Imean / PulsenData - 2047, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PulseImlpp);
+
+
+                    if (AllSessions[EIS.RunningSession].RelRef)
+                    {
+                        volt = -volt;
+                        current = -current;
+                    }
+
+                    //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " iVmean=" + Vmean.ToString() + " V=" + volt.ToString()); //logchanged
+                    //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " iImean=" + Imean.ToString() + " I=" + current.ToString()); //logchanged
+
+                    //FormEISDScope.UpdateIVDiagram(IVnDataTotal, IVtDataTotal, IVVDataTotal, IVIDataTotal);
+
+                    AllSessionsData[EIS.RunningSession].Charge_V[cnt] = volt;
+                    AllSessionsData[EIS.RunningSession].Charge_I[cnt] = current;
+                    AllSessionsData[EIS.RunningSession].Charge_t[cnt] = Charge_TimeStep * cnt / 1000.0;
+
+
+                    //Corrected till This line
+                    try
+                    {
+                        AllSessionsData[EIS.RunningSession].ReceivedDataCount++;
+                        PBAllSessionsValue++;
+                        SetPBAllSessions(PBAllSessionsValue);
+                        if (AllSessionsData[EIS.RunningSession].ReceivedDataCount == AllSessions[EIS.RunningSession].Chrono_n)
+                        {
+                            if (isCharge_TimerTickSet)
+                            {
+                                Charge_Timer1.Stop();
+                                Charge_Timer1.Dispose();
+                                isCharge_TimerTickSet = false;
+                            }
+                            AllSessions[EIS.RunningSession].isFinished = true;
+
+                            if (AllSessions[EIS.RunningSession].isChBPostProcProbOff)
+                            {
+                                if (isProbOn)
+                                {
+                                    SampleOnBtn_Click(null, null);
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    int iVlt = SetDCVConvert(AllSessions[EIS.RunningSession].IdealVoltage, AllSessions[EIS.RunningSession].Charge_VoltageRangeMode, AllSessions[EIS.RunningSession].Charge_CurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                                    Port.DiscardOutBuffer(); //Clear Buffer
+                                    Port.DiscardInBuffer(); //Clear Buffer
+                                    Port.Write("ivset " + iVlt.ToString() + ReadToChar);
+                                    Port.Write(WriteReadToChar);
+                                    Thread.Sleep(100);
+                                    byte[] AllBytes11 = new byte[4];
+                                    byte[] AllBytes22 = new byte[4];
+                                    AllBytes11[0] = (byte)Port.ReadByte();
+                                    AllBytes11[1] = (byte)Port.ReadByte();
+                                    AllBytes11[2] = (byte)Port.ReadByte();
+                                    AllBytes11[3] = (byte)Port.ReadByte();
+                                    AllBytes22[0] = (byte)Port.ReadByte();
+                                    AllBytes22[1] = (byte)Port.ReadByte();
+                                    AllBytes22[2] = (byte)Port.ReadByte();
+                                    AllBytes22[3] = (byte)Port.ReadByte();
+                                }
+                                catch { }
+                            }
+                            tryNextRun();
+                        }
+
+                    }
+                    catch { }
+                }
+                catch { }
+            }
+            isCharge_TimerTickInProcess = false;
+        }
 
         public static void resetdevice()
         {
@@ -7073,12 +7481,24 @@ namespace EISProjects
                     bw.Write(S.IVVoltageRangeMode);
                     bw.Write(S.IVChrono_VFilter);
                     bw.Write(S.Pulse_VFilter);
-                    bw.Write(S.PulseVoltageRangeMode);
+                    bw.Write(S.PulseVoltagerangeMode);
                     bw.Write(S.PulseCurrentRangeMode);
                     bw.Write(S.PulseVmlp);
                     bw.Write(S.PulseImlpp);
                     bw.Write(S.PulseReadingEdgemode);
                     bw.Write(S.PulseVoltammetryMode);
+                    bw.Write(S.Charge_CurrentCharge);
+                    bw.Write(S.Charge_CurrentDischarge);
+                    bw.Write(S.Charge_VoltageMax);
+                    bw.Write(S.Charge_VoltageMin);
+                    bw.Write(S.Charge_TotalTime);
+                    bw.Write(S.Charge_NumberofCycles);
+                    bw.Write(S.Charge_VoltageRangeMode);
+                    bw.Write(S.Charge_CurrentRangeMode);
+                    bw.Write(S.Charge_Vmlp);
+                    bw.Write(S.Charge_Imlp);
+                    bw.Write(S.Charge_VFilter);
+                    bw.Write(S.Charge_dt);
                     bw.Write(S.DCVoltageConstant);
                     bw.Write(S.DCVoltageFrom);
                     bw.Write(S.DCVoltageStep);
@@ -7242,6 +7662,7 @@ namespace EISProjects
 
                 }
 
+
                 FileProtocol.Close();
                 bw.Close();
 
@@ -7286,12 +7707,12 @@ namespace EISProjects
                     NewSession.ACFrqNStep = br.ReadInt32();
                     NewSession.ACFrqTo = br.ReadDouble();
                     NewSession.active = br.ReadBoolean();
-                    if (Version >= 1016) NewSession.isCVEnable = br.ReadBoolean();
+                    if (Version >= 1016) NewSession.isCVEnable = br.ReadBoolean(); else NewSession.isCVEnable = FactoryDefault.isCVEnable;
                     NewSession.V_OCT = br.ReadDouble();
                     if (Version >= 1012) NewSession.IdealVoltage = br.ReadDouble(); else NewSession.IdealVoltage = FactoryDefault.IdealVoltage;
                     NewSession.isOCP = br.ReadBoolean();
-                    if (Version >= 1015) NewSession.isOCPAutoStart = br.ReadBoolean();
-                    if (Version >= 1014) NewSession.PGmode = br.ReadInt32();
+                    if (Version >= 1015) NewSession.isOCPAutoStart = br.ReadBoolean(); else NewSession.isOCPAutoStart = FactoryDefault.isOCPAutoStart;
+                    if (Version >= 1014) NewSession.PGmode = br.ReadInt32(); else NewSession.PGmode = FactoryDefault.PGmode;
                     NewSession.RelRef = br.ReadBoolean();
                     NewSession.EqTime = br.ReadInt32();
                     NewSession.EISDCCurrentRangeModea = br.ReadInt32();
@@ -7307,14 +7728,29 @@ namespace EISProjects
                     NewSession.EISOCMode = br.ReadInt32();
                     NewSession.EISVoltageRangeMode = br.ReadInt32();
                     NewSession.IVVoltageRangeMode = br.ReadInt32();
-                    if (Version >= 1024) NewSession.IVChrono_VFilter = br.ReadInt32();
-                    if (Version >= 1024) NewSession.Pulse_VFilter = br.ReadInt32();
-                    if (Version >= 1020) NewSession.PulseVoltageRangeMode = br.ReadInt32();
-                    if (Version >= 1020) NewSession.PulseCurrentRangeMode = br.ReadInt32();
-                    if (Version >= 1020) NewSession.PulseVmlp = br.ReadInt32();
-                    if (Version >= 1020) NewSession.PulseImlpp = br.ReadInt32();
-                    if (Version >= 1021) NewSession.PulseReadingEdgemode = br.ReadInt32();
-                    if (Version >= 1022) NewSession.PulseVoltammetryMode = br.ReadInt32();
+
+                    if (Version >= 1024) NewSession.IVChrono_VFilter = br.ReadInt32(); else NewSession.IVChrono_VFilter = FactoryDefault.IVChrono_VFilter;
+                    if (Version >= 1024) NewSession.Pulse_VFilter = br.ReadInt32(); else NewSession.Pulse_VFilter = FactoryDefault.Pulse_VFilter;
+                    if (Version >= 1020) NewSession.PulseVoltagerangeMode = br.ReadInt32(); else NewSession.PulseVoltagerangeMode = FactoryDefault.PulseVoltagerangeMode;
+                    if (Version >= 1020) NewSession.PulseCurrentRangeMode = br.ReadInt32(); else NewSession.PulseCurrentRangeMode = FactoryDefault.PulseCurrentRangeMode;
+                    if (Version >= 1020) NewSession.PulseVmlp = br.ReadInt32(); else NewSession.PulseVmlp = FactoryDefault.PulseVmlp;
+                    if (Version >= 1020) NewSession.PulseImlpp = br.ReadInt32(); else NewSession.PulseImlpp = FactoryDefault.PulseImlpp;
+                    if (Version >= 1021) NewSession.PulseReadingEdgemode = br.ReadInt32(); else NewSession.PulseReadingEdgemode = FactoryDefault.PulseReadingEdgemode;
+                    if (Version >= 1022) NewSession.PulseVoltammetryMode = br.ReadInt32(); else NewSession.PulseVoltammetryMode = FactoryDefault.PulseVoltammetryMode;
+
+                    if (Version >= 1025) NewSession.Charge_CurrentCharge = br.ReadDouble(); else NewSession.Charge_CurrentCharge = FactoryDefault.Charge_CurrentCharge;
+                    if (Version >= 1025) NewSession.Charge_CurrentDischarge = br.ReadDouble(); else NewSession.Charge_CurrentDischarge = FactoryDefault.Charge_CurrentDischarge;
+                    if (Version >= 1025) NewSession.Charge_VoltageMax = br.ReadDouble(); else NewSession.Charge_VoltageMax = FactoryDefault.Charge_VoltageMax;
+                    if (Version >= 1025) NewSession.Charge_VoltageMin = br.ReadDouble(); else NewSession.Charge_VoltageMin = FactoryDefault.Charge_VoltageMin;
+                    if (Version >= 1025) NewSession.Charge_TotalTime = br.ReadInt32(); else NewSession.Charge_TotalTime = FactoryDefault.Charge_TotalTime;
+                    if (Version >= 1025) NewSession.Charge_NumberofCycles = br.ReadInt32(); else NewSession.Charge_NumberofCycles = FactoryDefault.Charge_NumberofCycles;
+                    if (Version >= 1025) NewSession.Charge_VoltageRangeMode = br.ReadInt32(); else NewSession.Charge_VoltageRangeMode = FactoryDefault.Charge_VoltageRangeMode;
+                    if (Version >= 1025) NewSession.Charge_CurrentRangeMode = br.ReadInt32(); else NewSession.Charge_CurrentRangeMode = FactoryDefault.Charge_CurrentRangeMode;
+                    if (Version >= 1025) NewSession.Charge_Vmlp = br.ReadInt32(); else NewSession.Charge_Vmlp = FactoryDefault.Charge_Vmlp;
+                    if (Version >= 1025) NewSession.Charge_Imlp = br.ReadInt32(); else NewSession.Charge_Imlp = FactoryDefault.Charge_Imlp;
+                    if (Version >= 1025) NewSession.Charge_VFilter = br.ReadInt32(); else NewSession.Charge_VFilter = FactoryDefault.Charge_VFilter;
+                    if (Version >= 1025) NewSession.Charge_dt = br.ReadInt32(); else NewSession.Charge_dt = FactoryDefault.Charge_dt;
+
                     NewSession.DCVoltageConstant = br.ReadDouble();
                     NewSession.DCVoltageFrom = br.ReadDouble();
                     NewSession.DCVoltageStep = br.ReadInt32();
@@ -7324,56 +7760,56 @@ namespace EISProjects
                     NewSession.IVImlp = br.ReadInt32();
                     NewSession.IVVoltageFrom = br.ReadDouble();
                     NewSession.IVVoltageNStepp = br.ReadInt32();
-                    if (Version >= 1016) NewSession.CVStartpoint = br.ReadDouble();
-                    if (Version >= 1017) NewSession.PretreatmentVoltage = br.ReadDouble();
-                    if (Version >= 1017) NewSession.isPreProcProbOn = br.ReadBoolean();
-                    if (Version >= 1017) NewSession.isChBPostProcProbOff = br.ReadBoolean();
-                    if (Version >= 1016) NewSession.CVItteration = br.ReadInt32();
+                    if (Version >= 1016) NewSession.CVStartpoint = br.ReadDouble(); else NewSession.CVStartpoint = FactoryDefault.CVStartpoint;
+                    if (Version >= 1017) NewSession.PretreatmentVoltage = br.ReadDouble(); else NewSession.PretreatmentVoltage = FactoryDefault.PretreatmentVoltage;
+                    if (Version >= 1017) NewSession.isPreProcProbOn = br.ReadBoolean(); else NewSession.isPreProcProbOn = FactoryDefault.isPreProcProbOn;
+                    if (Version >= 1017) NewSession.isChBPostProcProbOff = br.ReadBoolean(); else NewSession.isChBPostProcProbOff = FactoryDefault.isChBPostProcProbOff;
+                    if (Version >= 1016) NewSession.CVItteration = br.ReadInt32(); else NewSession.CVItteration = FactoryDefault.CVItteration;
                     NewSession.IVvoltageTo = br.ReadDouble();
-                    if (Version >= 1019) NewSession.ChronoEndTime = br.ReadDouble();
+                    if (Version >= 1019) NewSession.ChronoEndTime = br.ReadDouble(); else NewSession.ChronoEndTime = FactoryDefault.ChronoEndTime;
                     NewSession.IVTimestep = br.ReadInt32();
 
-                    if (Version >= 1018) NewSession.Chrono_n = br.ReadInt32();
-                    if (Version >= 1018) NewSession.Chrono_Total_Period = br.ReadDouble();
-                    if (Version >= 1018) NewSession.Chrono_Pulse_Period = br.ReadDouble();
-                    if (Version >= 1018) NewSession.Chrono_Pulse_Level = br.ReadDouble();
-                    if (Version >= 1018) NewSession.Chrono_Pulse_Amplitude = br.ReadDouble();
-                    if (Version >= 1018) NewSession.Chrono_Level_Step = br.ReadDouble();
-                    if (Version >= 1018) NewSession.Chrono_Amplitude_step = br.ReadDouble();
-                    if (Version >= 1019) NewSession.Chrono_isfast = br.ReadBoolean();
+                    if (Version >= 1018) NewSession.Chrono_n = br.ReadInt32(); else NewSession.Chrono_n = FactoryDefault.Chrono_n;
+                    if (Version >= 1018) NewSession.Chrono_Total_Period = br.ReadDouble(); else NewSession.Chrono_Total_Period = FactoryDefault.Chrono_Total_Period;
+                    if (Version >= 1018) NewSession.Chrono_Pulse_Period = br.ReadDouble(); else NewSession.Chrono_Pulse_Period = FactoryDefault.Chrono_Pulse_Period;
+                    if (Version >= 1018) NewSession.Chrono_Pulse_Level = br.ReadDouble(); else NewSession.Chrono_Pulse_Level = FactoryDefault.Chrono_Pulse_Level;
+                    if (Version >= 1018) NewSession.Chrono_Pulse_Amplitude = br.ReadDouble(); else NewSession.Chrono_Pulse_Amplitude = FactoryDefault.Chrono_Pulse_Amplitude;
+                    if (Version >= 1018) NewSession.Chrono_Level_Step = br.ReadDouble(); else NewSession.Chrono_Level_Step = FactoryDefault.Chrono_Level_Step;
+                    if (Version >= 1018) NewSession.Chrono_Amplitude_step = br.ReadDouble(); else NewSession.Chrono_Amplitude_step = FactoryDefault.Chrono_Amplitude_step;
+                    if (Version >= 1019) NewSession.Chrono_isfast = br.ReadBoolean(); else NewSession.Chrono_isfast = FactoryDefault.Chrono_isfast;
 
-                    if (Version >= 1023) NewSession.Chrono_nsteps = br.ReadInt32();
-                    if (Version >= 1023) NewSession.Chrono_t1 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t2 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t3 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t4 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t5 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t6 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t7 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t8 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t9 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_t10 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v1 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v2 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v3 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v4 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v5 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v6 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v7 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v8 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v9 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_v10 = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_dt = br.ReadDouble();
-                    if (Version >= 1023) NewSession.Chrono_ocp1 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp2 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp3 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp4 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp5 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp6 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp7 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp8 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp9 = br.ReadBoolean();
-                    if (Version >= 1023) NewSession.Chrono_ocp10 = br.ReadBoolean();
+                    if (Version >= 1023) NewSession.Chrono_nsteps = br.ReadInt32(); else NewSession.Chrono_nsteps = FactoryDefault.Chrono_nsteps;
+                    if (Version >= 1023) NewSession.Chrono_t1 = br.ReadDouble(); else NewSession.Chrono_t1 = FactoryDefault.Chrono_t1;
+                    if (Version >= 1023) NewSession.Chrono_t2 = br.ReadDouble(); else NewSession.Chrono_t2 = FactoryDefault.Chrono_t2;
+                    if (Version >= 1023) NewSession.Chrono_t3 = br.ReadDouble(); else NewSession.Chrono_t3 = FactoryDefault.Chrono_t3;
+                    if (Version >= 1023) NewSession.Chrono_t4 = br.ReadDouble(); else NewSession.Chrono_t4 = FactoryDefault.Chrono_t4;
+                    if (Version >= 1023) NewSession.Chrono_t5 = br.ReadDouble(); else NewSession.Chrono_t5 = FactoryDefault.Chrono_t5;
+                    if (Version >= 1023) NewSession.Chrono_t6 = br.ReadDouble(); else NewSession.Chrono_t6 = FactoryDefault.Chrono_t6;
+                    if (Version >= 1023) NewSession.Chrono_t7 = br.ReadDouble(); else NewSession.Chrono_t7 = FactoryDefault.Chrono_t7;
+                    if (Version >= 1023) NewSession.Chrono_t8 = br.ReadDouble(); else NewSession.Chrono_t8 = FactoryDefault.Chrono_t8;
+                    if (Version >= 1023) NewSession.Chrono_t9 = br.ReadDouble(); else NewSession.Chrono_t9 = FactoryDefault.Chrono_t9;
+                    if (Version >= 1023) NewSession.Chrono_t10 = br.ReadDouble(); else NewSession.Chrono_t10 = FactoryDefault.Chrono_t10;
+                    if (Version >= 1023) NewSession.Chrono_v1 = br.ReadDouble(); else NewSession.Chrono_v1 = FactoryDefault.Chrono_v1;
+                    if (Version >= 1023) NewSession.Chrono_v2 = br.ReadDouble(); else NewSession.Chrono_v2 = FactoryDefault.Chrono_v2;
+                    if (Version >= 1023) NewSession.Chrono_v3 = br.ReadDouble(); else NewSession.Chrono_v3 = FactoryDefault.Chrono_v3;
+                    if (Version >= 1023) NewSession.Chrono_v4 = br.ReadDouble(); else NewSession.Chrono_v4 = FactoryDefault.Chrono_v4;
+                    if (Version >= 1023) NewSession.Chrono_v5 = br.ReadDouble(); else NewSession.Chrono_v5 = FactoryDefault.Chrono_v5;
+                    if (Version >= 1023) NewSession.Chrono_v6 = br.ReadDouble(); else NewSession.Chrono_v6 = FactoryDefault.Chrono_v6;
+                    if (Version >= 1023) NewSession.Chrono_v7 = br.ReadDouble(); else NewSession.Chrono_v7 = FactoryDefault.Chrono_v7;
+                    if (Version >= 1023) NewSession.Chrono_v8 = br.ReadDouble(); else NewSession.Chrono_v8 = FactoryDefault.Chrono_v8;
+                    if (Version >= 1023) NewSession.Chrono_v9 = br.ReadDouble(); else NewSession.Chrono_v9 = FactoryDefault.Chrono_v9;
+                    if (Version >= 1023) NewSession.Chrono_v10 = br.ReadDouble(); else NewSession.Chrono_v10 = FactoryDefault.Chrono_v10;
+                    if (Version >= 1023) NewSession.Chrono_dt = br.ReadDouble(); else NewSession.Chrono_dt = FactoryDefault.Chrono_dt;
+                    if (Version >= 1023) NewSession.Chrono_ocp1 = br.ReadBoolean(); else NewSession.Chrono_ocp1 = FactoryDefault.Chrono_ocp1;
+                    if (Version >= 1023) NewSession.Chrono_ocp2 = br.ReadBoolean(); else NewSession.Chrono_ocp2 = FactoryDefault.Chrono_ocp2;
+                    if (Version >= 1023) NewSession.Chrono_ocp3 = br.ReadBoolean(); else NewSession.Chrono_ocp3 = FactoryDefault.Chrono_ocp3;
+                    if (Version >= 1023) NewSession.Chrono_ocp4 = br.ReadBoolean(); else NewSession.Chrono_ocp4 = FactoryDefault.Chrono_ocp4;
+                    if (Version >= 1023) NewSession.Chrono_ocp5 = br.ReadBoolean(); else NewSession.Chrono_ocp5 = FactoryDefault.Chrono_ocp5;
+                    if (Version >= 1023) NewSession.Chrono_ocp6 = br.ReadBoolean(); else NewSession.Chrono_ocp6 = FactoryDefault.Chrono_ocp6;
+                    if (Version >= 1023) NewSession.Chrono_ocp7 = br.ReadBoolean(); else NewSession.Chrono_ocp7 = FactoryDefault.Chrono_ocp7;
+                    if (Version >= 1023) NewSession.Chrono_ocp8 = br.ReadBoolean(); else NewSession.Chrono_ocp8 = FactoryDefault.Chrono_ocp8;
+                    if (Version >= 1023) NewSession.Chrono_ocp9 = br.ReadBoolean(); else NewSession.Chrono_ocp9 = FactoryDefault.Chrono_ocp9;
+                    if (Version >= 1023) NewSession.Chrono_ocp10 = br.ReadBoolean(); else NewSession.Chrono_ocp10 = FactoryDefault.Chrono_ocp10;
                     NewSession.index = br.ReadInt32(); NewSession.index = EIS.nSsn;
                     NewSession.isACAmpConstant = br.ReadBoolean();
                     NewSession.isACFrqConstant = br.ReadBoolean();
@@ -7381,7 +7817,7 @@ namespace EISProjects
                     NewSession.isFinished = br.ReadBoolean();
                     NewSession.isStarted = br.ReadBoolean();
                     NewSession.name = br.ReadString();
-                    if (Version >= 1017) NewSession.DataAndTime = br.ReadString();
+                    if (Version >= 1017) NewSession.DataAndTime = br.ReadString(); else NewSession.IVChrono_VFilter = FactoryDefault.IVChrono_VFilter;
                     NewSession.nCircuits = br.ReadInt32();
 
                     AllSessions.Add(NewSession);
@@ -7658,7 +8094,9 @@ namespace EISProjects
 
         private void CBMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ((CBMode.SelectedIndex == 0 && Settings.isEIS) || (CBMode.SelectedIndex == 1 && Settings.isMSH) || (CBMode.SelectedIndex == 2 && Settings.isChrono) || (CBMode.SelectedIndex == 3 && (Settings.isIV0 || Settings.isCV)) || (CBMode.SelectedIndex == 4 && Settings.isPulse))
+            if ((CBMode.SelectedIndex == 0 && Settings.isEIS) || (CBMode.SelectedIndex == 1 && Settings.isMSH) ||
+                (CBMode.SelectedIndex == 2 && Settings.isChrono) || (CBMode.SelectedIndex == 3 && (Settings.isIV0 || Settings.isCV)) ||
+                (CBMode.SelectedIndex == 4 && Settings.isPulse) || (CBMode.SelectedIndex == 5 && Settings.isCharge))
             {
                 AllSessions[Selected].Mode = CBMode.SelectedIndex;
             }
@@ -7755,13 +8193,27 @@ namespace EISProjects
             NewSession.EISVoltageRangeMode = AllSessions[Index].EISVoltageRangeMode;
             NewSession.IVVoltageRangeMode = AllSessions[Index].IVVoltageRangeMode;
             NewSession.IVChrono_VFilter = AllSessions[Index].IVChrono_VFilter;
+
             NewSession.Pulse_VFilter = AllSessions[Index].Pulse_VFilter;
-            NewSession.PulseVoltageRangeMode = AllSessions[Index].PulseVoltageRangeMode;
+            NewSession.PulseVoltagerangeMode = AllSessions[Index].PulseVoltagerangeMode;
             NewSession.PulseCurrentRangeMode = AllSessions[Index].PulseCurrentRangeMode;
             NewSession.PulseVmlp = AllSessions[Index].PulseVmlp;
             NewSession.PulseImlpp = AllSessions[Index].PulseImlpp;
             NewSession.PulseReadingEdgemode = AllSessions[Index].PulseReadingEdgemode;
             NewSession.PulseVoltammetryMode = AllSessions[Index].PulseVoltammetryMode;
+
+            NewSession.Charge_CurrentCharge = AllSessions[Index].Charge_CurrentCharge;
+            NewSession.Charge_CurrentDischarge = AllSessions[Index].Charge_CurrentDischarge;
+            NewSession.Charge_VoltageMax = AllSessions[Index].Charge_VoltageMax;
+            NewSession.Charge_VoltageMin = AllSessions[Index].Charge_VoltageMin;
+            NewSession.Charge_TotalTime = AllSessions[Index].Charge_TotalTime;
+            NewSession.Charge_NumberofCycles = AllSessions[Index].Charge_NumberofCycles;
+            NewSession.Charge_VoltageRangeMode = AllSessions[Index].Charge_VoltageRangeMode;
+            NewSession.Charge_CurrentRangeMode = AllSessions[Index].Charge_CurrentRangeMode;
+            NewSession.Charge_Vmlp = AllSessions[Index].Charge_Vmlp;
+            NewSession.Charge_Imlp = AllSessions[Index].Charge_Imlp;
+            NewSession.Charge_VFilter = AllSessions[Index].Charge_VFilter;
+            NewSession.Charge_dt = AllSessions[Index].Charge_dt;
 
             NewSession.DCVoltageConstant = AllSessions[Index].DCVoltageConstant;
             NewSession.DCVoltageFrom = AllSessions[Index].DCVoltageFrom;
@@ -8342,6 +8794,7 @@ namespace EISProjects
                 bw.Write(++counter); bw.Write(Settings.isIV0);
                 bw.Write(++counter); bw.Write(Settings.isChrono);
                 bw.Write(++counter); bw.Write(Settings.isPulse);
+                bw.Write(++counter); bw.Write(Settings.isCharge);
 
                 bw.Write(++counter); bw.Write(Settings.GalvanostatI_Select4);
                 bw.Write(++counter); bw.Write(Settings.GalvanostatI_Select5);
@@ -8464,6 +8917,7 @@ namespace EISProjects
             Settings.isIV0 = Form1.FactoryDefault.isIV0;
             Settings.isCV = Form1.FactoryDefault.isCV;
             Settings.isPulse = Form1.FactoryDefault.isPulse;
+            Settings.isCharge = Form1.FactoryDefault.isCharge;
 
             Settings.GalvanostatI_Select4 = Form1.FactoryDefault.GalvanostatI_Select4;
             Settings.GalvanostatI_Select5 = Form1.FactoryDefault.GalvanostatI_Select5;
@@ -8638,6 +9092,7 @@ namespace EISProjects
                     br.ReadByte(); Settings.isIV0 = br.ReadBoolean();
                     br.ReadByte(); Settings.isChrono = br.ReadBoolean();
                     br.ReadByte(); Settings.isPulse = br.ReadBoolean();
+                    br.ReadByte(); Settings.isCharge = br.ReadBoolean();
 
                     br.ReadByte(); Settings.GalvanostatI_Select4 = br.ReadSingle();
                     br.ReadByte(); Settings.GalvanostatI_Select5 = br.ReadSingle();
@@ -10748,6 +11203,7 @@ namespace EISProjects
             if (Settings.isIV0) nMethods++;
             if (Settings.isChrono) nMethods++;
             if (Settings.isPulse) nMethods++;
+            if (Settings.isCharge) nMethods++;
 
             if (nMethods < 2)
             {
@@ -11670,8 +12126,8 @@ namespace EISProjects
             if (Form1.AllSessions[Form1.Selected].PulseVoltammetryMode != 2) AddPoint(0, TotalPeriod + (n - 1) * TotalPeriod, PulseLevel + n * LevelStep);
 
             double Thereshold = 0;
-            if (AllSessions[Selected].PulseVoltageRangeMode == 0) Thereshold = 5;
-            if (AllSessions[Selected].PulseVoltageRangeMode == 1) Thereshold = 1;
+            if (AllSessions[Selected].PulseVoltagerangeMode == 0) Thereshold = 5;
+            if (AllSessions[Selected].PulseVoltagerangeMode == 1) Thereshold = 1;
 
             double xmin = -t2;
             double xmax = TotalPeriod + (n - 1) * TotalPeriod;
@@ -11729,7 +12185,7 @@ namespace EISProjects
             if (isCBPulseVoltageRangeCompleted)
             {
                 isCBPulseVoltageRangeCompleted = false;
-                AllSessions[Selected].PulseVoltageRangeMode = CBPulseVoltageRangeMode.SelectedIndex;
+                AllSessions[Selected].PulseVoltagerangeMode = CBPulseVoltageRangeMode.SelectedIndex;
                 //LoadSelectedProperties();
                 UpdatePulse();
                 isCBPulseVoltageRangeCompleted = true;
@@ -11744,7 +12200,7 @@ namespace EISProjects
             if (isPulseVmlpCompleted && AllSessions[Selected].PulseVmlp != CBPulseVmlp.SelectedIndex)
             {
                 isPulseVmlpCompleted = false;
-                AllSessions[Selected].IVVmlp = CBPulseVmlp.SelectedIndex;
+                AllSessions[Selected].PulseVmlp = CBPulseVmlp.SelectedIndex;
                 //LoadSelectedProperties();
                 isPulseRangesChanged = true;
                 isPulseVmlpCompleted = true;
@@ -12187,6 +12643,160 @@ namespace EISProjects
         private void comboBox_Post_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void CBCharge_VoltageRangeMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isCBCharge_VoltageRangeCompleted)
+            {
+                isCBCharge_VoltageRangeCompleted = false;
+                AllSessions[Selected].Charge_VoltageRangeMode = CBCharge_VoltageRangeMode.SelectedIndex;
+                isCBCharge_VoltageRangeCompleted = true;
+            }
+        }
+
+        private void CBCharge_Vmlp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isCharge_VmlpCompleted && AllSessions[Selected].Charge_Vmlp != CBCharge_Vmlp.SelectedIndex)
+            {
+                isCharge_VmlpCompleted = false;
+                AllSessions[Selected].Charge_Vmlp = CBCharge_Vmlp.SelectedIndex;
+                //LoadSelectedProperties();
+                isCharge_RangesChanged = true;
+                isCharge_VmlpCompleted = true;
+                //VMLP.Focus();
+            }
+        }
+
+        private void CBCharge_CurrentRangeMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isCBCharge_RangeCompleted && AllSessions[Selected].Charge_CurrentRangeMode != CBCharge_CurrentRangeMode.SelectedIndex)
+            {
+                isCBCharge_RangeCompleted = false;
+                /*if (CBIVRange.SelectedIndex < 2)
+                {
+                    AllSessions[Selected].IVCurrentRangeMode = CBIVRange.SelectedIndex;
+                }
+                else
+                {
+                    MessageBox.Show("You are not allowed to change to this range manually ...");
+                }*/
+                AllSessions[Selected].Charge_CurrentRangeMode = CBCharge_CurrentRangeMode.SelectedIndex;
+                //LoadSelectedProperties();
+
+
+                isCharge_VmlpCompleted = false;
+                isCharge_ImlpCompleted = false;
+
+                CBCharge_Vmlp.Items.Clear();
+                CBCharge_Imlp.Items.Clear();
+
+                int pow2mlp = 1;
+                for (int mlp = 0; mlp < 7; mlp++)
+                {
+                    double Vmax = Settings.GetDCV_Domain;
+                    double Imax = 0;
+
+                    if (CBCharge_CurrentRangeMode.SelectedIndex == 0)
+                        Imax = 1;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 1)
+                        Imax = 100;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 2)
+                        Imax = 10;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 3)  //Added in EISProject66
+                        Imax = 1;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 4)  //Added in EISProject71
+                        Imax = 100;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 5)  //Added in EISProject71
+                        Imax = 10;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 6)  //Added in EISProject71
+                        Imax = 1;
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 7)  //Added in EISProject71
+                        Imax = 100;
+
+                    double dImax = 1.0 * Imax / pow2mlp;
+                    double dVmax = 1.0 * Vmax / pow2mlp;
+
+                    double Ifact = Math.Pow(10, Math.Floor(Math.Log10(dImax)));
+                    double Vfact = Math.Pow(10, Math.Floor(Math.Log10(dVmax)));
+                    dImax = Math.Floor(dImax / Ifact) * Ifact;
+                    dVmax = Math.Floor(dVmax / Vfact) * Vfact;
+
+                    CBCharge_Vmlp.Items.Add("[-" + dVmax.ToString() + "(V)  ..  " + dVmax.ToString() + "(V)]");
+
+                    if (CBCharge_CurrentRangeMode.SelectedIndex <= 0)
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(A)  ..  " + dImax.ToString() + "(A)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 1)
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(mA)  ..  " + dImax.ToString() + "(mA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 2)
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(mA)  ..  " + dImax.ToString() + "(mA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 3)                                                          //Added in EISProject66
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(mA)  ..  " + dImax.ToString() + "(mA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 4)                                                          //Added in EISProject71
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(uA)  ..  " + dImax.ToString() + "(uA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.000001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 5)                                                          //Added in EISProject71
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(uA)  ..  " + dImax.ToString() + "(uA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.000001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 6)                                                          //Added in EISProject71
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(uA)  ..  " + dImax.ToString() + "(uA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.000001;
+                    }
+                    else if (CBCharge_CurrentRangeMode.SelectedIndex == 7)                                                          //Added in EISProject71
+                    {
+                        CBCharge_Imlp.Items.Add("[-" + dImax.ToString() + "(nA)  ..  " + dImax.ToString() + "(nA)]");
+                        if (AllSessions[Selected].Charge_Imlp == mlp) Charge_MaxFineCurrent = dImax * 0.000000001;
+                    }
+
+                    pow2mlp = pow2mlp * 2;
+                }
+
+                CBCharge_Vmlp.SelectedIndex = AllSessions[Selected].Charge_Vmlp;
+                CBCharge_Imlp.SelectedIndex = AllSessions[Selected].Charge_Imlp;
+
+                isCharge_VmlpCompleted = true;
+                isCharge_ImlpCompleted = true;
+
+                isCharge_RangesChanged = true;
+                isCBCharge_RangeCompleted = true;
+                //CBIVRange.Focus();
+                LoadSelectedProperties();
+            }
+        }
+
+        private void CBCharge_Imlp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isCharge_ImlpCompleted && AllSessions[Selected].Charge_Imlp != CBCharge_Imlp.SelectedIndex)
+            {
+                isCharge_ImlpCompleted = false;
+                AllSessions[Selected].Charge_Imlp = CBCharge_Imlp.SelectedIndex;
+                //LoadSelectedProperties();
+                isCharge_RangesChanged = true;
+                isCharge_ImlpCompleted = true;
+                //IMLP.Focus();
+            }
+        }
+
+        private void CBCharge_VFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AllSessions[Selected].Charge_VFilter = CBCharge_VFilter.SelectedIndex;
         }
 
         private void IVChronoVFilter_SelectedIndexChanged(object sender, EventArgs e)

@@ -321,6 +321,7 @@ namespace EISProjects
             isIV.Checked = Form1.Settings.isIV0;
             isCV.Checked = Form1.Settings.isCV;
             isPulse.Checked = Form1.Settings.isPulse;
+            isCharge.Checked = Form1.Settings.isCharge;
 
             SetACI_Select0.Text = Form1.Settings.GalvanostatI_Select4.ToString();
             SetACI_Select1.Text = Form1.Settings.GalvanostatI_Select5.ToString();
@@ -688,6 +689,11 @@ namespace EISProjects
         private void ChBIsPulse_CheckedChanged(object sender, EventArgs e)
         {
             Form1.Settings.isPulse = isPulse.Checked;
+        }
+
+        private void isCharge_CheckedChanged(object sender, EventArgs e)
+        {
+            Form1.Settings.isCharge = isCharge.Checked;
         }
     }
 }

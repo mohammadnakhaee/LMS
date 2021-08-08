@@ -902,12 +902,25 @@ public class SampleTicks : FrameChart {
             NewSession.IVChrono_VFilter = Form1.AllSessions[Index].IVChrono_VFilter;
             NewSession.Pulse_VFilter = Form1.AllSessions[Index].Pulse_VFilter;
 
-            NewSession.PulseVoltageRangeMode = Form1.AllSessions[Index].PulseVoltageRangeMode;
+            NewSession.PulseVoltagerangeMode = Form1.AllSessions[Index].PulseVoltagerangeMode;
             NewSession.PulseCurrentRangeMode = Form1.AllSessions[Index].PulseCurrentRangeMode;
             NewSession.PulseVmlp = Form1.AllSessions[Index].PulseVmlp;
             NewSession.PulseImlpp = Form1.AllSessions[Index].PulseImlpp;
             NewSession.PulseReadingEdgemode = Form1.AllSessions[Index].PulseReadingEdgemode;
             NewSession.PulseVoltammetryMode = Form1.AllSessions[Index].PulseVoltammetryMode;
+
+            NewSession.Charge_CurrentCharge = Form1.AllSessions[Index].Charge_CurrentCharge;
+            NewSession.Charge_CurrentDischarge = Form1.AllSessions[Index].Charge_CurrentDischarge;
+            NewSession.Charge_VoltageMax = Form1.AllSessions[Index].Charge_VoltageMax;
+            NewSession.Charge_VoltageMin = Form1.AllSessions[Index].Charge_VoltageMin;
+            NewSession.Charge_TotalTime = Form1.AllSessions[Index].Charge_TotalTime;
+            NewSession.Charge_NumberofCycles = Form1.AllSessions[Index].Charge_NumberofCycles;
+            NewSession.Charge_VoltageRangeMode = Form1.AllSessions[Index].Charge_VoltageRangeMode;
+            NewSession.Charge_CurrentRangeMode = Form1.AllSessions[Index].Charge_CurrentRangeMode;
+            NewSession.Charge_Vmlp = Form1.AllSessions[Index].Charge_Vmlp;
+            NewSession.Charge_Imlp = Form1.AllSessions[Index].Charge_Imlp;
+            NewSession.Charge_VFilter = Form1.AllSessions[Index].Charge_VFilter;
+            NewSession.Charge_dt = Form1.AllSessions[Index].Charge_dt;
 
             NewSession.DCVoltageConstant = Form1.AllSessions[Index].DCVoltageConstant;
             NewSession.DCVoltageFrom = Form1.AllSessions[Index].DCVoltageFrom;
