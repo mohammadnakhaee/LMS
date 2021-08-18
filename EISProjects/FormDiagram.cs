@@ -678,6 +678,17 @@ public class SampleTicks : FrameChart {
                         else if (Form1.AllSessions[PlotIndex].PulseCurrentRangeMode == 7)
                             PGxunit = "[nA]";
                     }
+                    else if (Form1.AllSessions[PlotIndex].Mode == 5)
+                    {
+                        if (Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode == 0)
+                            PGxunit = "[A]";
+                        else if (Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode >= 1 && Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode <= 3)
+                            PGxunit = "[mA]";
+                        else if (Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode >= 4 && Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode <= 6)
+                            PGxunit = "[uA]";
+                        else if (Form1.AllSessions[PlotIndex].Charge_CurrentRangeMode == 7)
+                            PGxunit = "[nA]";
+                    }
                     NormalVoltPGCurrent = "Current " + PGxunit;
                     NormalCurrentPGVolt = "Real Current [A]";
                     NormalSetVoltPGSetCurrent = "Voltage [V]";
@@ -768,7 +779,20 @@ public class SampleTicks : FrameChart {
 
                     }
 
-                    if (Form1.AllSessions[PlotIndex].Mode == 3)
+                    if (Form1.AllSessions[PlotIndex].Mode == 5)
+                    {
+                        CBXAxis.Items.Add(NormalVoltPGCurrent);
+                        CBYAxis.Items.Add(NormalVoltPGCurrent);
+
+                        CBXAxis.Items.Add(NormalCurrentPGVolt);
+                        CBYAxis.Items.Add(NormalCurrentPGVolt);
+
+                        CBXAxis.Items.Add("Time [sec]");
+                        CBYAxis.Items.Add("Time [sec]");
+                        
+                    }
+
+                    if (Form1.AllSessions[PlotIndex].Mode == 3 || Form1.AllSessions[PlotIndex].Mode == 5)
                     {
                         CBYAxis.Items.Add("Log(I)");
                         CBYAxis.Items.Add("Log(t)");
@@ -794,6 +818,15 @@ public class SampleTicks : FrameChart {
                             CBYAxis.SelectedIndex = 3;
                         else
                             CBYAxis.SelectedIndex = 1;
+                    }
+
+                    if (Form1.AllSessions[PlotIndex].Mode == 5)
+                    {
+                        CBXAxis.SelectedIndex = 2;
+                        if (Form1.AllSessions[Form1.Selected].PGmode == 3)
+                            CBYAxis.SelectedIndex = 0;
+                        else
+                            CBYAxis.SelectedIndex = 0;
                     }
 
                     CBIUnit.SelectedIndex = 2;
@@ -914,13 +947,14 @@ public class SampleTicks : FrameChart {
             NewSession.Charge_VoltageMax = Form1.AllSessions[Index].Charge_VoltageMax;
             NewSession.Charge_VoltageMin = Form1.AllSessions[Index].Charge_VoltageMin;
             NewSession.Charge_TotalTime = Form1.AllSessions[Index].Charge_TotalTime;
-            NewSession.Charge_NumberofCycles = Form1.AllSessions[Index].Charge_NumberofCycles;
+            NewSession.Charge_NumberOfCycles = Form1.AllSessions[Index].Charge_NumberOfCycles;
+            NewSession.Charge_DataCount = Form1.AllSessions[Index].Charge_DataCount;
             NewSession.Charge_VoltageRangeMode = Form1.AllSessions[Index].Charge_VoltageRangeMode;
             NewSession.Charge_CurrentRangeMode = Form1.AllSessions[Index].Charge_CurrentRangeMode;
             NewSession.Charge_Vmlp = Form1.AllSessions[Index].Charge_Vmlp;
             NewSession.Charge_Imlp = Form1.AllSessions[Index].Charge_Imlp;
             NewSession.Charge_VFilter = Form1.AllSessions[Index].Charge_VFilter;
-            NewSession.Charge_dt = Form1.AllSessions[Index].Charge_dt;
+            NewSession.Charge_dt_ms = Form1.AllSessions[Index].Charge_dt_ms;
 
             NewSession.DCVoltageConstant = Form1.AllSessions[Index].DCVoltageConstant;
             NewSession.DCVoltageFrom = Form1.AllSessions[Index].DCVoltageFrom;
@@ -1145,6 +1179,60 @@ public class SampleTicks : FrameChart {
                         if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].ReZ[narray - 1];
                         if (YAxisIndex == 2) MinY = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
                         if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].ReZ[narray - 1];
+
+                        if (Form1.AllSessions[PlotIndex].isFinished)
+                        {
+                            PlotIVLine(chart1, xArray, yArray,
+                            nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+                        }
+                        else
+                        {
+                            PlotIVPoint(chart1, xArray, yArray,
+                            nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+                        }
+
+                    }
+                    else if (Form1.AllSessions[PlotIndex].Mode == 5)
+                    {
+                        xArray = new double[nDate];
+                        yArray = new double[nDate];
+                        if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_V[i]; //NormalVoltPGCurrent
+                        if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_I[i]; //NormalCurrentPGVolt
+                        if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_t[i]; //Time [sec]
+                        //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+
+                        if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_V[i]; //NormalVoltPGCurrent
+                        if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_I[i]; //NormalCurrentPGVolt
+                        if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_t[i]; //Time [sec]
+                        //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+                        if (YAxisIndex == 3)
+                            for (int i = 0; i < nDate; i++)
+                            {
+                                double x = Form1.AllSessionsData[PlotIndex].Charge_I[i];
+                                if (x == 0) x = 0.00001;
+                                yArray[i] = Math.Log(Math.Abs(x)); //Log(NormalCurrentPGVolt)
+                            }
+                        if (YAxisIndex == 4)
+                            for (int i = 0; i < nDate; i++)
+                            {
+                                double x = Form1.AllSessionsData[PlotIndex].Charge_t[i];
+                                if (x == 0) x = 0.00001;
+                                yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
+                            }
+
+                        /*int narray = Form1.AllSessionsData[EIS.RunningSession].Charge_t.Length;
+                        if (XAxisIndex == 2) MinX = Form1.AllSessionsData[EIS.RunningSession].Charge_t[0];
+                        if (YAxisIndex == 2) MinY = Form1.AllSessionsData[EIS.RunningSession].Charge_t[0];
+                        if (nDate > 0)
+                        {
+                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].Charge_t[nDate - 1];
+                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].Charge_t[nDate - 1];
+                        }
+                        else
+                        {
+                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].Charge_t[0];
+                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].Charge_t[0];
+                        }*/
 
                         if (Form1.AllSessions[PlotIndex].isFinished)
                         {
@@ -1476,8 +1564,25 @@ public class SampleTicks : FrameChart {
                     if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.ReZ[i];
                     if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Imz[i];
 
+                    if (YAxisIndex == 4)
+                        for (int i = 0; i < nDate; i++)
+                        {
+                            double x = SelfStandingSessionData.Amp[i];
+                            if (x == 0) x = 0.00001;
+                            yArray[i] = Math.Log(Math.Abs(x)); //Log(NormalCurrentPGVolt)
+                        }
+                    if (YAxisIndex == 5)
+                        for (int i = 0; i < nDate; i++)
+                        {
+                            double x = SelfStandingSessionData.ReZ[i];
+                            if (x == 0) x = 0.00001;
+                            yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
+                        }
 
-                    if (Form1.AllSessions[PlotIndex].isFinished)
+                    PlotIVLine(chart1, xArray, yArray,
+                        nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+
+                    /*if (Form1.AllSessions[PlotIndex].isFinished)
                     {
                         PlotIVLine(chart1, xArray, yArray,
                         nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
@@ -1486,7 +1591,50 @@ public class SampleTicks : FrameChart {
                     {
                         PlotIVPoint(chart1, xArray, yArray,
                         nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+                    }*/
+                }
+                else if (Form1.AllSessions[PlotIndex].Mode == 5)
+                {
+                    xArray = new double[nDate];
+                    yArray = new double[nDate];
+                    if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Charge_V[i]; //NormalVoltPGCurrent
+                    if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Charge_I[i]; //NormalCurrentPGVolt
+                    if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Charge_t[i]; //Time [sec]
+                                                                                                                                   //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+
+                    if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Charge_V[i]; //NormalVoltPGCurrent
+                    if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Charge_I[i]; //NormalCurrentPGVolt
+                    if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Charge_t[i]; //Time [sec]
+                                                                                                                                   //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+                    if (YAxisIndex == 3)
+                        for (int i = 0; i < nDate; i++)
+                        {
+                            double x = SelfStandingSessionData.Charge_I[i];
+                            if (x == 0) x = 0.00001;
+                            yArray[i] = Math.Log(Math.Abs(x)); //Log(NormalCurrentPGVolt)
+                        }
+                    if (YAxisIndex == 4)
+                        for (int i = 0; i < nDate; i++)
+                        {
+                            double x = SelfStandingSessionData.Charge_t[i];
+                            if (x == 0) x = 0.00001;
+                            yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
+                        }
+
+                    PlotIVLine(chart1, xArray, yArray,
+                        nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+
+                    /*if (Form1.AllSessions[PlotIndex].isFinished)
+                    {
+                       PlotIVLine(chart1, xArray, yArray,
+                        nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString()); 
                     }
+                    else
+                    {
+                        PlotIVPoint(chart1, xArray, yArray,
+                        nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
+                    }*/
+
                 }
                 else
                 {

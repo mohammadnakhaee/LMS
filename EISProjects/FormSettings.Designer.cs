@@ -136,6 +136,7 @@
             this.TBVTau_L = new System.Windows.Forms.TextBox();
             this.TBVTau_H = new System.Windows.Forms.TextBox();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
+            this.isCharge = new System.Windows.Forms.CheckBox();
             this.isCV = new System.Windows.Forms.CheckBox();
             this.isPulse = new System.Windows.Forms.CheckBox();
             this.isIV = new System.Windows.Forms.CheckBox();
@@ -251,7 +252,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.isCharge = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -1370,6 +1370,18 @@
             this.groupBox30.TabIndex = 11;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Available Modes";
+            // 
+            // isCharge
+            // 
+            this.isCharge.AutoSize = true;
+            this.isCharge.Location = new System.Drawing.Point(204, 67);
+            this.isCharge.Name = "isCharge";
+            this.isCharge.Size = new System.Drawing.Size(155, 24);
+            this.isCharge.TabIndex = 6;
+            this.isCharge.Text = "Charge-Decharge";
+            this.isCharge.UseVisualStyleBackColor = true;
+            this.isCharge.Visible = false;
+            this.isCharge.CheckedChanged += new System.EventHandler(this.isCharge_CheckedChanged);
             // 
             // isCV
             // 
@@ -2538,17 +2550,6 @@
             this.label1.Size = new System.Drawing.Size(81, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Set Data";
-            // 
-            // isCharge
-            // 
-            this.isCharge.AutoSize = true;
-            this.isCharge.Location = new System.Drawing.Point(204, 67);
-            this.isCharge.Name = "isCharge";
-            this.isCharge.Size = new System.Drawing.Size(155, 24);
-            this.isCharge.TabIndex = 6;
-            this.isCharge.Text = "Charge-Decharge";
-            this.isCharge.UseVisualStyleBackColor = true;
-            this.isCharge.CheckedChanged += new System.EventHandler(this.isCharge_CheckedChanged);
             // 
             // FormSettings
             // 
