@@ -297,6 +297,12 @@ namespace EISProjects
             ChangeStyle(BtnRun, 'g');
             ChangeStyle(BtnPauseContinue, 'g');
 
+            ChangeStyle(btnNewEIS, 'g');
+            ChangeStyle(btnNewMottSchottky, 'g');
+            ChangeStyle(btnNewChronoamperometry, 'g');
+            ChangeStyle(btnNewIVandCV, 'g');
+            ChangeStyle(btnNewPulse, 'g');
+            ChangeStyle(btnNewBattery, 'g');
 
         }
 
@@ -584,12 +590,13 @@ namespace EISProjects
             logo.BackgroundImage = global::EISProjects.Properties.Resources.logolink_move;
         }
 
-        private void ChangeStyle(Button button, Char color = 'b')
+        private void ChangeStyle(Button button, Char color = 'b', float FontSize = 8.5f)
         {
             button.TabStop = false;
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
             button.Tag = color;
+            button.Font = new Font(button.Font.FontFamily, FontSize, button.Font.Style);
             button.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255); //transparent
             if (color == 'r')
                 button.BackgroundImage = global::EISProjects.Properties.Resources.btn_red_normal;
@@ -1368,8 +1375,16 @@ namespace EISProjects
             if (EIS.nSsn >= 0) PanelProperties.Visible = true;
         }
 
-        private void BtnCreateSession_Click(object sender, EventArgs e)
+        private void CreateNewSession(int Method)
         {
+            if (!((Method == 0 && Settings.isEIS) || (Method == 1 && Settings.isMSH) ||
+                (Method == 2 && Settings.isChrono) || (Method == 3 && (Settings.isIV0 || Settings.isCV)) ||
+                (Method == 4 && Settings.isPulse) || (Method == 5 && Settings.isChrono)))
+            {
+                MessageBox.Show("This feature is not available ...");
+                return;
+            }
+
             int theFirstOpenMode = -1;
             if (theFirstOpenMode == -1 && Settings.isEIS) theFirstOpenMode = 0;
             if (theFirstOpenMode == -1 && Settings.isMSH) theFirstOpenMode = 1;
@@ -1401,7 +1416,7 @@ namespace EISProjects
                 NewSession.EISfilterMode = FactoryDefault.EISfilterMode;
                 NewSession.EISAverageNumberL = FactoryDefault.EISAverageNumberL;
                 NewSession.EISAverageNumberH = FactoryDefault.EISAverageNumberH;
-                NewSession.Mode = theFirstOpenMode;
+                NewSession.Mode = Method;
                 NewSession.EISMode = FactoryDefault.EISMode;
                 NewSession.EISOCMode = FactoryDefault.EISOCMode;
                 NewSession.EISVoltageRangeMode = FactoryDefault.EISVoltageRangeMode;
@@ -1508,7 +1523,8 @@ namespace EISProjects
                 NewSession.Chrono_ocp9 = FactoryDefault.Chrono_ocp9;
                 NewSession.Chrono_ocp10 = FactoryDefault.Chrono_ocp10;
 
-                NewSession.name = "Session " + ns.ToString();
+                
+                NewSession.name = CBMode.Items[Method].ToString() + "(" + ns.ToString() + ")";
                 NewSession.index = EIS.nSsn;
                 AllSessions.Add(NewSession);
 
@@ -1564,7 +1580,7 @@ namespace EISProjects
             if (ChBActive.Checked)
             {
                 AllSessionsGUI[Selected].ForeColor = Color.Black;
-                CBMode.Enabled = true;
+                //CBMode.Enabled = true;
                 GBEIS.Enabled = true;
                 GBPulse.Enabled = true;
                 GBCV.Enabled = true;
@@ -1574,7 +1590,7 @@ namespace EISProjects
             else
             {
                 AllSessionsGUI[Selected].ForeColor = Color.Red;
-                CBMode.Enabled = false;
+                //CBMode.Enabled = false;
                 GBEIS.Enabled = false;
                 GBPulse.Enabled = false;
                 GBCV.Enabled = false;
@@ -2161,10 +2177,12 @@ namespace EISProjects
                     {
                         int Cnt = (int)(AllSessions[EIS.RunningSession].Charge_TotalTime / AllSessions[EIS.RunningSession].Charge_dt_ms * 1000) + 1;
                         AllSessions[EIS.RunningSession].Charge_DataCount = Cnt;
-                        AllSessionsData[EIS.RunningSession].Charge_n = Cnt;
-                        AllSessionsData[EIS.RunningSession].Charge_V = new double[Cnt];
-                        AllSessionsData[EIS.RunningSession].Charge_I = new double[Cnt];
-                        AllSessionsData[EIS.RunningSession].Charge_t = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Vlt = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Amp = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Frq = new double[Cnt];
+
+                        for (int i=0; i<Cnt; i++)
+                            AllSessionsData[EIS.RunningSession].Frq[i] = AllSessions[EIS.RunningSession].Charge_dt_ms * i / 1000.0;
                     }
 
                     AllSessionsData[EIS.RunningSession].ReceivedDataCount = 0;
@@ -4208,6 +4226,10 @@ namespace EISProjects
                 newfd.MinY = -1.1 * Charge_MaxFineCurrent;
                 newfd.MaxY = 1.1 * Charge_MaxFineCurrent;
 
+                newfd.MinY = -1.1;
+                newfd.MaxY = 1.1;
+
+
                 newfd.SessionName.Visible = false;
                 newfd.SessionName_SelectedIndexChanged(null, null);
                 newfd.label1.Text = AllSessions[EIS.RunningSession].name;
@@ -5221,9 +5243,9 @@ namespace EISProjects
 
 
                 //to chart
-                AllSessionsData[EIS.RunningSession].Charge_V[battery.datacount] = volt;
-                AllSessionsData[EIS.RunningSession].Charge_I[battery.datacount] = current;
-                AllSessionsData[EIS.RunningSession].Charge_t[battery.datacount] = AllSessions[EIS.RunningSession].Charge_dt_ms * battery.datacount / 1000.0;
+                AllSessionsData[EIS.RunningSession].Vlt[battery.datacount] = volt;
+                AllSessionsData[EIS.RunningSession].Amp[battery.datacount] = current;
+                AllSessionsData[EIS.RunningSession].Frq[battery.datacount] = AllSessions[EIS.RunningSession].Charge_dt_ms * battery.datacount / 1000.0;
 
                 AllSessionsData[EIS.RunningSession].ReceivedDataCount++;
                 PBAllSessionsValue++;
@@ -5249,6 +5271,39 @@ namespace EISProjects
                         isCharge_TimerTickSet = false;
                     }
                     AllSessions[EIS.RunningSession].isFinished = true;
+
+                    if (AllSessions[EIS.RunningSession].isChBPostProcProbOff)
+                    {
+                        if (isProbOn)
+                        {
+                            SampleOnBtn_Click(null, null);
+                        }
+                    }
+                    else
+                    {
+                        /*
+                        try
+                        {
+                            int iVlt = SetDCVConvert(AllSessions[EIS.RunningSession].IdealVoltage, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                            Port.DiscardOutBuffer(); //Clear Buffer
+                            Port.DiscardInBuffer(); //Clear Buffer
+                            Port.Write("ivset " + iVlt.ToString() + ReadToChar);
+                            Port.Write(WriteReadToChar);
+                            Thread.Sleep(100);
+                            byte[] AllBytes11 = new byte[4];
+                            byte[] AllBytes22 = new byte[4];
+                            AllBytes11[0] = (byte)Port.ReadByte();
+                            AllBytes11[1] = (byte)Port.ReadByte();
+                            AllBytes11[2] = (byte)Port.ReadByte();
+                            AllBytes11[3] = (byte)Port.ReadByte();
+                            AllBytes22[0] = (byte)Port.ReadByte();
+                            AllBytes22[1] = (byte)Port.ReadByte();
+                            AllBytes22[2] = (byte)Port.ReadByte();
+                            AllBytes22[3] = (byte)Port.ReadByte();
+                        }
+                        catch { }*/
+                    }
+                    tryNextRun();
                 }
 
             }
@@ -5330,9 +5385,9 @@ namespace EISProjects
 
                     //FormEISDScope.UpdateIVDiagram(IVnDataTotal, IVtDataTotal, IVVDataTotal, IVIDataTotal);
 
-                    AllSessionsData[EIS.RunningSession].Charge_V[cnt] = volt;
-                    AllSessionsData[EIS.RunningSession].Charge_I[cnt] = current;
-                    AllSessionsData[EIS.RunningSession].Charge_t[cnt] = Charge_TimeStep * cnt / 1000.0;
+                    AllSessionsData[EIS.RunningSession].Vlt[cnt] = volt;
+                    AllSessionsData[EIS.RunningSession].Amp[cnt] = current;
+                    AllSessionsData[EIS.RunningSession].Frq[cnt] = Charge_TimeStep * cnt / 1000.0;
 
 
                     //Corrected till This line
@@ -13067,6 +13122,41 @@ namespace EISProjects
         private void CBCharge_DataCount_ValueChanged(object sender, EventArgs e)
         {
             AllSessions[Selected].Charge_DataCount = Convert.ToInt32(CBCharge_DataCount.Value);
+        }
+
+        private void BtnCreateSession_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNewEIS_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(0);
+        }
+
+        private void btnNewMottSchottky_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(1);
+        }
+
+        private void btnNewChronoamperometry_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(2);
+        }
+
+        private void btnNewIVandCV_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(3);
+        }
+
+        private void btnNewPulse_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(4);
+        }
+
+        private void btnNewBattery_Click(object sender, EventArgs e)
+        {
+            CreateNewSession(5);
         }
 
         private void IVChronoVFilter_SelectedIndexChanged(object sender, EventArgs e)
