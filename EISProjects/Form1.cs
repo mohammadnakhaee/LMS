@@ -162,6 +162,8 @@ namespace EISProjects
         public static int EISMotLast_vdcmlp = 0;
         public static double PulseMaxVoltage = 0;
         public static double PulseMinVoltage = 0;
+        public static double Charge_MaxVoltage = 0;
+        public static double Charge_MinVoltage = 0;
         public static bool IsReconnectingMode = false;
         public static double EISVAmplitudeRMS = 0.0;
         int Ecount = 0;
@@ -712,6 +714,8 @@ namespace EISProjects
                 CBEISVoltageRangeMode.Enabled = true;
             }
 
+
+
             TBSsnName.Text = AllSessions[Selected].name;
             //TBSsnName.Text = AllSessions[Selected].DataAndTime;
             ChBActive.Checked = AllSessions[Selected].active;
@@ -731,6 +735,10 @@ namespace EISProjects
             TBIdealVoltage.Text = AllSessions[Selected].IdealVoltage.ToString();
 
             CBMode.SelectedIndex = AllSessions[Selected].Mode;
+            if (AllSessions[Selected].Mode >= 0)
+                MethodLabel.Text = "Method: " + CBMode.Items[AllSessions[Selected].Mode].ToString();
+            else
+                MethodLabel.Text = "Method:";
 
             CBEISMode.SelectedIndex = AllSessions[Selected].EISMode;
             CBEISFilterMode.SelectedIndex = AllSessions[Selected].EISfilterMode;
@@ -1756,7 +1764,8 @@ namespace EISProjects
             isRunPause = false;
             DisableBtnPauseContinue("Pause");
             isRunStart = false;
-            RestartBtnRun("Start all");
+            RestartBtnRun("Run all");
+            RestartBtnRunS("Start");
             ActiveBtnCreateSession("");
             PBAllSessionsValue = 1;
             SetPBAllSessions(PBAllSessionsValue);
@@ -2179,16 +2188,17 @@ namespace EISProjects
                         AllSessions[EIS.RunningSession].Charge_DataCount = Cnt;
                         AllSessionsData[EIS.RunningSession].Vlt = new double[Cnt];
                         AllSessionsData[EIS.RunningSession].Amp = new double[Cnt];
-                        AllSessionsData[EIS.RunningSession].Frq = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].ReZ = new double[Cnt];
 
                         for (int i=0; i<Cnt; i++)
-                            AllSessionsData[EIS.RunningSession].Frq[i] = AllSessions[EIS.RunningSession].Charge_dt_ms * i / 1000.0;
+                            AllSessionsData[EIS.RunningSession].ReZ[i] = AllSessions[EIS.RunningSession].Charge_dt_ms * i / 1000.0;
                     }
 
                     AllSessionsData[EIS.RunningSession].ReceivedDataCount = 0;
                     isRunStart = true;
                     BtnPauseContinue.Enabled = true;
                     BtnRun.Text = "Stop";
+                    BtnRunS.Text = "Stop";
                     BtnCreateSession.Enabled = false;
 
                     Port.DiscardOutBuffer();
@@ -4223,12 +4233,9 @@ namespace EISProjects
 
                 newfd.MinX = 0.1 * Math.Floor(10 * (1.01 * x1 + xm));
                 newfd.MaxX = 0.1 * Math.Floor(10 * (1.01 * x2 + xm)) + 0.1;
-                newfd.MinY = -1.1 * Charge_MaxFineCurrent;
-                newfd.MaxY = 1.1 * Charge_MaxFineCurrent;
-
-                newfd.MinY = -1.1;
-                newfd.MaxY = 1.1;
-
+                newfd.MinY = 1.1 * Charge_MinVoltage;
+                newfd.MaxY = 1.1 * Charge_MaxVoltage;
+                
 
                 newfd.SessionName.Visible = false;
                 newfd.SessionName_SelectedIndexChanged(null, null);
@@ -5182,6 +5189,13 @@ namespace EISProjects
                     battery.setpoint = battery.discharge;
                     battery.discharge_hit++;
                     battery.hit_count = 0;
+
+                    Label_Charge.Text = "  (" + battery.charge_hit + ")";
+                    Label_Discharge.Text = "->(" + battery.discharge_hit + ")";
+                    Label_Discharge.ForeColor = Color.Red;
+                    Label_Charge.ForeColor = Color.Black;
+                    DebugListBox.Items.Add("Discharging(" + battery.discharge_hit + "):" + battery.setpoint);
+                    DebugListBox.TopIndex = DebugListBox.Items.Count - 1;
                 }
 
             }
@@ -5193,6 +5207,14 @@ namespace EISProjects
                     battery.setpoint = battery.charge;
                     battery.charge_hit++;
                     battery.hit_count = 0;
+
+                    Label_Discharge.Text = "  (" + battery.discharge_hit + ")";
+                    Label_Charge.Text = "->(" + battery.charge_hit + ")";
+                    Label_Charge.ForeColor = Color.Red;
+                    Label_Discharge.ForeColor = Color.Black;
+                    DebugListBox.Items.Add("   Charging(" + battery.charge_hit + "):" + battery.setpoint);
+                    DebugListBox.TopIndex = DebugListBox.Items.Count - 1;
+
                 }
             }
             else
@@ -5201,8 +5223,8 @@ namespace EISProjects
                     battery.hit_count--;
             }
             battery.datacount++;
-            Label_Charge.Text ="|hit:" + battery.hit_count + "|+|" + battery.charge_hit + "|-|" + battery.discharge_hit +"|set|"+ battery.setpoint;
-            //return Set_Point;
+            // + "|-|" + battery.discharge_hit +"|set|"+ battery.setpoint;
+                        //return Set_Point;
         }
 
         private void battery_timer_tick()
@@ -5245,7 +5267,8 @@ namespace EISProjects
                 //to chart
                 AllSessionsData[EIS.RunningSession].Vlt[battery.datacount] = volt;
                 AllSessionsData[EIS.RunningSession].Amp[battery.datacount] = current;
-                AllSessionsData[EIS.RunningSession].Frq[battery.datacount] = AllSessions[EIS.RunningSession].Charge_dt_ms * battery.datacount / 1000.0;
+                //It has been written before
+                //AllSessionsData[EIS.RunningSession].ReZ[battery.datacount] = AllSessions[EIS.RunningSession].Charge_dt_ms * battery.datacount / 1000.0;
 
                 AllSessionsData[EIS.RunningSession].ReceivedDataCount++;
                 PBAllSessionsValue++;
@@ -7590,6 +7613,21 @@ namespace EISProjects
             }
         }
 
+        private void RestartBtnRunS(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (BtnRunS.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(RestartBtnRunS);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                BtnRunS.Text = text;
+            }
+        }
 
         private void UpdateFormFit(string text)
         {
@@ -12916,6 +12954,16 @@ namespace EISProjects
             {
                 isCBCharge_VoltageRangeCompleted = false;
                 AllSessions[Selected].Charge_VoltageRangeMode = CBCharge_VoltageRangeMode.SelectedIndex;
+                if (AllSessions[Selected].Charge_VoltageRangeMode == 0)
+                {
+                    Charge_MaxVoltage = 5;
+                    Charge_MinVoltage = -5;
+                }
+                else
+                {
+                    Charge_MaxVoltage = 1;
+                    Charge_MinVoltage = -1;
+                }
                 isCBCharge_VoltageRangeCompleted = true;
             }
         }
@@ -13157,6 +13205,18 @@ namespace EISProjects
         private void btnNewBattery_Click(object sender, EventArgs e)
         {
             CreateNewSession(5);
+        }
+
+        private void CBMode_EnabledChanged(object sender, EventArgs e)
+        {
+            if (CBMode.Enabled == false)
+            {
+                CBMode.BackColor = Color.White; //or pick the color you want when not enabled
+            }
+            else
+            {
+                CBMode.BackColor = Color.White; //same here with the color
+            }
         }
 
         private void IVChronoVFilter_SelectedIndexChanged(object sender, EventArgs e)

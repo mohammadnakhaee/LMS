@@ -520,8 +520,10 @@ public class SampleTicks : FrameChart {
                         else
                             chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                         AddSeries(chart, "I(V)", XAxisName, YAxisName, Color.Blue);
-                        AddSeries(chart, "X Axis", "", "", Color.Red); AddPoint(chart, 1, MinX * 10, 0); AddPoint(chart, 1, MaxX * 10, 0);
-                        AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
+                        //AddSeries(chart, "X Axis", "", "", Color.Red); AddPoint(chart, 1, MinX * 10, 0); AddPoint(chart, 1, MaxX * 10, 0);
+                        //AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0, MinY * 10 * Yfactor); AddPoint(chart, 2, 0, MaxY * 10 * Yfactor);
+                        AddSeries(chart, "X Axis", "", "", Color.Red); AddPoint(chart, 1, MinX * 10 * 0.0000000001, 0.0000000001); AddPoint(chart, 1, MaxX * 10 *0.0000000001, 0.0000000001);
+                        AddSeries(chart, "Y Axis", "", "", Color.Red); AddPoint(chart, 2, 0.0000000001, MinY * 10 * Yfactor * 0.0000000001); AddPoint(chart, 2, 0.0000000001, MaxY * 10 * Yfactor * 0.0000000001);
                         chart.Series[0].ChartType = SeriesChartType.Point;
                         chart.Series[0].MarkerStyle = MarkerStyle.None;
                         AddPoint(chart, 0, Vlt[0], Amp[0] * Yfactor);
@@ -1085,6 +1087,18 @@ public class SampleTicks : FrameChart {
                     EmptyData.Imz[i] = Form1.AllSessionsData[Index].Imz[i];
                 }
             }
+            if (NewSession.Mode == 5)   //charge mode battery mode
+            {
+                EmptyData.Vlt = new double[EmptyData.ReceivedDataCount];
+                EmptyData.Amp = new double[EmptyData.ReceivedDataCount];
+                EmptyData.ReZ = new double[EmptyData.ReceivedDataCount];
+                for (int i = 0; i < EmptyData.ReceivedDataCount; i++)
+                {
+                    EmptyData.Vlt[i] = Form1.AllSessionsData[Index].Vlt[i];
+                    EmptyData.Amp[i] = Form1.AllSessionsData[Index].Amp[i];
+                    EmptyData.ReZ[i] = Form1.AllSessionsData[Index].ReZ[i];
+                }
+            }
         }
 
         private void CheckStartTimer_Tick(object sender, EventArgs e)
@@ -1198,12 +1212,12 @@ public class SampleTicks : FrameChart {
                         yArray = new double[nDate];
                         if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
                         if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
-                        if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Frq[i]; //Time [sec]
+                        if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
                         //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
 
                         if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
                         if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
-                        if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Frq[i]; //Time [sec]
+                        if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
                         //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
                         if (YAxisIndex == 3)
                             for (int i = 0; i < nDate; i++)
@@ -1215,24 +1229,25 @@ public class SampleTicks : FrameChart {
                         if (YAxisIndex == 4)
                             for (int i = 0; i < nDate; i++)
                             {
-                                double x = Form1.AllSessionsData[PlotIndex].Frq[i];
+                                double x = Form1.AllSessionsData[PlotIndex].ReZ[i];
                                 if (x == 0) x = 0.00001;
                                 yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
                             }
 
-                        int narray = Form1.AllSessionsData[EIS.RunningSession].Frq.Length;
-                        if (XAxisIndex == 2) MinX = Form1.AllSessionsData[EIS.RunningSession].Frq[0];
-                        if (YAxisIndex == 2) MinY = Form1.AllSessionsData[EIS.RunningSession].Frq[0];
+                        int narray = Form1.AllSessionsData[EIS.RunningSession].ReZ.Length;
+                        if (XAxisIndex == 2) MinX = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
+                        if (YAxisIndex == 2) MinY = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
                         if (nDate > 1)
                         {
-                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].Frq[nDate - 1];
-                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].Frq[nDate - 1];
+                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].ReZ[nDate - 1];
+                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].ReZ[nDate - 1];
                         }
                         else
                         {
-                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].Frq[0];
-                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].Frq[0];
+                            if (XAxisIndex == 2) MaxX = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
+                            if (YAxisIndex == 2) MaxY = Form1.AllSessionsData[EIS.RunningSession].ReZ[0];
                         }
+
                         if (Form1.AllSessions[PlotIndex].isFinished)
                         {
                             PlotIVLine(chart1, xArray, yArray,
@@ -1598,12 +1613,12 @@ public class SampleTicks : FrameChart {
                     yArray = new double[nDate];
                     if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Vlt[i]; //NormalVoltPGCurrent
                     if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Amp[i]; //NormalCurrentPGVolt
-                    if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Frq[i]; //Time [sec]
+                    if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.ReZ[i]; //Time [sec]
                                                                                                                                    //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
 
                     if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Vlt[i]; //NormalVoltPGCurrent
                     if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Amp[i]; //NormalCurrentPGVolt
-                    if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Frq[i]; //Time [sec]
+                    if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.ReZ[i]; //Time [sec]
                                                                                                                                    //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
                     if (YAxisIndex == 3)
                         for (int i = 0; i < nDate; i++)
@@ -1615,7 +1630,7 @@ public class SampleTicks : FrameChart {
                     if (YAxisIndex == 4)
                         for (int i = 0; i < nDate; i++)
                         {
-                            double x = SelfStandingSessionData.Frq[i];
+                            double x = SelfStandingSessionData.ReZ[i];
                             if (x == 0) x = 0.00001;
                             yArray[i] = Math.Log(Math.Abs(x)); //Log(Time [sec])
                         }
