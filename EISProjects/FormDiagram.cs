@@ -83,7 +83,10 @@ public class SampleTicks : FrameChart {
 }
 
              */
-
+            //chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            //chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
         }
 
         private void PlotImpedanceRe(Chart chart, bool[] overflow, double[] xArray, double[] ReZArray, int npoints, bool isLogX, string XAxisName, string YAxisName)
@@ -656,6 +659,7 @@ public class SampleTicks : FrameChart {
                 string NormalCurrentPGVolt = "Current [A]";
                 string NormalSetVoltPGSetCurrent = "Real Voltage [V]";
 
+                /*
                 if (Form1.AllSessions[PlotIndex].PGmode == 3)
                 {
                     if (Form1.AllSessions[PlotIndex].Mode == 2 || Form1.AllSessions[PlotIndex].Mode == 3)
@@ -694,7 +698,7 @@ public class SampleTicks : FrameChart {
                     NormalVoltPGCurrent = "Current " + PGxunit;
                     NormalCurrentPGVolt = "Real Current [A]";
                     NormalSetVoltPGSetCurrent = "Voltage [V]";
-                }
+                }*/
                 
 
                 if (PlotIndex > -1)

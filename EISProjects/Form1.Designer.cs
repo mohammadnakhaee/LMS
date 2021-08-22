@@ -33,9 +33,9 @@ namespace EISProjects
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabFile = new System.Windows.Forms.TabPage();
             this.BtnImport = new System.Windows.Forms.Button();
@@ -371,6 +371,9 @@ namespace EISProjects
             this.Label_Discharge = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.MethodLabel = new System.Windows.Forms.Label();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.label103 = new System.Windows.Forms.Label();
+            this.label104 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
@@ -428,6 +431,7 @@ namespace EISProjects
             this.panel1.SuspendLayout();
             this.groupBox15.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.groupBox21.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -1383,8 +1387,7 @@ namespace EISProjects
             // 
             // GBCharge
             // 
-            this.GBCharge.Controls.Add(this.Label_Discharge);
-            this.GBCharge.Controls.Add(this.Label_Charge);
+            this.GBCharge.Controls.Add(this.groupBox21);
             this.GBCharge.Controls.Add(this.label102);
             this.GBCharge.Controls.Add(this.CBCharge_DataCount);
             this.GBCharge.Controls.Add(this.label100);
@@ -1419,26 +1422,25 @@ namespace EISProjects
             // Label_Charge
             // 
             this.Label_Charge.AutoSize = true;
-            this.Label_Charge.Location = new System.Drawing.Point(325, 27);
+            this.Label_Charge.Location = new System.Drawing.Point(64, 18);
             this.Label_Charge.Name = "Label_Charge";
-            this.Label_Charge.Size = new System.Drawing.Size(44, 13);
+            this.Label_Charge.Size = new System.Drawing.Size(13, 13);
             this.Label_Charge.TabIndex = 48;
-            this.Label_Charge.Text = "Counter";
+            this.Label_Charge.Text = "0";
             // 
             // label102
             // 
             this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(221, 135);
+            this.label102.Location = new System.Drawing.Point(215, 136);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(73, 13);
             this.label102.TabIndex = 47;
             this.label102.Text = "Data Number:";
-            this.label102.Visible = false;
             // 
             // CBCharge_DataCount
             // 
             this.CBCharge_DataCount.Enabled = false;
-            this.CBCharge_DataCount.Location = new System.Drawing.Point(300, 133);
+            this.CBCharge_DataCount.Location = new System.Drawing.Point(292, 133);
             this.CBCharge_DataCount.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -1450,7 +1452,7 @@ namespace EISProjects
             0,
             0});
             this.CBCharge_DataCount.Name = "CBCharge_DataCount";
-            this.CBCharge_DataCount.Size = new System.Drawing.Size(81, 20);
+            this.CBCharge_DataCount.Size = new System.Drawing.Size(66, 20);
             this.CBCharge_DataCount.TabIndex = 46;
             this.CBCharge_DataCount.Value = new decimal(new int[] {
             1,
@@ -1463,7 +1465,7 @@ namespace EISProjects
             // 
             this.label100.AutoSize = true;
             this.label100.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label100.Location = new System.Drawing.Point(357, 165);
+            this.label100.Location = new System.Drawing.Point(360, 165);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(30, 13);
             this.label100.TabIndex = 45;
@@ -1471,7 +1473,7 @@ namespace EISProjects
             // 
             // CBCharge_TotalTime
             // 
-            this.CBCharge_TotalTime.Location = new System.Drawing.Point(284, 163);
+            this.CBCharge_TotalTime.Location = new System.Drawing.Point(292, 163);
             this.CBCharge_TotalTime.Maximum = new decimal(new int[] {
             599940,
             0,
@@ -1495,7 +1497,7 @@ namespace EISProjects
             // label101
             // 
             this.label101.AutoSize = true;
-            this.label101.Location = new System.Drawing.Point(223, 166);
+            this.label101.Location = new System.Drawing.Point(231, 166);
             this.label101.Name = "label101";
             this.label101.Size = new System.Drawing.Size(60, 13);
             this.label101.TabIndex = 43;
@@ -1577,6 +1579,7 @@ namespace EISProjects
             // 
             // CBCharge_CurrentRangeMode
             // 
+            this.CBCharge_CurrentRangeMode.Enabled = false;
             this.CBCharge_CurrentRangeMode.FormattingEnabled = true;
             this.CBCharge_CurrentRangeMode.Items.AddRange(new object[] {
             "1 ampere",
@@ -1595,6 +1598,7 @@ namespace EISProjects
             // 
             // CBCharge_Imlp
             // 
+            this.CBCharge_Imlp.Enabled = false;
             this.CBCharge_Imlp.FormattingEnabled = true;
             this.CBCharge_Imlp.Items.AddRange(new object[] {
             "1",
@@ -2265,17 +2269,17 @@ namespace EISProjects
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea8.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chart1.Legends.Add(legend8);
             this.chart1.Location = new System.Drawing.Point(5, 18);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chart1.Series.Add(series8);
             this.chart1.Size = new System.Drawing.Size(388, 123);
             this.chart1.TabIndex = 28;
             this.chart1.Text = "chart1";
@@ -4277,6 +4281,7 @@ namespace EISProjects
             // 
             // CBCharge_VoltageRangeMode
             // 
+            this.CBCharge_VoltageRangeMode.Enabled = false;
             this.CBCharge_VoltageRangeMode.FormattingEnabled = true;
             this.CBCharge_VoltageRangeMode.Items.AddRange(new object[] {
             "[-5 (V) .. 5 (V)]",
@@ -4292,9 +4297,9 @@ namespace EISProjects
             this.label97.AutoSize = true;
             this.label97.Location = new System.Drawing.Point(12, 23);
             this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(100, 13);
+            this.label97.Size = new System.Drawing.Size(81, 13);
             this.label97.TabIndex = 18;
-            this.label97.Text = "Set Voltage Range:";
+            this.label97.Text = "Voltage Range:";
             // 
             // groupBox15
             // 
@@ -4310,11 +4315,11 @@ namespace EISProjects
             // Label_Discharge
             // 
             this.Label_Discharge.AutoSize = true;
-            this.Label_Discharge.Location = new System.Drawing.Point(325, 51);
+            this.Label_Discharge.Location = new System.Drawing.Point(64, 40);
             this.Label_Discharge.Name = "Label_Discharge";
-            this.Label_Discharge.Size = new System.Drawing.Size(44, 13);
+            this.Label_Discharge.Size = new System.Drawing.Size(13, 13);
             this.Label_Discharge.TabIndex = 49;
-            this.Label_Discharge.Text = "Counter";
+            this.Label_Discharge.Text = "0";
             // 
             // panel3
             // 
@@ -4336,6 +4341,37 @@ namespace EISProjects
             this.MethodLabel.Size = new System.Drawing.Size(46, 13);
             this.MethodLabel.TabIndex = 9;
             this.MethodLabel.Text = "Method:";
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.label104);
+            this.groupBox21.Controls.Add(this.label103);
+            this.groupBox21.Controls.Add(this.Label_Discharge);
+            this.groupBox21.Controls.Add(this.Label_Charge);
+            this.groupBox21.Location = new System.Drawing.Point(234, 27);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(124, 71);
+            this.groupBox21.TabIndex = 50;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Status";
+            // 
+            // label103
+            // 
+            this.label103.AutoSize = true;
+            this.label103.Location = new System.Drawing.Point(22, 18);
+            this.label103.Name = "label103";
+            this.label103.Size = new System.Drawing.Size(44, 13);
+            this.label103.TabIndex = 50;
+            this.label103.Text = "Charge:";
+            // 
+            // label104
+            // 
+            this.label104.AutoSize = true;
+            this.label104.Location = new System.Drawing.Point(9, 40);
+            this.label104.Name = "label104";
+            this.label104.Size = new System.Drawing.Size(58, 13);
+            this.label104.TabIndex = 51;
+            this.label104.Text = "Discharge:";
             // 
             // Form1
             // 
@@ -4446,6 +4482,8 @@ namespace EISProjects
             this.groupBox15.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -4787,6 +4825,9 @@ namespace EISProjects
         private System.Windows.Forms.Label Label_Discharge;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label MethodLabel;
+        private System.Windows.Forms.GroupBox groupBox21;
+        private System.Windows.Forms.Label label104;
+        private System.Windows.Forms.Label label103;
     }
 
 

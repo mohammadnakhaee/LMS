@@ -4078,7 +4078,75 @@ namespace EISProjects
                     isDataReceivedSet = false;
                 }
 
+
+
+
+                                
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //voltage range selector
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                double voltage_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMax), Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMin));
+
+                if (voltage_abs_max > 1)
+                //read 5v
+                {
+                    AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 0;
+                }
+                else
+                //read 1v
+                {
+                    AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 1;
+                }
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //current range selector
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                double current_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_CurrentCharge), AllSessions[EIS.RunningSession].Charge_CurrentDischarge);
+
+                if ((current_abs_max <= 1000) && (current_abs_max > 100))
+                //read 1000mA
+                {
+                    AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 0;
+                }
+                else
+                if ((current_abs_max <= 100) && (current_abs_max > 10))
+                //read 100mA
+                {
+                    AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 1;
+                }
+                else
+                if ((current_abs_max <= 10) && (current_abs_max > 1))
+                //read 10mA
+                {
+                    AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 2;
+                }
+                else
+                if ((current_abs_max <= 1) && (current_abs_max > 0.1))
+                //read 1mA
+                {
+                    AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 3;
+                }
+                else
+                if ((current_abs_max <= 0.1))
+                //read 100uA
+                {
+                    AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 4;
+                }
+
+                //// just show
+                CBCharge_VoltageRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_VoltageRangeMode;
+                CBCharge_CurrentRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_CurrentRangeMode;
+
+
+
                 string ans;
+
+
+
+
+
+
+
 
                 Port.Write(";");
                 System.Threading.Thread.Sleep(50);
@@ -4105,63 +4173,12 @@ namespace EISProjects
                 Thread.Sleep(100);
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
-
-                Port.Write("idcselect " + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString() + WriteReadToChar);
-                Thread.Sleep(100);
-                ans = Port.ReadTo(ReadToChar);
-                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200001 Command:idcselect");
-                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Idcselect=" + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString());
-
-                if (AllSessions[EIS.RunningSession].Charge_CurrentRangeMode <= 1 && AllSessions[EIS.RunningSession].PGmode == 1)
-                {
-                    Port.DiscardOutBuffer();
-                    Port.DiscardInBuffer();
-                    Port.Write("PGmode 0" + WriteReadToChar);
-                    Thread.Sleep(100);
-                    ans = Port.ReadTo(ReadToChar);
-                    if (ans != "OK") throw new Exception("The command OK is not received.\r error number:m10001 Command:PGmode");
-                }
-
-
-                Port.DiscardOutBuffer(); //Clear Buffer
-                Port.DiscardInBuffer(); //Clear Buffer
-                Port.Write("setselect " + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString() + WriteReadToChar);
-                Thread.Sleep(100);
-                ans = Port.ReadTo(ReadToChar);
-                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200002 Command:setselect");
-                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Setselect=" + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString());
-
-                Port.DiscardOutBuffer(); //Clear Buffer
-                Port.DiscardInBuffer(); //Clear Buffer
+                
                 Port.Write("acset 0" + WriteReadToChar);
-                Thread.Sleep(100);
+                Thread.Sleep(20);
                 ans = Port.ReadTo(ReadToChar);
                 if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200003 Command:acset");
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " acset: 0");
-                SetLabel(ref iLabel_vac, 0);
-                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Vac: 0.0");
-                SetLabel(ref Label_vac, 0, "V");
-
-                int zeroset;
-                if (AllSessions[EIS.RunningSession].Charge_VoltageRangeMode == 0)
-                    zeroset = Settings.Zeroset0;
-                else
-                    zeroset = Settings.Zeroset1;
-
-                if (AllSessions[EIS.RunningSession].PGmode == 3)
-                    zeroset = GetGalvanostatZerosetOffset(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode);
-
-                Port.DiscardOutBuffer(); //Clear Buffer
-                Port.DiscardInBuffer(); //Clear Buffer
-                Port.Write("zeroset " + zeroset.ToString() + WriteReadToChar);
-                Thread.Sleep(100);
-                ans = Port.ReadTo(ReadToChar);
-                isDataReceived = false;
-                Thread.Sleep(100);
-                isDigitalEISStepCompleted = false;
-                AllowToTick = true;
-                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200004 Command:zeroset");
-                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset=" + zeroset.ToString());
 
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
@@ -4180,24 +4197,86 @@ namespace EISProjects
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " idcmlp=" + AllSessions[EIS.RunningSession].Charge_Imlp.ToString());
 
 
-                if (isCharge_RangesChanged)
-                {
-                    CalculateSpecificIVOffsets(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode, AllSessions[EIS.RunningSession].Charge_Imlp, AllSessions[EIS.RunningSession].Charge_Vmlp, ref ThisCharge_Ioffset, ref ThisCharge_Voffset);
-                    GetVOffsetFromSettings(AllSessions[EIS.RunningSession].Charge_Vmlp, ref ThisCharge_Voffset);
-                    isCharge_RangesChanged = false;
-                }
+
+
+                ///////////////////////////////////////////////////
+                /////start galvanostat
+                ////////////////////////////////////////////////////////
+                ///
+                Port.DiscardOutBuffer();
+                Port.DiscardInBuffer();
+                Port.Write("PGmode 3" + WriteReadToChar);
+                Thread.Sleep(20);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:m10001 Command:PGmode");
+                
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("setselect 1" + WriteReadToChar);
+                Thread.Sleep(20);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200002 Command:setselect");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Setselect=" + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString());
+
+                int zeroset;
+
+                zeroset = Settings.Zeroset1;
+                //???????????????????????????????????????????? work?
+                zeroset = GetGalvanostatZerosetOffset(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode);
+                //?????????????????????????????????????????????
+
+                Port.DiscardOutBuffer(); //Clear Buffer
+                Port.DiscardInBuffer(); //Clear Buffer
+                Port.Write("zeroset " + zeroset.ToString() + WriteReadToChar);
+                Thread.Sleep(100);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200004 Command:zeroset");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset=" + zeroset.ToString());
+
+
+                ////////////////////////////////////////////////////////////////////
+                //////end galvanostat
+                //////////////////////////////////////////////////////////////////////
 
 
 
-                ////////////////////////////////////////////////////////////////////////////
+
+                ////select voltage and current range
+
+                Port.Write("idcselect " + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString() + WriteReadToChar);
+                Thread.Sleep(20);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200001 Command:idcselect");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Idcselect=" + AllSessions[EIS.RunningSession].Charge_CurrentRangeMode.ToString());
+
+                Port.Write("vdcselect " + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString() + WriteReadToChar);
+                Thread.Sleep(20);
+                ans = Port.ReadTo(ReadToChar);
+                if (ans != "OK") throw new Exception("The command OK is not received.\r error number:200001 Command:idcselect");
+                DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " Vdcselect=" + AllSessions[EIS.RunningSession].Charge_VoltageRangeMode.ToString());
 
 
 
-                int CurrentCharge = SetDCVConvert(-AllSessions[EIS.RunningSession].Charge_CurrentCharge, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
-                int CurrentDischarge = SetDCVConvert(AllSessions[EIS.RunningSession].Charge_CurrentDischarge, AllSessions[EIS.RunningSession].PulseVoltagerangeMode, AllSessions[EIS.RunningSession].PulseCurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+
+
+
+
+
+                ///general initialization
+                isDataReceived = false;
+                isDigitalEISStepCompleted = false;
+                AllowToTick = true;
+
+                
+               ///////////////////////////////////////////////////////////////////////////////
+
+
+                int CurrentCharge = SetDCVConvert(-AllSessions[EIS.RunningSession].Charge_CurrentCharge, AllSessions[EIS.RunningSession].Charge_VoltageRangeMode, AllSessions[EIS.RunningSession].Charge_CurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
+                int CurrentDischarge = SetDCVConvert(AllSessions[EIS.RunningSession].Charge_CurrentDischarge, AllSessions[EIS.RunningSession].Charge_VoltageRangeMode, AllSessions[EIS.RunningSession].Charge_CurrentRangeMode, AllSessions[EIS.RunningSession].PGmode);
 
                 
 
+                
 
 
 
@@ -4215,7 +4294,7 @@ namespace EISProjects
                 battery.total_datacount = AllSessions[EIS.RunningSession].Charge_DataCount;
                 battery.setpoint = CurrentCharge;
 
-
+                
 
                 ////////////////////////////////////////////////////////////////////////////////////////////
                 FormDiagram newfd = new FormDiagram();
@@ -4231,10 +4310,15 @@ namespace EISProjects
                 x1 = -Math.Abs(x1 - xm);
                 x2 = Math.Abs(x2 - xm);
 
+                //if someone put min and max vice versa we need to handle the range
+                double MinV = Math.Min(AllSessions[EIS.RunningSession].Charge_VoltageMin, AllSessions[EIS.RunningSession].Charge_VoltageMax);
+                double MaxV = Math.Max(AllSessions[EIS.RunningSession].Charge_VoltageMin, AllSessions[EIS.RunningSession].Charge_VoltageMax);
+                double DeltaY = Math.Abs(MaxV - MinV);
+                
                 newfd.MinX = 0.1 * Math.Floor(10 * (1.01 * x1 + xm));
                 newfd.MaxX = 0.1 * Math.Floor(10 * (1.01 * x2 + xm)) + 0.1;
-                newfd.MinY = 1.1 * Charge_MinVoltage;
-                newfd.MaxY = 1.1 * Charge_MaxVoltage;
+                newfd.MinY = MinV - DeltaY * 10.0 / 100.0;
+                newfd.MaxY = MaxV + DeltaY * 10.0 / 100.0;
                 
 
                 newfd.SessionName.Visible = false;
@@ -4242,10 +4326,6 @@ namespace EISProjects
                 newfd.label1.Text = AllSessions[EIS.RunningSession].name;
                 newfd.label1.Font = new Font("", 14);
                 newfd.Show();
-
-
-
-
                 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -5212,7 +5292,7 @@ namespace EISProjects
                     Label_Charge.Text = "->(" + battery.charge_hit + ")";
                     Label_Charge.ForeColor = Color.Red;
                     Label_Discharge.ForeColor = Color.Black;
-                    DebugListBox.Items.Add("   Charging(" + battery.charge_hit + "):" + battery.setpoint);
+                    DebugListBox.Items.Add("Charging(" + battery.charge_hit + "):    " + battery.setpoint);
                     DebugListBox.TopIndex = DebugListBox.Items.Count - 1;
 
                 }
@@ -12950,6 +13030,7 @@ namespace EISProjects
 
         private void CBCharge_VoltageRangeMode_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (isCBCharge_VoltageRangeCompleted)
             {
                 isCBCharge_VoltageRangeCompleted = false;
@@ -12970,30 +13051,16 @@ namespace EISProjects
 
         private void CBCharge_Vmlp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isCharge_VmlpCompleted && AllSessions[Selected].Charge_Vmlp != CBCharge_Vmlp.SelectedIndex)
-            {
-                isCharge_VmlpCompleted = false;
-                AllSessions[Selected].Charge_Vmlp = CBCharge_Vmlp.SelectedIndex;
-                //LoadSelectedProperties();
-                isCharge_RangesChanged = true;
-                isCharge_VmlpCompleted = true;
-                //VMLP.Focus();
-            }
+            
         }
 
         private void CBCharge_CurrentRangeMode_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (isCBCharge_RangeCompleted && AllSessions[Selected].Charge_CurrentRangeMode != CBCharge_CurrentRangeMode.SelectedIndex)
             {
                 isCBCharge_RangeCompleted = false;
-                /*if (CBIVRange.SelectedIndex < 2)
-                {
-                    AllSessions[Selected].IVCurrentRangeMode = CBIVRange.SelectedIndex;
-                }
-                else
-                {
-                    MessageBox.Show("You are not allowed to change to this range manually ...");
-                }*/
+                
                 AllSessions[Selected].Charge_CurrentRangeMode = CBCharge_CurrentRangeMode.SelectedIndex;
                 //LoadSelectedProperties();
 
@@ -13096,15 +13163,7 @@ namespace EISProjects
 
         private void CBCharge_Imlp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isCharge_ImlpCompleted && AllSessions[Selected].Charge_Imlp != CBCharge_Imlp.SelectedIndex)
-            {
-                isCharge_ImlpCompleted = false;
-                AllSessions[Selected].Charge_Imlp = CBCharge_Imlp.SelectedIndex;
-                //LoadSelectedProperties();
-                isCharge_RangesChanged = true;
-                isCharge_ImlpCompleted = true;
-                //IMLP.Focus();
-            }
+            
         }
 
         private void CBCharge_VFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -13140,21 +13199,137 @@ namespace EISProjects
         private void CBCharge_CurrentCharge_ValueChanged(object sender, EventArgs e)
         {
             AllSessions[Selected].Charge_CurrentCharge = Convert.ToDouble(CBCharge_CurrentCharge.Value);
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            //current range selector
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            double current_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_CurrentCharge), AllSessions[EIS.RunningSession].Charge_CurrentDischarge);
+
+            if ((current_abs_max <= 1000) && (current_abs_max > 100))
+            //read 1000mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 0;
+            }
+            else
+            if ((current_abs_max <= 100) && (current_abs_max > 10))
+            //read 100mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 1;
+            }
+            else
+            if ((current_abs_max <= 10) && (current_abs_max > 1))
+            //read 10mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 2;
+            }
+            else
+            if ((current_abs_max <= 1) && (current_abs_max > 0.1))
+            //read 1mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 3;
+            }
+            else
+            if ((current_abs_max <= 0.1))
+            //read 100uA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 4;
+            }
+
+            //// just show
+            CBCharge_CurrentRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_CurrentRangeMode;
+
         }
 
         private void CBCharge_CurrentDischarge_ValueChanged(object sender, EventArgs e)
         {
             AllSessions[Selected].Charge_CurrentDischarge = Convert.ToDouble(CBCharge_CurrentDischarge.Value);
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            //current range selector
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            double current_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_CurrentCharge), AllSessions[EIS.RunningSession].Charge_CurrentDischarge);
+
+            if ((current_abs_max <= 1000) && (current_abs_max > 100))
+            //read 1000mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 0;
+            }
+            else
+            if ((current_abs_max <= 100) && (current_abs_max > 10))
+            //read 100mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 1;
+            }
+            else
+            if ((current_abs_max <= 10) && (current_abs_max > 1))
+            //read 10mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 2;
+            }
+            else
+            if ((current_abs_max <= 1) && (current_abs_max > 0.1))
+            //read 1mA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 3;
+            }
+            else
+            if ((current_abs_max <= 0.1))
+            //read 100uA
+            {
+                AllSessions[EIS.RunningSession].Charge_CurrentRangeMode = 4;
+            }
+
+            //// just show
+            CBCharge_CurrentRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_CurrentRangeMode;
+
         }
 
         private void CBCharge_VoltageMax_ValueChanged(object sender, EventArgs e)
         {
             AllSessions[Selected].Charge_VoltageMax = Convert.ToDouble(CBCharge_VoltageMax.Value);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            //voltage range selector
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            double voltage_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMax), Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMin));
+
+            if (voltage_abs_max > 1)
+            //read 5v
+            {
+                AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 0;
+            }
+            else
+            //read 1v
+            {
+                AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 1;
+            }
+
+            CBCharge_VoltageRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_VoltageRangeMode;
         }
 
         private void CBCharge_VoltageMin_ValueChanged(object sender, EventArgs e)
         {
             AllSessions[Selected].Charge_VoltageMin = Convert.ToDouble(CBCharge_VoltageMin.Value);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            //voltage range selector
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            double voltage_abs_max = Math.Max(Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMax), Math.Abs(AllSessions[EIS.RunningSession].Charge_VoltageMin));
+
+            if (voltage_abs_max > 1)
+            //read 5v
+            {
+                AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 0;
+            }
+            else
+            //read 1v
+            {
+                AllSessions[EIS.RunningSession].Charge_VoltageRangeMode = 1;
+            }
+
+            CBCharge_VoltageRangeMode.SelectedIndex = AllSessions[EIS.RunningSession].Charge_VoltageRangeMode;
         }
 
         private void CBCharge_NumberOfCycles_ValueChanged(object sender, EventArgs e)

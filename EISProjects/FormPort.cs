@@ -367,7 +367,8 @@ namespace EISProjects
                             SetPortprogressBar(PortprogressBar.Maximum);
                             EIS.Connected = true;
                             Form1.Status.Text = "Application is Connected to Device.";
-
+                            notification1.BalloonTipText = "Application is Connected to Device.";
+                            notification1.ShowBalloonTip(2000);
                             Form1.resetdevice();
 
                             try
@@ -440,6 +441,11 @@ namespace EISProjects
                                 MessageBox.Show("micro save number 5");
                                 Form1.microsaveSetting("../settings.bin");
                             }
+
+
+                            Form1.isFormPort = false;
+                            this.Hide();
+
                         }
                      /*   catch
                         {
