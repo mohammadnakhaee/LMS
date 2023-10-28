@@ -91,11 +91,16 @@ public class SampleTicks : FrameChart {
 
         private void PlotImpedanceRe(Chart chart, bool[] overflow, double[] xArray, double[] ReZArray, int npoints, bool isLogX, string XAxisName, string YAxisName)
         {
+            
             if (nPlottedData == 0)
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "Re(Z)", XAxisName, YAxisName, Color.Blue);
@@ -116,7 +121,11 @@ public class SampleTicks : FrameChart {
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "I", XAxisName, YAxisName, Color.Blue);
@@ -133,11 +142,32 @@ public class SampleTicks : FrameChart {
 
         private void PlotImpedanceIm(Chart chart, bool[] overflow, double[] xArray, double[] ImZArray, int npoints, bool isLogX, string XAxisName, string YAxisName)
         {
+            if (XAxisName.Contains("Re(Z)"))
+            {
+                chart.ChartAreas[0].AxisX.Minimum = Math.Min(Form1.IMP_RE_MIN, - Form1.IMP_IM_MIN);
+                chart.ChartAreas[0].AxisX.Minimum = Math.Min(chart.ChartAreas[0].AxisX.Minimum,0);
+                chart.ChartAreas[0].AxisX.Maximum = Math.Max(Form1.IMP_RE_MAX, - Form1.IMP_IM_MAX) * 1.2;
+                chart.ChartAreas[0].AxisY.Minimum = Math.Min(Form1.IMP_RE_MIN, - Form1.IMP_IM_MIN);
+                chart.ChartAreas[0].AxisY.Minimum = Math.Min(chart.ChartAreas[0].AxisY.Minimum, 0);
+                chart.ChartAreas[0].AxisY.Maximum = Math.Max(Form1.IMP_RE_MAX, - Form1.IMP_IM_MAX) * 1.2;
+                //chart.ChartAreas[0].
+            }
+            else
+            {
+                chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+                chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            }
             if (nPlottedData == 0)
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "Im(Z)", XAxisName, YAxisName, Color.Red);
@@ -158,7 +188,11 @@ public class SampleTicks : FrameChart {
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "R", XAxisName, YAxisName, Color.Green);
@@ -178,9 +212,15 @@ public class SampleTicks : FrameChart {
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
+                chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+                chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
                 AddSeriesPoint(chart, "Theta", XAxisName, YAxisName, Color.Orange);
             }
 
@@ -200,7 +240,11 @@ public class SampleTicks : FrameChart {
                 chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
                 chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "Re(Z)", XAxisName, YAxisName, Color.Blue);
@@ -223,7 +267,11 @@ public class SampleTicks : FrameChart {
             {
                 ClearPlot(chart);
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                 AddSeriesPoint(chart, "1/C^2", XAxisName, YAxisName, Color.Orange);
@@ -369,7 +417,11 @@ public class SampleTicks : FrameChart {
                 //Array.Sort(SortVlt);
 
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
@@ -407,7 +459,11 @@ public class SampleTicks : FrameChart {
                 //Array.Sort(SortVlt);
 
                 if (npoints > 0 && isLogX)
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                }
                 else
                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
@@ -463,7 +519,11 @@ public class SampleTicks : FrameChart {
                     }*/
 
                     if (2 * n1 > 0 && isLogX)
+                    {
+                        chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                        chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                         chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                    }
                     else
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
@@ -519,7 +579,11 @@ public class SampleTicks : FrameChart {
                     if (nPlottedData == 0)
                     {
                         if (npoints > 0 && isLogX)
+                        {
+                            chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                            chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                             chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                        }
                         else
                             chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                         AddSeries(chart, "I(V)", XAxisName, YAxisName, Color.Blue);
@@ -557,7 +621,11 @@ public class SampleTicks : FrameChart {
                     int npoints0 = Math.Min(npoints, CVnFirst);
 
                     if (npoints0 > 0 && isLogX)
+                    {
+                        chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                        chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                         chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                    }
                     else
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                     AddSeries(chart, "I(V) 1", XAxisName, YAxisName, GetCVColor(1));
@@ -589,7 +657,11 @@ public class SampleTicks : FrameChart {
                         try
                         {
                             if (2 * n1 > 0 && isLogX)
+                            {
+                                chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                                chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                                 chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                            }
                             else
                                 chart.ChartAreas[0].AxisX.IsLogarithmic = false;
 
@@ -1096,11 +1168,13 @@ public class SampleTicks : FrameChart {
                 EmptyData.Vlt = new double[EmptyData.ReceivedDataCount];
                 EmptyData.Amp = new double[EmptyData.ReceivedDataCount];
                 EmptyData.ReZ = new double[EmptyData.ReceivedDataCount];
+                EmptyData.Imz = new double[EmptyData.ReceivedDataCount];
                 for (int i = 0; i < EmptyData.ReceivedDataCount; i++)
                 {
                     EmptyData.Vlt[i] = Form1.AllSessionsData[Index].Vlt[i];
                     EmptyData.Amp[i] = Form1.AllSessionsData[Index].Amp[i];
                     EmptyData.ReZ[i] = Form1.AllSessionsData[Index].ReZ[i];
+                    EmptyData.Imz[i] = Form1.AllSessionsData[Index].Imz[i];
                 }
             }
         }
@@ -1217,12 +1291,12 @@ public class SampleTicks : FrameChart {
                         if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
                         if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
                         if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
-                        //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+                        if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i]; //NormalSetVoltPGSetCurrent
 
                         if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Vlt[i]; //NormalVoltPGCurrent
                         if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Amp[i]; //NormalCurrentPGVolt
                         if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].ReZ[i]; //Time [sec]
-                        //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
+                        if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Imz[i]; //NormalSetVoltPGSetCurrent
                         if (YAxisIndex == 3)
                             for (int i = 0; i < nDate; i++)
                             {
@@ -1278,6 +1352,7 @@ public class SampleTicks : FrameChart {
                                     xArray[i] = frq;
                                     frq = frq * frqMultStep;
                                 }*/
+                                
                                 xArray = new double[nDate];
                                 for (int i = 0; i < nDate; i++)
                                 {
@@ -1482,7 +1557,11 @@ public class SampleTicks : FrameChart {
                 if (!Form1.AllSessions[PlotIndex].isCVEnable)
                 {
                     if (npoints > 0 && isLogX)
+                    {
+                        chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                        chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                         chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                    }
                     else
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                     AddSeries(chart, "I(V)", XAxisName, YAxisName, Color.Blue);
@@ -1508,7 +1587,11 @@ public class SampleTicks : FrameChart {
                 {
                     int CVnFirst = (int)((Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].CVStartpoint) / (Form1.AllSessions[PlotIndex].IVvoltageTo - Form1.AllSessions[PlotIndex].IVVoltageFrom) * (Form1.AllSessions[PlotIndex].IVVoltageNStepp - 1)) + 1;
                     if (npoints > 0 && isLogX)
+                    {
+                        chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                        chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                         chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                    }
                     else
                         chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                     AddSeries(chart, "I(V) 1", XAxisName, YAxisName, Color.Blue);
@@ -1531,7 +1614,11 @@ public class SampleTicks : FrameChart {
                             if (mynpoints > 0)
                             {
                                 if (mynpoints > 0 && isLogX)
+                                {
+                                    chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+                                    chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
                                     chart.ChartAreas[0].AxisX.IsLogarithmic = true;
+                                }
                                 else
                                     chart.ChartAreas[0].AxisX.IsLogarithmic = false;
                                 AddSeries(chart, "I(V) " + (it + 1).ToString(), XAxisName, YAxisName, GetCVColor(ic));
@@ -1618,11 +1705,13 @@ public class SampleTicks : FrameChart {
                     if (XAxisIndex == 0) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Vlt[i]; //NormalVoltPGCurrent
                     if (XAxisIndex == 1) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Amp[i]; //NormalCurrentPGVolt
                     if (XAxisIndex == 2) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.ReZ[i]; //Time [sec]
+                    if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = SelfStandingSessionData.Imz[i];
                                                                                                                                    //if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) xArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
 
                     if (YAxisIndex == 0) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Vlt[i]; //NormalVoltPGCurrent
                     if (YAxisIndex == 1) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Amp[i]; //NormalCurrentPGVolt
                     if (YAxisIndex == 2) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.ReZ[i]; //Time [sec]
+                    if (XAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = SelfStandingSessionData.Imz[i];
                                                                                                                                    //if (YAxisIndex == 3) for (int i = 0; i < nDate; i++) yArray[i] = Form1.AllSessionsData[PlotIndex].Charge_SetV[i]; //NormalSetVoltPGSetCurrent
                     if (YAxisIndex == 3)
                         for (int i = 0; i < nDate; i++)
@@ -1756,7 +1845,11 @@ public class SampleTicks : FrameChart {
 
                     if (YAxisIndex == 2)
                     {
-                        if (SelfStandingSession.Mode == 0) PlotImpedanceIm(chart1, SelfStandingSessionData.overflow, xArray, SelfStandingSessionData.Imz,
+                        double[] MinusImZ = new double[SelfStandingSessionData.Imz.Length];
+                        for (int i = 0; i < SelfStandingSessionData.Imz.Length; i++)
+                            MinusImZ[i] = -SelfStandingSessionData.Imz[i];
+
+                        if (SelfStandingSession.Mode == 0) PlotImpedanceIm(chart1, SelfStandingSessionData.overflow, xArray, MinusImZ,
                         nDate, isLogX, CBXAxis.SelectedItem.ToString(), CBYAxis.SelectedItem.ToString());
 
                         if (SelfStandingSession.Mode == 1) PlotImpedanceRe(chart1, SelfStandingSessionData.overflow, xArray, SelfStandingSessionData.ReZ,
@@ -2001,7 +2094,16 @@ public class SampleTicks : FrameChart {
                         FileProtocol.Write("Itteration: " + Sess.CVItteration + "\n");
                     }
                 }
-
+                if (Sess.Mode == 5)
+                {
+                    FileProtocol.Write("Type: Battrey\n");
+                    FileProtocol.Write("Equilibration time: " + Sess.EqTime + "\n");
+                    FileProtocol.Write("Charge Current: " + Sess.Charge_CurrentCharge + "mA" + "\n");
+                    FileProtocol.Write("disCharge Current: " + Sess.Charge_CurrentDischarge + "mA" + "\n");
+                    FileProtocol.Write("Time Start: 0\n");
+                    FileProtocol.Write("Time End: " + Sess.Charge_TotalTime + "(sec)\n");
+                    FileProtocol.Write("Number of Steps: " + Sess.Charge_DataCount + "\n");
+                }
                 //FileProtocol.Write("Number of serries:" + nSerries.ToString() + "\n");
                 FileProtocol.Write("Number of data:" + nData.ToString() + "\n");
 
@@ -2031,7 +2133,7 @@ public class SampleTicks : FrameChart {
 
                 if (Form1.AllSessions[PlotIndex].PGmode == 3)
                 {
-                    if (Form1.AllSessions[PlotIndex].Mode == 2 || Form1.AllSessions[PlotIndex].Mode == 3)
+                    if (Form1.AllSessions[PlotIndex].Mode == 2 || Form1.AllSessions[PlotIndex].Mode == 3 || Form1.AllSessions[PlotIndex].Mode == 5)
                     {
                         if (Form1.AllSessions[PlotIndex].IVCurrentRangeMode == 0)
                             PGxunit = "[A]";
@@ -2109,10 +2211,12 @@ public class SampleTicks : FrameChart {
                     case 2:
                         if (Sess.isStarted)
                         {
-                            SsnGridView.Columns.Add(NormalVoltPGCurrent, NormalVoltPGCurrent);
+                            
                             SsnGridView.Columns.Add(NormalCurrentPGVolt, NormalCurrentPGVolt);
-                            SsnGridView.Columns.Add("Time [sec]", "Time [sec]");
+                            
                             SsnGridView.Columns.Add(NormalSetVoltPGSetCurrent, NormalSetVoltPGSetCurrent);
+                            SsnGridView.Columns.Add("Time [sec]", "Time [sec]");
+                            SsnGridView.Columns.Add(NormalVoltPGCurrent, NormalVoltPGCurrent);
                             for (int f = 0; f < SessD.ReceivedDataCount; f++)
                             {
                                 SsnGridView.Rows.Add("");
@@ -2153,6 +2257,25 @@ public class SampleTicks : FrameChart {
                                 SsnGridView.Rows[f].Cells[0].Value = SessD.Vlt[f];
                                 SsnGridView.Rows[f].Cells[1].Value = SessD.Amp[f];
                                 SsnGridView.Rows[f].Cells[2].Value = SessD.ReZ[f];
+                                SsnGridView.Rows[f].Cells[3].Value = SessD.Imz[f];
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (Sess.isStarted)
+                        {
+                            SsnGridView.Columns.Add(NormalSetVoltPGSetCurrent, NormalSetVoltPGSetCurrent);
+                            SsnGridView.Columns.Add(NormalCurrentPGVolt, NormalCurrentPGVolt);
+                            SsnGridView.Columns.Add("Time [sec]", "Time [sec]");
+                            SsnGridView.Columns.Add(NormalVoltPGCurrent, NormalVoltPGCurrent);
+
+                            for (int f = 0; f < SessD.ReceivedDataCount; f++)
+                            {
+                                SsnGridView.Rows.Add("");
+                                SsnGridView.Rows[f].Cells[0].Value = SessD.Vlt[f];
+                                SsnGridView.Rows[f].Cells[1].Value = SessD.Amp[f];
+                                SsnGridView.Rows[f].Cells[2].Value = SessD.ReZ[f];
+                                
                                 SsnGridView.Rows[f].Cells[3].Value = SessD.Imz[f];
                             }
                         }

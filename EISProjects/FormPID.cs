@@ -28,7 +28,7 @@ namespace EISProjects
         double output;
         double Oldoutput;
         public static string ReadToChar = "\r";
-        public static string WriteReadToChar = "\n";
+        public static string WriteReadToChar = "\r";
         int idcselect=1;
         int IMLP = 0;
         bool isTuningTimerCompeted = true;
@@ -243,7 +243,7 @@ namespace EISProjects
                     Form1.Port.DiscardOutBuffer(); //Clear Buffer
                     Form1.Port.DiscardInBuffer(); //Clear Buffer
                     Form1.Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                    Form1.Port.Write(WriteReadToChar);
+                   // Form1.Port.Write(WriteReadToChar);
                     Thread.SpinWait(2000 * 1000);
                     //SetLabel(ref iLabel_vdc, ivlt);
                     //SetLabel(ref Label_vdc, vlt);
@@ -305,7 +305,7 @@ namespace EISProjects
                             Form1.Port.DiscardOutBuffer(); //Clear Buffer
                             Form1.Port.DiscardInBuffer(); //Clear Buffer
                             Form1.Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                            Form1.Port.Write(WriteReadToChar);
+                            //Form1.Port.Write(WriteReadToChar);
                             Thread.SpinWait(2000 * 1000);
                             //SetLabel(ref iLabel_vdc, ivlt);
                             //SetLabel(ref Label_vdc, vlt);
@@ -378,7 +378,7 @@ namespace EISProjects
                             Form1.Port.DiscardOutBuffer(); //Clear Buffer
                             Form1.Port.DiscardInBuffer(); //Clear Buffer
                             Form1.Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                            Form1.Port.Write(WriteReadToChar);
+                            //Form1.Port.Write(WriteReadToChar);
                             Thread.SpinWait(2000 * 1000);
                             //SetLabel(ref iLabel_vdc, ivlt);
                             //SetLabel(ref Label_vdc, vlt);

@@ -46,7 +46,7 @@ namespace EISProjects
             foreach (Series S in chart.Series) Index++;
             chart.Series[Index].ChartType = SeriesChartType.Line;
             chart.Series[Index].Color = color;
-            chart.Series[Index].LegendText = legend;
+            //chart.Series[Index].LegendText = legend;
             chart.ChartAreas[0].Axes[0].Title = xAxis;
             chart.ChartAreas[0].Axes[1].Title = yAxis;
         }

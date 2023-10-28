@@ -50,9 +50,13 @@ namespace EISProjects
 
         private void FormEndorseOCP_Shown(object sender, EventArgs e)
         {
-            Form1.isEndorseOCTOk = false;
-            textBox1.Text = Form1.EndorseOCTSugestedV.ToString();
-            if (Form1.AllSessions[EIS.RunningSession].isOCP && Form1.AllSessions[EIS.RunningSession].isOCPAutoStart) button2_Click(null, null);
+            try
+            {
+                Form1.isEndorseOCTOk = false;
+                textBox1.Text = Form1.EndorseOCTSugestedV.ToString();
+                if (Form1.AllSessions[EIS.RunningSession].isOCP && Form1.AllSessions[EIS.RunningSession].isOCPAutoStart) button2_Click(null, null);
+            }
+            catch { }
         }
     }
 }

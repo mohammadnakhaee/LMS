@@ -86,7 +86,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(986, 37);
+            this.panel4.Size = new System.Drawing.Size(802, 37);
             this.panel4.TabIndex = 1;
             // 
             // label1
@@ -252,7 +252,7 @@
             this.Xpanel.Enabled = false;
             this.Xpanel.Location = new System.Drawing.Point(183, 466);
             this.Xpanel.Name = "Xpanel";
-            this.Xpanel.Size = new System.Drawing.Size(803, 61);
+            this.Xpanel.Size = new System.Drawing.Size(619, 61);
             this.Xpanel.TabIndex = 5;
             // 
             // panel3
@@ -262,7 +262,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(183, 37);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(803, 429);
+            this.panel3.Size = new System.Drawing.Size(619, 429);
             this.panel3.TabIndex = 6;
             // 
             // chart1
@@ -301,7 +301,7 @@
             this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(799, 425);
+            this.chart1.Size = new System.Drawing.Size(615, 425);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             // 
@@ -309,7 +309,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(986, 527);
+            this.ClientSize = new System.Drawing.Size(802, 527);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.Xpanel);
             this.Controls.Add(this.Ypanel);

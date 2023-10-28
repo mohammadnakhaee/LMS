@@ -33,9 +33,9 @@ namespace EISProjects
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabFile = new System.Windows.Forms.TabPage();
             this.BtnImport = new System.Windows.Forms.Button();
@@ -73,9 +73,8 @@ namespace EISProjects
             this.button11 = new System.Windows.Forms.Button();
             this.BtnFindOCP = new System.Windows.Forms.Button();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.BtnRunS = new System.Windows.Forms.Button();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.BtnRun = new System.Windows.Forms.Button();
-            this.BtnPauseContinue = new System.Windows.Forms.Button();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.DummyOnBtn = new System.Windows.Forms.Button();
             this.SampleOnBtn = new System.Windows.Forms.Button();
@@ -97,6 +96,8 @@ namespace EISProjects
             this.label46 = new System.Windows.Forms.Label();
             this.TBLogin = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
+            this.BtnRunS = new System.Windows.Forms.Button();
+            this.BtnPauseContinue = new System.Windows.Forms.Button();
             this.StatusPanel = new System.Windows.Forms.Panel();
             this.label_per = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
@@ -107,6 +108,10 @@ namespace EISProjects
             this.Panel101 = new System.Windows.Forms.Panel();
             this.PanelProperties = new System.Windows.Forms.Panel();
             this.GBCharge = new System.Windows.Forms.GroupBox();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.label104 = new System.Windows.Forms.Label();
+            this.label103 = new System.Windows.Forms.Label();
+            this.Label_Discharge = new System.Windows.Forms.Label();
             this.Label_Charge = new System.Windows.Forms.Label();
             this.label102 = new System.Windows.Forms.Label();
             this.CBCharge_DataCount = new System.Windows.Forms.NumericUpDown();
@@ -125,7 +130,9 @@ namespace EISProjects
             this.CBCharge_VFilter = new System.Windows.Forms.ComboBox();
             this.label95 = new System.Windows.Forms.Label();
             this.label96 = new System.Windows.Forms.Label();
+            this.CBCharge_VoltageRangeMode = new System.Windows.Forms.ComboBox();
             this.CBCharge_Vmlp = new System.Windows.Forms.ComboBox();
+            this.label97 = new System.Windows.Forms.Label();
             this.CBCharge_NumberOfCycles = new System.Windows.Forms.NumericUpDown();
             this.label92 = new System.Windows.Forms.Label();
             this.CBCharge_VoltageMin = new System.Windows.Forms.NumericUpDown();
@@ -156,6 +163,9 @@ namespace EISProjects
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.ChBExport = new System.Windows.Forms.CheckBox();
+            this.CBMode = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ChBActive = new System.Windows.Forms.CheckBox();
             this.GBPulse = new System.Windows.Forms.GroupBox();
             this.WarnLabel = new System.Windows.Forms.Label();
             this.groupBox18 = new System.Windows.Forms.GroupBox();
@@ -188,12 +198,11 @@ namespace EISProjects
             this.TBMSCHDCVTo = new System.Windows.Forms.TextBox();
             this.TBMSCHDCVFrm = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.CBMode = new System.Windows.Forms.ComboBox();
-            this.ChBActive = new System.Windows.Forms.CheckBox();
             this.TBSsnName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.GBEIS = new System.Windows.Forms.GroupBox();
+            this.numericUpDown_freq = new System.Windows.Forms.NumericUpDown();
+            this.checkBox_HImpede = new System.Windows.Forms.CheckBox();
             this.BtnEISAveNumH = new System.Windows.Forms.TextBox();
             this.label55 = new System.Windows.Forms.Label();
             this.BtnEISAveNum = new System.Windows.Forms.TextBox();
@@ -304,6 +313,8 @@ namespace EISProjects
             this.label66 = new System.Windows.Forms.Label();
             this.LabelVOCT = new System.Windows.Forms.Label();
             this.ChBRelRef = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.MethodLabel = new System.Windows.Forms.Label();
             this.Prop = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -316,6 +327,10 @@ namespace EISProjects
             this.IVTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.GBAdminLog = new System.Windows.Forms.GroupBox();
+            this.label107 = new System.Windows.Forms.Label();
+            this.label_idcmA = new System.Windows.Forms.Label();
+            this.label106 = new System.Windows.Forms.Label();
+            this.label_idcraw = new System.Windows.Forms.Label();
             this.label_clm = new System.Windows.Forms.Label();
             this.label81 = new System.Windows.Forms.Label();
             this.label_iacdac = new System.Windows.Forms.Label();
@@ -365,21 +380,13 @@ namespace EISProjects
             this.PreproccessingTimer = new System.Windows.Forms.Timer(this.components);
             this.Desktop = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.CBCharge_VoltageRangeMode = new System.Windows.Forms.ComboBox();
-            this.label97 = new System.Windows.Forms.Label();
-            this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.Label_Discharge = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.MethodLabel = new System.Windows.Forms.Label();
-            this.groupBox21 = new System.Windows.Forms.GroupBox();
-            this.label103 = new System.Windows.Forms.Label();
-            this.label104 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabFile.SuspendLayout();
             this.TabEdit.SuspendLayout();
             this.TabWindow.SuspendLayout();
             this.TabMethods.SuspendLayout();
             this.TabTools.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             this.TabOffset.SuspendLayout();
             this.TabHelp.SuspendLayout();
             this.TabLogin.SuspendLayout();
@@ -387,6 +394,7 @@ namespace EISProjects
             this.Panel101.SuspendLayout();
             this.PanelProperties.SuspendLayout();
             this.GBCharge.SuspendLayout();
+            this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_DataCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_TotalTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_dt)).BeginInit();
@@ -408,6 +416,7 @@ namespace EISProjects
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.GBEIS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_freq)).BeginInit();
             this.GBVoltages.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -422,6 +431,7 @@ namespace EISProjects
             this.GBPreprocessing.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.Prop.SuspendLayout();
             this.CMSSession.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -429,9 +439,6 @@ namespace EISProjects
             this.groupBox14.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox15.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.groupBox21.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -467,7 +474,7 @@ namespace EISProjects
             this.TabFile.Location = new System.Drawing.Point(4, 28);
             this.TabFile.Name = "TabFile";
             this.TabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.TabFile.Size = new System.Drawing.Size(1276, 68);
+            this.TabFile.Size = new System.Drawing.Size(1276, 58);
             this.TabFile.TabIndex = 0;
             this.TabFile.Text = "File";
             // 
@@ -479,7 +486,7 @@ namespace EISProjects
             this.BtnImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnImport.Location = new System.Drawing.Point(703, 3);
             this.BtnImport.Name = "BtnImport";
-            this.BtnImport.Size = new System.Drawing.Size(100, 60);
+            this.BtnImport.Size = new System.Drawing.Size(100, 50);
             this.BtnImport.TabIndex = 7;
             this.BtnImport.Text = "Import";
             this.BtnImport.UseVisualStyleBackColor = false;
@@ -493,7 +500,7 @@ namespace EISProjects
             this.BtnAppend.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAppend.Location = new System.Drawing.Point(603, 3);
             this.BtnAppend.Name = "BtnAppend";
-            this.BtnAppend.Size = new System.Drawing.Size(100, 60);
+            this.BtnAppend.Size = new System.Drawing.Size(100, 50);
             this.BtnAppend.TabIndex = 6;
             this.BtnAppend.Text = "Append";
             this.BtnAppend.UseVisualStyleBackColor = false;
@@ -507,7 +514,7 @@ namespace EISProjects
             this.CheckPID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CheckPID.Location = new System.Drawing.Point(503, 3);
             this.CheckPID.Name = "CheckPID";
-            this.CheckPID.Size = new System.Drawing.Size(100, 60);
+            this.CheckPID.Size = new System.Drawing.Size(100, 50);
             this.CheckPID.TabIndex = 9;
             this.CheckPID.Text = "Check PID";
             this.CheckPID.UseVisualStyleBackColor = false;
@@ -521,7 +528,7 @@ namespace EISProjects
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.Location = new System.Drawing.Point(403, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 60);
+            this.button3.Size = new System.Drawing.Size(100, 50);
             this.button3.TabIndex = 8;
             this.button3.Text = "Log in as administrator";
             this.button3.UseVisualStyleBackColor = false;
@@ -535,7 +542,7 @@ namespace EISProjects
             this.BtnSaveAs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnSaveAs.Location = new System.Drawing.Point(303, 3);
             this.BtnSaveAs.Name = "BtnSaveAs";
-            this.BtnSaveAs.Size = new System.Drawing.Size(100, 60);
+            this.BtnSaveAs.Size = new System.Drawing.Size(100, 50);
             this.BtnSaveAs.TabIndex = 5;
             this.BtnSaveAs.Text = "Save As";
             this.BtnSaveAs.UseVisualStyleBackColor = false;
@@ -548,7 +555,7 @@ namespace EISProjects
             this.BtnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnSave.Location = new System.Drawing.Point(203, 3);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(100, 60);
+            this.BtnSave.Size = new System.Drawing.Size(100, 50);
             this.BtnSave.TabIndex = 4;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = false;
@@ -561,7 +568,7 @@ namespace EISProjects
             this.BtnOpen.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnOpen.Location = new System.Drawing.Point(103, 3);
             this.BtnOpen.Name = "BtnOpen";
-            this.BtnOpen.Size = new System.Drawing.Size(100, 60);
+            this.BtnOpen.Size = new System.Drawing.Size(100, 50);
             this.BtnOpen.TabIndex = 3;
             this.BtnOpen.Text = "Open";
             this.BtnOpen.UseVisualStyleBackColor = false;
@@ -577,7 +584,7 @@ namespace EISProjects
             this.BtnNew.Location = new System.Drawing.Point(3, 3);
             this.BtnNew.Margin = new System.Windows.Forms.Padding(0);
             this.BtnNew.Name = "BtnNew";
-            this.BtnNew.Size = new System.Drawing.Size(100, 60);
+            this.BtnNew.Size = new System.Drawing.Size(100, 50);
             this.BtnNew.TabIndex = 2;
             this.BtnNew.Text = "New";
             this.BtnNew.UseVisualStyleBackColor = true;
@@ -595,7 +602,7 @@ namespace EISProjects
             this.TabEdit.Name = "TabEdit";
             this.TabEdit.Padding = new System.Windows.Forms.Padding(3);
             this.TabEdit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.TabEdit.Size = new System.Drawing.Size(1276, 68);
+            this.TabEdit.Size = new System.Drawing.Size(1276, 58);
             this.TabEdit.TabIndex = 1;
             this.TabEdit.Text = "Edit";
             // 
@@ -606,7 +613,7 @@ namespace EISProjects
             this.BtnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnDelete.Location = new System.Drawing.Point(103, 3);
             this.BtnDelete.Name = "BtnDelete";
-            this.BtnDelete.Size = new System.Drawing.Size(100, 60);
+            this.BtnDelete.Size = new System.Drawing.Size(100, 50);
             this.BtnDelete.TabIndex = 5;
             this.BtnDelete.Text = "Delete";
             this.BtnDelete.UseVisualStyleBackColor = false;
@@ -619,7 +626,7 @@ namespace EISProjects
             this.BtnDuplicate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnDuplicate.Location = new System.Drawing.Point(3, 3);
             this.BtnDuplicate.Name = "BtnDuplicate";
-            this.BtnDuplicate.Size = new System.Drawing.Size(100, 60);
+            this.BtnDuplicate.Size = new System.Drawing.Size(100, 50);
             this.BtnDuplicate.TabIndex = 6;
             this.BtnDuplicate.Text = "Duplicate";
             this.BtnDuplicate.UseVisualStyleBackColor = false;
@@ -640,7 +647,7 @@ namespace EISProjects
             this.TabWindow.Location = new System.Drawing.Point(4, 28);
             this.TabWindow.Name = "TabWindow";
             this.TabWindow.Padding = new System.Windows.Forms.Padding(3);
-            this.TabWindow.Size = new System.Drawing.Size(1276, 68);
+            this.TabWindow.Size = new System.Drawing.Size(1276, 58);
             this.TabWindow.TabIndex = 2;
             this.TabWindow.Text = "Window";
             this.TabWindow.UseVisualStyleBackColor = true;
@@ -653,7 +660,7 @@ namespace EISProjects
             this.BtnVirtualMachine.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.BtnVirtualMachine.Location = new System.Drawing.Point(703, 3);
             this.BtnVirtualMachine.Name = "BtnVirtualMachine";
-            this.BtnVirtualMachine.Size = new System.Drawing.Size(100, 60);
+            this.BtnVirtualMachine.Size = new System.Drawing.Size(100, 50);
             this.BtnVirtualMachine.TabIndex = 2;
             this.BtnVirtualMachine.Text = "Virtual Machine";
             this.BtnVirtualMachine.UseVisualStyleBackColor = false;
@@ -668,7 +675,7 @@ namespace EISProjects
             this.BtnFitt.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BtnFitt.Location = new System.Drawing.Point(603, 3);
             this.BtnFitt.Name = "BtnFitt";
-            this.BtnFitt.Size = new System.Drawing.Size(100, 60);
+            this.BtnFitt.Size = new System.Drawing.Size(100, 50);
             this.BtnFitt.TabIndex = 3;
             this.BtnFitt.Text = "Fitting";
             this.BtnFitt.UseVisualStyleBackColor = false;
@@ -683,7 +690,7 @@ namespace EISProjects
             this.BtnTerminal.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BtnTerminal.Location = new System.Drawing.Point(503, 3);
             this.BtnTerminal.Name = "BtnTerminal";
-            this.BtnTerminal.Size = new System.Drawing.Size(100, 60);
+            this.BtnTerminal.Size = new System.Drawing.Size(100, 50);
             this.BtnTerminal.TabIndex = 8;
             this.BtnTerminal.Text = "Terminal";
             this.BtnTerminal.UseVisualStyleBackColor = false;
@@ -698,7 +705,7 @@ namespace EISProjects
             this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button2.Location = new System.Drawing.Point(403, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 60);
+            this.button2.Size = new System.Drawing.Size(100, 50);
             this.button2.TabIndex = 7;
             this.button2.Text = "Scope 2";
             this.button2.UseVisualStyleBackColor = false;
@@ -713,7 +720,7 @@ namespace EISProjects
             this.BtnSetting.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.BtnSetting.Location = new System.Drawing.Point(303, 3);
             this.BtnSetting.Name = "BtnSetting";
-            this.BtnSetting.Size = new System.Drawing.Size(100, 60);
+            this.BtnSetting.Size = new System.Drawing.Size(100, 50);
             this.BtnSetting.TabIndex = 5;
             this.BtnSetting.Text = "Settings";
             this.BtnSetting.UseVisualStyleBackColor = false;
@@ -727,7 +734,7 @@ namespace EISProjects
             this.BtnShowData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnShowData.Location = new System.Drawing.Point(203, 3);
             this.BtnShowData.Name = "BtnShowData";
-            this.BtnShowData.Size = new System.Drawing.Size(100, 60);
+            this.BtnShowData.Size = new System.Drawing.Size(100, 50);
             this.BtnShowData.TabIndex = 4;
             this.BtnShowData.Text = "Show Data";
             this.BtnShowData.UseVisualStyleBackColor = false;
@@ -741,7 +748,7 @@ namespace EISProjects
             this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button1.Location = new System.Drawing.Point(103, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 60);
+            this.button1.Size = new System.Drawing.Size(100, 50);
             this.button1.TabIndex = 6;
             this.button1.Text = "Scope";
             this.button1.UseVisualStyleBackColor = false;
@@ -754,7 +761,7 @@ namespace EISProjects
             this.BtnDiagram.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnDiagram.Location = new System.Drawing.Point(3, 3);
             this.BtnDiagram.Name = "BtnDiagram";
-            this.BtnDiagram.Size = new System.Drawing.Size(100, 60);
+            this.BtnDiagram.Size = new System.Drawing.Size(100, 50);
             this.BtnDiagram.TabIndex = 0;
             this.BtnDiagram.Text = "Diagram";
             this.BtnDiagram.UseVisualStyleBackColor = false;
@@ -974,17 +981,16 @@ namespace EISProjects
             this.splitter2.TabIndex = 17;
             this.splitter2.TabStop = false;
             // 
-            // BtnRunS
+            // groupBox15
             // 
-            this.BtnRunS.BackColor = System.Drawing.Color.CadetBlue;
-            this.BtnRunS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnRunS.Location = new System.Drawing.Point(260, 2);
-            this.BtnRunS.Name = "BtnRunS";
-            this.BtnRunS.Size = new System.Drawing.Size(71, 29);
-            this.BtnRunS.TabIndex = 5;
-            this.BtnRunS.Text = "Start";
-            this.BtnRunS.UseVisualStyleBackColor = false;
-            this.BtnRunS.Click += new System.EventHandler(this.BtnRunS_Click);
+            this.groupBox15.Controls.Add(this.BtnRun);
+            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox15.Location = new System.Drawing.Point(315, 3);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(157, 50);
+            this.groupBox15.TabIndex = 11;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Run";
             // 
             // BtnRun
             // 
@@ -997,19 +1003,6 @@ namespace EISProjects
             this.BtnRun.Text = "Run All";
             this.BtnRun.UseVisualStyleBackColor = false;
             this.BtnRun.Click += new System.EventHandler(this.BtnRun_Click);
-            // 
-            // BtnPauseContinue
-            // 
-            this.BtnPauseContinue.BackColor = System.Drawing.Color.CadetBlue;
-            this.BtnPauseContinue.Enabled = false;
-            this.BtnPauseContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnPauseContinue.Location = new System.Drawing.Point(339, 2);
-            this.BtnPauseContinue.Name = "BtnPauseContinue";
-            this.BtnPauseContinue.Size = new System.Drawing.Size(71, 29);
-            this.BtnPauseContinue.TabIndex = 4;
-            this.BtnPauseContinue.Text = "Pause";
-            this.BtnPauseContinue.UseVisualStyleBackColor = false;
-            this.BtnPauseContinue.Click += new System.EventHandler(this.BtnPauseContinue_Click);
             // 
             // splitter1
             // 
@@ -1178,7 +1171,7 @@ namespace EISProjects
             this.TabHelp.Location = new System.Drawing.Point(4, 28);
             this.TabHelp.Name = "TabHelp";
             this.TabHelp.Padding = new System.Windows.Forms.Padding(3);
-            this.TabHelp.Size = new System.Drawing.Size(1276, 68);
+            this.TabHelp.Size = new System.Drawing.Size(1276, 58);
             this.TabHelp.TabIndex = 3;
             this.TabHelp.Text = "Help";
             this.TabHelp.UseVisualStyleBackColor = true;
@@ -1190,7 +1183,7 @@ namespace EISProjects
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(103, 3);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(100, 60);
+            this.button4.Size = new System.Drawing.Size(100, 50);
             this.button4.TabIndex = 4;
             this.button4.Text = "Tutorial";
             this.button4.UseVisualStyleBackColor = false;
@@ -1204,7 +1197,7 @@ namespace EISProjects
             this.BtnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAbout.Location = new System.Drawing.Point(3, 3);
             this.BtnAbout.Name = "BtnAbout";
-            this.BtnAbout.Size = new System.Drawing.Size(100, 60);
+            this.BtnAbout.Size = new System.Drawing.Size(100, 50);
             this.BtnAbout.TabIndex = 3;
             this.BtnAbout.Text = "About";
             this.BtnAbout.UseVisualStyleBackColor = false;
@@ -1276,6 +1269,31 @@ namespace EISProjects
             this.label45.TabIndex = 2;
             this.label45.Text = "Enter the password to open all features ...";
             // 
+            // BtnRunS
+            // 
+            this.BtnRunS.BackColor = System.Drawing.Color.CadetBlue;
+            this.BtnRunS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnRunS.Location = new System.Drawing.Point(260, 2);
+            this.BtnRunS.Name = "BtnRunS";
+            this.BtnRunS.Size = new System.Drawing.Size(71, 29);
+            this.BtnRunS.TabIndex = 5;
+            this.BtnRunS.Text = "Start";
+            this.BtnRunS.UseVisualStyleBackColor = false;
+            this.BtnRunS.Click += new System.EventHandler(this.BtnRunS_Click);
+            // 
+            // BtnPauseContinue
+            // 
+            this.BtnPauseContinue.BackColor = System.Drawing.Color.CadetBlue;
+            this.BtnPauseContinue.Enabled = false;
+            this.BtnPauseContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnPauseContinue.Location = new System.Drawing.Point(339, 2);
+            this.BtnPauseContinue.Name = "BtnPauseContinue";
+            this.BtnPauseContinue.Size = new System.Drawing.Size(71, 29);
+            this.BtnPauseContinue.TabIndex = 4;
+            this.BtnPauseContinue.Text = "Pause";
+            this.BtnPauseContinue.UseVisualStyleBackColor = false;
+            this.BtnPauseContinue.Click += new System.EventHandler(this.BtnPauseContinue_Click);
+            // 
             // StatusPanel
             // 
             this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1286,7 +1304,7 @@ namespace EISProjects
             this.StatusPanel.Controls.Add(this.ProbWarningLabel);
             this.StatusPanel.Controls.Add(this.PBAllSessions);
             this.StatusPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.StatusPanel.Location = new System.Drawing.Point(0, 871);
+            this.StatusPanel.Location = new System.Drawing.Point(0, 679);
             this.StatusPanel.Name = "StatusPanel";
             this.StatusPanel.Size = new System.Drawing.Size(1284, 70);
             this.StatusPanel.TabIndex = 1;
@@ -1359,7 +1377,7 @@ namespace EISProjects
             this.Panel101.Dock = System.Windows.Forms.DockStyle.Right;
             this.Panel101.Location = new System.Drawing.Point(849, 90);
             this.Panel101.Name = "Panel101";
-            this.Panel101.Size = new System.Drawing.Size(435, 781);
+            this.Panel101.Size = new System.Drawing.Size(435, 589);
             this.Panel101.TabIndex = 3;
             // 
             // PanelProperties
@@ -1380,7 +1398,7 @@ namespace EISProjects
             this.PanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelProperties.Location = new System.Drawing.Point(0, 57);
             this.PanelProperties.Name = "PanelProperties";
-            this.PanelProperties.Size = new System.Drawing.Size(435, 724);
+            this.PanelProperties.Size = new System.Drawing.Size(435, 532);
             this.PanelProperties.TabIndex = 1;
             this.PanelProperties.Visible = false;
             this.PanelProperties.MouseEnter += new System.EventHandler(this.PanelProperties_MouseEnter);
@@ -1418,6 +1436,46 @@ namespace EISProjects
             this.GBCharge.TabIndex = 32;
             this.GBCharge.TabStop = false;
             this.GBCharge.Text = "Charge-Discharge";
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.label104);
+            this.groupBox21.Controls.Add(this.label103);
+            this.groupBox21.Controls.Add(this.Label_Discharge);
+            this.groupBox21.Controls.Add(this.Label_Charge);
+            this.groupBox21.Location = new System.Drawing.Point(234, 27);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(124, 71);
+            this.groupBox21.TabIndex = 50;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Status";
+            // 
+            // label104
+            // 
+            this.label104.AutoSize = true;
+            this.label104.Location = new System.Drawing.Point(9, 40);
+            this.label104.Name = "label104";
+            this.label104.Size = new System.Drawing.Size(58, 13);
+            this.label104.TabIndex = 51;
+            this.label104.Text = "Discharge:";
+            // 
+            // label103
+            // 
+            this.label103.AutoSize = true;
+            this.label103.Location = new System.Drawing.Point(22, 18);
+            this.label103.Name = "label103";
+            this.label103.Size = new System.Drawing.Size(44, 13);
+            this.label103.TabIndex = 50;
+            this.label103.Text = "Charge:";
+            // 
+            // Label_Discharge
+            // 
+            this.Label_Discharge.AutoSize = true;
+            this.Label_Discharge.Location = new System.Drawing.Point(64, 40);
+            this.Label_Discharge.Name = "Label_Discharge";
+            this.Label_Discharge.Size = new System.Drawing.Size(13, 13);
+            this.Label_Discharge.TabIndex = 49;
+            this.Label_Discharge.Text = "0";
             // 
             // Label_Charge
             // 
@@ -1663,6 +1721,19 @@ namespace EISProjects
             this.label96.Text = "Fine Range:";
             this.label96.Visible = false;
             // 
+            // CBCharge_VoltageRangeMode
+            // 
+            this.CBCharge_VoltageRangeMode.Enabled = false;
+            this.CBCharge_VoltageRangeMode.FormattingEnabled = true;
+            this.CBCharge_VoltageRangeMode.Items.AddRange(new object[] {
+            "[-5 (V) .. 5 (V)]",
+            "[-1 (V) .. 1 (V)]"});
+            this.CBCharge_VoltageRangeMode.Location = new System.Drawing.Point(116, 20);
+            this.CBCharge_VoltageRangeMode.Name = "CBCharge_VoltageRangeMode";
+            this.CBCharge_VoltageRangeMode.Size = new System.Drawing.Size(126, 21);
+            this.CBCharge_VoltageRangeMode.TabIndex = 17;
+            this.CBCharge_VoltageRangeMode.SelectedIndexChanged += new System.EventHandler(this.CBCharge_VoltageRangeMode_SelectedIndexChanged);
+            // 
             // CBCharge_Vmlp
             // 
             this.CBCharge_Vmlp.FormattingEnabled = true;
@@ -1680,6 +1751,15 @@ namespace EISProjects
             this.CBCharge_Vmlp.TabIndex = 21;
             this.CBCharge_Vmlp.Visible = false;
             this.CBCharge_Vmlp.SelectedIndexChanged += new System.EventHandler(this.CBCharge_Vmlp_SelectedIndexChanged);
+            // 
+            // label97
+            // 
+            this.label97.AutoSize = true;
+            this.label97.Location = new System.Drawing.Point(12, 23);
+            this.label97.Name = "label97";
+            this.label97.Size = new System.Drawing.Size(81, 13);
+            this.label97.TabIndex = 18;
+            this.label97.Text = "Voltage Range:";
             // 
             // CBCharge_NumberOfCycles
             // 
@@ -2030,6 +2110,44 @@ namespace EISProjects
             this.ChBExport.UseVisualStyleBackColor = true;
             this.ChBExport.CheckedChanged += new System.EventHandler(this.ChBExport_CheckedChanged);
             // 
+            // CBMode
+            // 
+            this.CBMode.Enabled = false;
+            this.CBMode.FormattingEnabled = true;
+            this.CBMode.Items.AddRange(new object[] {
+            "EIS",
+            "Mott Schottky",
+            "Chronoamperometry",
+            "I-V and C-V",
+            "Pulse",
+            "Battery"});
+            this.CBMode.Location = new System.Drawing.Point(271, 41);
+            this.CBMode.Name = "CBMode";
+            this.CBMode.Size = new System.Drawing.Size(129, 21);
+            this.CBMode.TabIndex = 7;
+            this.CBMode.SelectedIndexChanged += new System.EventHandler(this.CBMode_SelectedIndexChanged);
+            this.CBMode.EnabledChanged += new System.EventHandler(this.CBMode_EnabledChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(232, 45);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Mode:";
+            // 
+            // ChBActive
+            // 
+            this.ChBActive.AutoSize = true;
+            this.ChBActive.Location = new System.Drawing.Point(308, 25);
+            this.ChBActive.Name = "ChBActive";
+            this.ChBActive.Size = new System.Drawing.Size(56, 17);
+            this.ChBActive.TabIndex = 3;
+            this.ChBActive.Text = "Active";
+            this.ChBActive.UseVisualStyleBackColor = true;
+            this.ChBActive.CheckedChanged += new System.EventHandler(this.ChBActive_CheckedChanged);
+            // 
             // GBPulse
             // 
             this.GBPulse.Controls.Add(this.WarnLabel);
@@ -2269,17 +2387,17 @@ namespace EISProjects
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.SystemColors.Control;
-            chartArea8.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chart1.Legends.Add(legend8);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(5, 18);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chart1.Series.Add(series8);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(388, 123);
             this.chart1.TabIndex = 28;
             this.chart1.Text = "chart1";
@@ -2407,44 +2525,6 @@ namespace EISProjects
             this.label10.TabIndex = 14;
             this.label10.Text = "From:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(232, 45);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Mode:";
-            // 
-            // CBMode
-            // 
-            this.CBMode.Enabled = false;
-            this.CBMode.FormattingEnabled = true;
-            this.CBMode.Items.AddRange(new object[] {
-            "EIS",
-            "Mott Schottky",
-            "Chronoamperometry",
-            "I-V and C-V",
-            "Pulse",
-            "Battery"});
-            this.CBMode.Location = new System.Drawing.Point(271, 41);
-            this.CBMode.Name = "CBMode";
-            this.CBMode.Size = new System.Drawing.Size(129, 21);
-            this.CBMode.TabIndex = 7;
-            this.CBMode.SelectedIndexChanged += new System.EventHandler(this.CBMode_SelectedIndexChanged);
-            this.CBMode.EnabledChanged += new System.EventHandler(this.CBMode_EnabledChanged);
-            // 
-            // ChBActive
-            // 
-            this.ChBActive.AutoSize = true;
-            this.ChBActive.Location = new System.Drawing.Point(308, 25);
-            this.ChBActive.Name = "ChBActive";
-            this.ChBActive.Size = new System.Drawing.Size(56, 17);
-            this.ChBActive.TabIndex = 3;
-            this.ChBActive.Text = "Active";
-            this.ChBActive.UseVisualStyleBackColor = true;
-            this.ChBActive.CheckedChanged += new System.EventHandler(this.ChBActive_CheckedChanged);
-            // 
             // TBSsnName
             // 
             this.TBSsnName.Location = new System.Drawing.Point(113, 23);
@@ -2464,6 +2544,8 @@ namespace EISProjects
             // 
             // GBEIS
             // 
+            this.GBEIS.Controls.Add(this.numericUpDown_freq);
+            this.GBEIS.Controls.Add(this.checkBox_HImpede);
             this.GBEIS.Controls.Add(this.BtnEISAveNumH);
             this.GBEIS.Controls.Add(this.label55);
             this.GBEIS.Controls.Add(this.BtnEISAveNum);
@@ -2480,6 +2562,38 @@ namespace EISProjects
             this.GBEIS.TabIndex = 9;
             this.GBEIS.TabStop = false;
             this.GBEIS.Text = "EIS";
+            // 
+            // numericUpDown_freq
+            // 
+            this.numericUpDown_freq.Location = new System.Drawing.Point(278, 92);
+            this.numericUpDown_freq.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDown_freq.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_freq.Name = "numericUpDown_freq";
+            this.numericUpDown_freq.Size = new System.Drawing.Size(80, 20);
+            this.numericUpDown_freq.TabIndex = 16;
+            this.numericUpDown_freq.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // checkBox_HImpede
+            // 
+            this.checkBox_HImpede.AutoSize = true;
+            this.checkBox_HImpede.Location = new System.Drawing.Point(275, 74);
+            this.checkBox_HImpede.Name = "checkBox_HImpede";
+            this.checkBox_HImpede.Size = new System.Drawing.Size(104, 17);
+            this.checkBox_HImpede.TabIndex = 15;
+            this.checkBox_HImpede.Text = "High Impedance";
+            this.checkBox_HImpede.UseVisualStyleBackColor = true;
             // 
             // BtnEISAveNumH
             // 
@@ -3679,6 +3793,27 @@ namespace EISProjects
             this.ChBRelRef.Visible = false;
             this.ChBRelRef.CheckedChanged += new System.EventHandler(this.ChBRelRef_CheckedChanged);
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.MethodLabel);
+            this.panel3.Controls.Add(this.BtnPauseContinue);
+            this.panel3.Controls.Add(this.BtnRunS);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 21);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(435, 36);
+            this.panel3.TabIndex = 2;
+            // 
+            // MethodLabel
+            // 
+            this.MethodLabel.AutoSize = true;
+            this.MethodLabel.Location = new System.Drawing.Point(21, 11);
+            this.MethodLabel.Name = "MethodLabel";
+            this.MethodLabel.Size = new System.Drawing.Size(46, 13);
+            this.MethodLabel.TabIndex = 9;
+            this.MethodLabel.Text = "Method:";
+            // 
             // Prop
             // 
             this.Prop.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -3760,11 +3895,15 @@ namespace EISProjects
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 90);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(286, 781);
+            this.panel2.Size = new System.Drawing.Size(286, 589);
             this.panel2.TabIndex = 6;
             // 
             // GBAdminLog
             // 
+            this.GBAdminLog.Controls.Add(this.label107);
+            this.GBAdminLog.Controls.Add(this.label_idcmA);
+            this.GBAdminLog.Controls.Add(this.label106);
+            this.GBAdminLog.Controls.Add(this.label_idcraw);
             this.GBAdminLog.Controls.Add(this.label_clm);
             this.GBAdminLog.Controls.Add(this.label81);
             this.GBAdminLog.Controls.Add(this.label_iacdac);
@@ -3806,6 +3945,42 @@ namespace EISProjects
             this.GBAdminLog.TabStop = false;
             this.GBAdminLog.Text = "Admin Log";
             // 
+            // label107
+            // 
+            this.label107.AutoSize = true;
+            this.label107.Location = new System.Drawing.Point(115, 217);
+            this.label107.Name = "label107";
+            this.label107.Size = new System.Drawing.Size(30, 15);
+            this.label107.TabIndex = 40;
+            this.label107.Text = "IDC:";
+            // 
+            // label_idcmA
+            // 
+            this.label_idcmA.AutoSize = true;
+            this.label_idcmA.Location = new System.Drawing.Point(142, 217);
+            this.label_idcmA.Name = "label_idcmA";
+            this.label_idcmA.Size = new System.Drawing.Size(35, 15);
+            this.label_idcmA.TabIndex = 39;
+            this.label_idcmA.Text = "-------";
+            // 
+            // label106
+            // 
+            this.label106.AutoSize = true;
+            this.label106.Location = new System.Drawing.Point(23, 216);
+            this.label106.Name = "label106";
+            this.label106.Size = new System.Drawing.Size(20, 15);
+            this.label106.TabIndex = 38;
+            this.label106.Text = "IZ:";
+            // 
+            // label_idcraw
+            // 
+            this.label_idcraw.AutoSize = true;
+            this.label_idcraw.Location = new System.Drawing.Point(48, 217);
+            this.label_idcraw.Name = "label_idcraw";
+            this.label_idcraw.Size = new System.Drawing.Size(35, 15);
+            this.label_idcraw.TabIndex = 37;
+            this.label_idcraw.Text = "-------";
+            // 
             // label_clm
             // 
             this.label_clm.AutoSize = true;
@@ -3836,7 +4011,7 @@ namespace EISProjects
             // label82
             // 
             this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(33, 222);
+            this.label82.Location = new System.Drawing.Point(33, 240);
             this.label82.Name = "label82";
             this.label82.Size = new System.Drawing.Size(36, 15);
             this.label82.TabIndex = 33;
@@ -3845,7 +4020,7 @@ namespace EISProjects
             // label_false
             // 
             this.label_false.AutoSize = true;
-            this.label_false.Location = new System.Drawing.Point(67, 222);
+            this.label_false.Location = new System.Drawing.Point(67, 240);
             this.label_false.Name = "label_false";
             this.label_false.Size = new System.Drawing.Size(35, 15);
             this.label_false.TabIndex = 32;
@@ -4264,7 +4439,7 @@ namespace EISProjects
             this.Desktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Desktop.Location = new System.Drawing.Point(286, 90);
             this.Desktop.Name = "Desktop";
-            this.Desktop.Size = new System.Drawing.Size(563, 781);
+            this.Desktop.Size = new System.Drawing.Size(563, 589);
             this.Desktop.TabIndex = 4;
             this.Desktop.MouseEnter += new System.EventHandler(this.Desktop_MouseEnter);
             this.Desktop.MouseLeave += new System.EventHandler(this.Desktop_MouseLeave);
@@ -4279,106 +4454,12 @@ namespace EISProjects
             this.panel1.Size = new System.Drawing.Size(1284, 90);
             this.panel1.TabIndex = 8;
             // 
-            // CBCharge_VoltageRangeMode
-            // 
-            this.CBCharge_VoltageRangeMode.Enabled = false;
-            this.CBCharge_VoltageRangeMode.FormattingEnabled = true;
-            this.CBCharge_VoltageRangeMode.Items.AddRange(new object[] {
-            "[-5 (V) .. 5 (V)]",
-            "[-1 (V) .. 1 (V)]"});
-            this.CBCharge_VoltageRangeMode.Location = new System.Drawing.Point(116, 20);
-            this.CBCharge_VoltageRangeMode.Name = "CBCharge_VoltageRangeMode";
-            this.CBCharge_VoltageRangeMode.Size = new System.Drawing.Size(126, 21);
-            this.CBCharge_VoltageRangeMode.TabIndex = 17;
-            this.CBCharge_VoltageRangeMode.SelectedIndexChanged += new System.EventHandler(this.CBCharge_VoltageRangeMode_SelectedIndexChanged);
-            // 
-            // label97
-            // 
-            this.label97.AutoSize = true;
-            this.label97.Location = new System.Drawing.Point(12, 23);
-            this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(81, 13);
-            this.label97.TabIndex = 18;
-            this.label97.Text = "Voltage Range:";
-            // 
-            // groupBox15
-            // 
-            this.groupBox15.Controls.Add(this.BtnRun);
-            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox15.Location = new System.Drawing.Point(315, 3);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(157, 50);
-            this.groupBox15.TabIndex = 11;
-            this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Run";
-            // 
-            // Label_Discharge
-            // 
-            this.Label_Discharge.AutoSize = true;
-            this.Label_Discharge.Location = new System.Drawing.Point(64, 40);
-            this.Label_Discharge.Name = "Label_Discharge";
-            this.Label_Discharge.Size = new System.Drawing.Size(13, 13);
-            this.Label_Discharge.TabIndex = 49;
-            this.Label_Discharge.Text = "0";
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.MethodLabel);
-            this.panel3.Controls.Add(this.BtnPauseContinue);
-            this.panel3.Controls.Add(this.BtnRunS);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 21);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(435, 36);
-            this.panel3.TabIndex = 2;
-            // 
-            // MethodLabel
-            // 
-            this.MethodLabel.AutoSize = true;
-            this.MethodLabel.Location = new System.Drawing.Point(21, 11);
-            this.MethodLabel.Name = "MethodLabel";
-            this.MethodLabel.Size = new System.Drawing.Size(46, 13);
-            this.MethodLabel.TabIndex = 9;
-            this.MethodLabel.Text = "Method:";
-            // 
-            // groupBox21
-            // 
-            this.groupBox21.Controls.Add(this.label104);
-            this.groupBox21.Controls.Add(this.label103);
-            this.groupBox21.Controls.Add(this.Label_Discharge);
-            this.groupBox21.Controls.Add(this.Label_Charge);
-            this.groupBox21.Location = new System.Drawing.Point(234, 27);
-            this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(124, 71);
-            this.groupBox21.TabIndex = 50;
-            this.groupBox21.TabStop = false;
-            this.groupBox21.Text = "Status";
-            // 
-            // label103
-            // 
-            this.label103.AutoSize = true;
-            this.label103.Location = new System.Drawing.Point(22, 18);
-            this.label103.Name = "label103";
-            this.label103.Size = new System.Drawing.Size(44, 13);
-            this.label103.TabIndex = 50;
-            this.label103.Text = "Charge:";
-            // 
-            // label104
-            // 
-            this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(9, 40);
-            this.label104.Name = "label104";
-            this.label104.Size = new System.Drawing.Size(58, 13);
-            this.label104.TabIndex = 51;
-            this.label104.Text = "Discharge:";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1284, 941);
+            this.ClientSize = new System.Drawing.Size(1284, 749);
             this.Controls.Add(this.Desktop);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.Panel101);
@@ -4397,6 +4478,7 @@ namespace EISProjects
             this.TabWindow.ResumeLayout(false);
             this.TabMethods.ResumeLayout(false);
             this.TabTools.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
             this.TabOffset.ResumeLayout(false);
             this.TabHelp.ResumeLayout(false);
             this.TabLogin.ResumeLayout(false);
@@ -4408,6 +4490,8 @@ namespace EISProjects
             this.PanelProperties.PerformLayout();
             this.GBCharge.ResumeLayout(false);
             this.GBCharge.PerformLayout();
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_DataCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_TotalTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CBCharge_dt)).EndInit();
@@ -4441,6 +4525,7 @@ namespace EISProjects
             this.groupBox3.PerformLayout();
             this.GBEIS.ResumeLayout(false);
             this.GBEIS.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_freq)).EndInit();
             this.GBVoltages.ResumeLayout(false);
             this.GBVoltages.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -4469,6 +4554,8 @@ namespace EISProjects
             this.groupBox5.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.Prop.ResumeLayout(false);
             this.Prop.PerformLayout();
             this.CMSSession.ResumeLayout(false);
@@ -4479,11 +4566,6 @@ namespace EISProjects
             this.groupBox14.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.groupBox15.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.groupBox21.ResumeLayout(false);
-            this.groupBox21.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -4828,6 +4910,12 @@ namespace EISProjects
         private System.Windows.Forms.GroupBox groupBox21;
         private System.Windows.Forms.Label label104;
         private System.Windows.Forms.Label label103;
+        private System.Windows.Forms.Label label107;
+        private System.Windows.Forms.Label label_idcmA;
+        private System.Windows.Forms.Label label106;
+        private System.Windows.Forms.Label label_idcraw;
+        private System.Windows.Forms.NumericUpDown numericUpDown_freq;
+        private System.Windows.Forms.CheckBox checkBox_HImpede;
     }
 
 
@@ -5352,7 +5440,7 @@ namespace EISProjects
         public int GetDigitalf_clock = 32000000;
         public float GetDigitalf_factor = 1.0f;
 
-        public int AnalogCommon_intOffset = 8388607;
+        public int AnalogCommon_intOffset = 2106;
         public float AnalogCommon_Domain = 2.5f;
         public float AnalogCommon_factor = 1.0f;
         //Domain set -5

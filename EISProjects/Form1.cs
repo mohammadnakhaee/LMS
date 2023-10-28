@@ -185,13 +185,15 @@ namespace EISProjects
 
         public Form1()
         {
-
-            clm = 1;//moosa
+                        clm = 1;//moosa
             Settings.Version = SettingsVersion;
             InitializeComponent();
+            
             Port.ReadBufferSize = 100000;
             FormPort = new FormPort(this);
             loadSetting(ref Settings);
+            CBIVVoltageRangeMode.Items[0] = "[-" + (int)(5 * Settings.AnalogCommon_factor) + " (V) .. " + (int)(5 * Settings.AnalogCommon_factor) + " (V)]";
+
             //////////////////////////////
             Settings.DEISMeanPercent = FactoryDefault.DEISMeanPercent;
             Settings.DEISNOverFlow0 = FactoryDefault.DEISNOverFlow0;
@@ -1659,7 +1661,7 @@ namespace EISProjects
         private void TBDCVoltageConstant_TextChanged(object sender, EventArgs e)
         {
             if (AllSessions[Selected].Mode == 0)
-                DigitTextChange(ref AllSessions[Selected].DCVoltageConstant, TBDCVoltageConstant, -5, 5);
+                DigitTextChange(ref AllSessions[Selected].DCVoltageConstant, TBDCVoltageConstant, -5*Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
             else
                 DigitTextChange(ref AllSessions[Selected].ACFrqConstant, TBDCVoltageConstant, Settings.SetDigitalf_Min, Settings.SetDigitalf_Max);
 
@@ -1677,7 +1679,7 @@ namespace EISProjects
             if (AllSessions[Selected].Mode == 0)
                 DigitTextChange(ref AllSessions[Selected].ACFrqFrom, TBACFrqFrom, Settings.SetDigitalf_Min, Settings.SetDigitalf_Max);
             else
-                DigitTextChange(ref AllSessions[Selected].DCVoltageFrom, TBACFrqFrom, -5, 5);
+                DigitTextChange(ref AllSessions[Selected].DCVoltageFrom, TBACFrqFrom, -5 * Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
         }
 
         private void TBACFrqTo_TextChanged(object sender, EventArgs e)
@@ -1685,7 +1687,7 @@ namespace EISProjects
             if (AllSessions[Selected].Mode == 0)
                 DigitTextChange(ref AllSessions[Selected].ACFrqTo, TBACFrqTo, Settings.SetDigitalf_Min, Settings.SetDigitalf_Max);
             else
-                DigitTextChange(ref AllSessions[Selected].DCVoltageTo, TBACFrqTo, -5, 5);
+                DigitTextChange(ref AllSessions[Selected].DCVoltageTo, TBACFrqTo, -5 * Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
         }
 
         private void TBACFrqStep_TextChanged(object sender, EventArgs e)
@@ -1884,6 +1886,16 @@ namespace EISProjects
                 GoToNext = true;
                 if (EIS.Connected)
                 {
+                    
+                    
+                    //moosa
+                    if (Settings.AnalogCommon_intOffset > 2300) Settings.AnalogCommon_intOffset = 2106;
+                    if (Settings.AnalogCommon_intOffset < 1700) Settings.AnalogCommon_intOffset = 2106;
+                    iacdac_zero = Settings.AnalogCommon_intOffset;
+                    //moosa
+
+
+
                     if (EIS.nSsn == 0)
                         MessageBox.Show("There is no session to run! Create new session by following path ...\n\nTools->New Session");
                     else
@@ -2069,6 +2081,7 @@ namespace EISProjects
                     AllSessionsData[EIS.RunningSession].OpenCircuitVoltage = 0;
                     if (AllSessions[EIS.RunningSession].Mode == 0)
                     {
+                       
                         int FrqCnt = AllSessions[EIS.RunningSession].ACFrqNStep;
                         AllSessionsData[EIS.RunningSession].ACFrqDim = FrqCnt;
                         AllSessionsData[EIS.RunningSession].Frq = new double[FrqCnt];
@@ -2189,6 +2202,7 @@ namespace EISProjects
                         AllSessionsData[EIS.RunningSession].Vlt = new double[Cnt];
                         AllSessionsData[EIS.RunningSession].Amp = new double[Cnt];
                         AllSessionsData[EIS.RunningSession].ReZ = new double[Cnt];
+                        AllSessionsData[EIS.RunningSession].Imz = new double[Cnt];
 
                         for (int i=0; i<Cnt; i++)
                             AllSessionsData[EIS.RunningSession].ReZ[i] = AllSessions[EIS.RunningSession].Charge_dt_ms * i / 1000.0;
@@ -2346,7 +2360,7 @@ namespace EISProjects
             Port.DiscardInBuffer(); //Clear Buffer
             Port.Write("ivset " + ivlt.ToString() + ReadToChar);
             DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + ivlt.ToString());
-            Port.Write(WriteReadToChar);
+           // Port.Write(WriteReadToChar);
             Thread.Sleep(100);
 
             try
@@ -2394,6 +2408,12 @@ namespace EISProjects
         {
             bool isError = true;
             double TheCurrentisset = 0;
+
+            IMP_RE_MAX = 0;
+            IMP_IM_MAX = 0;
+            IMP_RE_MIN = 0;
+            IMP_IM_MIN = 0;
+            
             try
             {
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " EIS digital is starting ...");
@@ -2509,7 +2529,7 @@ namespace EISProjects
 
                 int iIsv = (int)((EISMaxIDCSelect - 1) / 2);
                 if (iIsv > 3) iIsv = 3;
-                EISMaxIDCSelect = 7;
+                EISMaxIDCSelect = 5;
                 AllSessions[EIS.RunningSession].EISDCCurrentRangeModea = 2;// EISMaxIDCSelect;  //Check it
 
                 Port.DiscardOutBuffer();
@@ -2539,7 +2559,7 @@ namespace EISProjects
                 Port.DiscardInBuffer(); //Clear Buffer
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + ivlt.ToString());
-                Port.Write(WriteReadToChar);
+                //Port.Write(WriteReadToChar);
                 Thread.Sleep(100);
 
                 try
@@ -2600,7 +2620,7 @@ namespace EISProjects
                 Port.DiscardInBuffer(); //Clear Buffer
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + ivlt.ToString());
-                Port.Write(WriteReadToChar);
+                //Port.Write(WriteReadToChar);
                 Thread.Sleep(100);
 
                 try
@@ -2900,7 +2920,7 @@ namespace EISProjects
                 SetLabel(ref label_clm, clm);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
-                Port.Write("iacdac 2047" + WriteReadToChar);
+                Port.Write("iacdac " + iacdac_zero.ToString() + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
                 current_iacdac = 2047;
@@ -3041,7 +3061,7 @@ namespace EISProjects
                 Port.DiscardInBuffer(); //Clear Buffer
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset=" + ivlt.ToString() + " vset=" + setvolt0.ToString());
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                Port.Write(WriteReadToChar);
+               // Port.Write(WriteReadToChar);
                 Thread.Sleep(10);
 
                 try
@@ -3601,7 +3621,7 @@ namespace EISProjects
                                     Port.DiscardOutBuffer(); //Clear Buffer
                                     Port.DiscardInBuffer(); //Clear Buffer
                                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                    Port.Write(WriteReadToChar);
+                                    //Port.Write(WriteReadToChar);
                                     Thread.Sleep(100);
                                     byte[] AllBytes11 = new byte[4];
                                     byte[] AllBytes22 = new byte[4];
@@ -3682,7 +3702,7 @@ namespace EISProjects
                 SetLabel(ref label_clm, clm);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
-                Port.Write("iacdac 2047" + WriteReadToChar);
+                Port.Write("iacdac " + iacdac_zero.ToString() + WriteReadToChar);
                 Thread.Sleep(250);
                 ans = Port.ReadTo(ReadToChar);
                 current_iacdac = 2047;
@@ -3797,7 +3817,7 @@ namespace EISProjects
                 Port.DiscardInBuffer(); //Clear Buffer
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset=" + ivlt.ToString() + " vset=" + setvolt0.ToString());
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                Port.Write(WriteReadToChar);
+                //Port.Write(WriteReadToChar);
                 Thread.Sleep(100);
 
                 try
@@ -4158,11 +4178,11 @@ namespace EISProjects
                 SetLabel(ref label_clm, clm);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
-                Port.Write("iacdac 2047" + WriteReadToChar);
+                Port.Write("iacdac " + iacdac_zero.ToString() + WriteReadToChar);
                 Thread.Sleep(250);
                 ans = Port.ReadTo(ReadToChar);
                 current_iacdac = 2047;
-                SetLabel(ref label_iacdac, 2047);
+                SetLabel(ref label_iacdac, iacdac_zero);
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
                 Port.Write("iIs 3" + WriteReadToChar);
@@ -4224,6 +4244,7 @@ namespace EISProjects
                 //???????????????????????????????????????????? work?
                 zeroset = GetGalvanostatZerosetOffset(AllSessions[EIS.RunningSession].Charge_CurrentRangeMode);
                 //?????????????????????????????????????????????
+                zeroset = Settings.Zeroset1;//felan voltage 1
 
                 Port.DiscardOutBuffer(); //Clear Buffer
                 Port.DiscardInBuffer(); //Clear Buffer
@@ -4289,10 +4310,13 @@ namespace EISProjects
                 battery.down_voltage = AllSessions[EIS.RunningSession].Charge_VoltageMin; //auto select voltage   mAx(abs(up),abs(down));
                 battery.charge = CurrentCharge; //raw
                 battery.discharge = CurrentDischarge; //raw
+                battery.charge_current = AllSessions[EIS.RunningSession].Charge_CurrentCharge; //raw
+                battery.discharge_current = AllSessions[EIS.RunningSession].Charge_CurrentDischarge; //raw
                 battery.measured_adc = 0;
                 battery.total_cycle = AllSessions[EIS.RunningSession].Charge_NumberOfCycles;
                 battery.total_datacount = AllSessions[EIS.RunningSession].Charge_DataCount;
                 battery.setpoint = CurrentCharge;
+                battery.charging = +1;
 
                 
 
@@ -4452,7 +4476,7 @@ namespace EISProjects
                 Port.DiscardOutBuffer(); Port.DiscardInBuffer();
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset=" + ivlt.ToString() + " vset=" + setvolt0.ToString());
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
-                Port.Write(WriteReadToChar);
+                //Port.Write(WriteReadToChar);
                 Thread.Sleep(100);
 
                 try
@@ -4496,12 +4520,20 @@ namespace EISProjects
 
         private void EISInitializeAutoMaximumIDCSelectFinder(ref int Max)
         {
+            
             bool isBreak = false;
             int Tester = 0;
             int BoardISelectMax = 3;
             if (BoardType >= 2) BoardISelectMax = 7;
             if (BoardType < 2) BoardISelectMax = 2;
             BoardISelectMax = 7;
+            Port.DiscardOutBuffer(); //Clear Buffer
+            Port.DiscardInBuffer(); //Clear Buffer
+            Port.Write("postfilter 3"+WriteReadToChar);
+            string ans = Port.ReadTo(ReadToChar);
+            Port.DiscardOutBuffer(); //Clear Buffer
+            Port.DiscardInBuffer(); //Clear Buffer
+
             for (Tester = 2; Tester <= BoardISelectMax; Tester++)
             {
                 try
@@ -4510,7 +4542,7 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("idcselect " + Tester.ToString() + WriteReadToChar);
                     Thread.Sleep(1000);
-                    string ans = Port.ReadTo(ReadToChar);
+                    ans = Port.ReadTo(ReadToChar);
                     Port.DiscardOutBuffer(); //Clear Buffer
                     Port.DiscardInBuffer(); //Clear Buffer
                     if (ans == "OK")
@@ -4536,7 +4568,7 @@ namespace EISProjects
                 Port.DiscardInBuffer();
                 Port.Write("ivset " + ivlt.ToString() + ReadToChar);
                 DebugListBox.Items.Add("stp: Finder" + DebugListBox.Items.Count.ToString() + " ivset:" + ivlt.ToString());
-                Port.Write(WriteReadToChar);
+                //Port.Write(WriteReadToChar);
                 Thread.Sleep(300);
 
                 try
@@ -4812,7 +4844,7 @@ namespace EISProjects
                                         Port.DiscardOutBuffer(); //Clear Buffer
                                         Port.DiscardInBuffer(); //Clear Buffer
                                         Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                        Port.Write(WriteReadToChar);
+                                        //Port.Write(WriteReadToChar);
                                         Thread.Sleep(100);
                                         byte[] AllBytes11 = new byte[4];
                                         byte[] AllBytes22 = new byte[4];
@@ -4859,7 +4891,7 @@ namespace EISProjects
                                         Port.DiscardOutBuffer(); //Clear Buffer
                                         Port.DiscardInBuffer(); //Clear Buffer
                                         Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                        Port.Write(WriteReadToChar);
+                                        //Port.Write(WriteReadToChar);
                                         Thread.Sleep(100);
                                         byte[] AllBytes11 = new byte[4];
                                         byte[] AllBytes22 = new byte[4];
@@ -5214,7 +5246,7 @@ namespace EISProjects
                                     Port.DiscardOutBuffer(); //Clear Buffer
                                     Port.DiscardInBuffer(); //Clear Buffer
                                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                    Port.Write(WriteReadToChar);
+                                    //Port.Write(WriteReadToChar);
                                     Thread.Sleep(100);
                                     byte[] AllBytes11 = new byte[4];
                                     byte[] AllBytes22 = new byte[4];
@@ -5255,9 +5287,19 @@ namespace EISProjects
             public int total_cycle;//cycle number
             public int total_datacount;//data_num
             public int setpoint;
+
+            public double discharge_current { get; internal set; }
+            public double charge_current { get; internal set; }
+            public int charging { get; internal set; }
         }
         battery_struct battery;
-        
+
+        public static double IMP_RE_MAX=0;
+        public static double IMP_IM_MAX=0;
+        public static double IMP_RE_MIN=0;
+        public static double IMP_IM_MIN=0;
+        private static int iacdac_zero=2047;
+
         private void battery_tick(double measured_voltage)
         {
             //int Set_Point = battery.lastsetpoint;
@@ -5275,6 +5317,7 @@ namespace EISProjects
                     Label_Discharge.ForeColor = Color.Red;
                     Label_Charge.ForeColor = Color.Black;
                     DebugListBox.Items.Add("Discharging(" + battery.discharge_hit + "):" + battery.setpoint);
+                    battery.charging = -1;
                     DebugListBox.TopIndex = DebugListBox.Items.Count - 1;
                 }
 
@@ -5293,6 +5336,7 @@ namespace EISProjects
                     Label_Charge.ForeColor = Color.Red;
                     Label_Discharge.ForeColor = Color.Black;
                     DebugListBox.Items.Add("Charging(" + battery.charge_hit + "):    " + battery.setpoint);
+                    battery.charging = +1;
                     DebugListBox.TopIndex = DebugListBox.Items.Count - 1;
 
                 }
@@ -5347,6 +5391,10 @@ namespace EISProjects
                 //to chart
                 AllSessionsData[EIS.RunningSession].Vlt[battery.datacount] = volt;
                 AllSessionsData[EIS.RunningSession].Amp[battery.datacount] = current;
+                if(battery.charging==1)
+                AllSessionsData[EIS.RunningSession].Imz[battery.datacount] = battery.charge_current;//fill
+                else
+                AllSessionsData[EIS.RunningSession].Imz[battery.datacount] = - battery.discharge_current;//fill
                 //It has been written before
                 //AllSessionsData[EIS.RunningSession].ReZ[battery.datacount] = AllSessions[EIS.RunningSession].Charge_dt_ms * battery.datacount / 1000.0;
 
@@ -5524,7 +5572,7 @@ namespace EISProjects
                                     Port.DiscardOutBuffer(); //Clear Buffer
                                     Port.DiscardInBuffer(); //Clear Buffer
                                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                    Port.Write(WriteReadToChar);
+                                    //Port.Write(WriteReadToChar);
                                     //Thread.Sleep(100);
                                     byte[] AllBytes11 = new byte[4];
                                     byte[] AllBytes22 = new byte[4];
@@ -5938,7 +5986,7 @@ namespace EISProjects
                                 SettingsITau_H = Settings.ITau_H0;
                             }
                             //moosa
-                            // SettingsITau_H = (20E-12) * Math.Pow(10, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
+                             SettingsITau_H = (27E-12) * Math.Pow(10, AllSessions[EIS.RunningSession].EISDCCurrentRangeModea);
 
 
                             double omega = 2 * Math.Acos(-1.0) * Frequency;
@@ -5957,14 +6005,18 @@ namespace EISProjects
                             RealImp = absImp * Math.Cos(teta);
                             ImagImp = absImp * Math.Sin(teta);
 
-                            // double RealH = (1.0 + Settings.VTau_H * omega * SettingsITau_H * omega) / absH;
-                            // double ImagH = omega * (Settings.VTau_H - SettingsITau_H) / absH;
+                             double RealH = (1.0 + Settings.VTau_H * omega * SettingsITau_H * omega) / absH;
+                             double ImagH = omega * (Settings.VTau_H - SettingsITau_H) / absH;
 
                             isIvalidtofit = isValidToFit(nData - 0, IntIdata, Settings.DEISMeanPercent + 10, Settings.DEISNOverFlow0, ref isINeedToAmp);
                             isVvalidtofit = isValidToFit(nData - 0, IntVdata, Settings.DEISMeanPercent, Settings.DEISNOverFlow0, ref isVNeedToAmp, ref TheLastAmplitude);
                             if (I_Error > 5) isIvalidtofit = false;
                             if (V_Error > 5) isVvalidtofit = false;
-                            if (DigitalEISStepUnSuccessCounter > 12) { isIvalidtofit = true; isVvalidtofit = true; }
+
+
+                            if (cnt==0 && DigitalEISStepUnSuccessCounter > 12) { isIvalidtofit = true; isVvalidtofit = true; }
+                            if (cnt > 0 && DigitalEISStepUnSuccessCounter > 6) { isIvalidtofit = true; isVvalidtofit = true; }
+
                             {
                                 TheLastAmplitude = EISGetVConvert(TheLastAmplitude + 2047, DEISCurrentVmlp, AllSessions[EIS.RunningSession].EISVoltageRangeMode);
                                 double VAmplitudeRMS = TheLastAmplitude / Math.Sqrt(2); //For show
@@ -5985,6 +6037,7 @@ namespace EISProjects
                                 (isIvalidtofit && isVvalidtofit && (AllSessions[EIS.RunningSession].EISACRegulatorMode == 1)))
                             {
                                 ///////////////
+                                DigitalEISStepUnSuccessCounter = 0;
                                 EISAverageNumberCounter++;
                                 if ((EISAverageNumberCounter >= AllSessions[EIS.RunningSession].EISAverageNumberL && (Frequency <= 10.0)) ||
                                     (EISAverageNumberCounter >= AllSessions[EIS.RunningSession].EISAverageNumberH && (Frequency > 10.0)))
@@ -5994,6 +6047,17 @@ namespace EISProjects
                                     EISImagImpMean = EISImagImpMean + ImagImp / EISAverageNumberCounter;
                                     AllSessionsData[EIS.RunningSession].ReZ[cnt] = EISRealImpMean;
                                     AllSessionsData[EIS.RunningSession].Imz[cnt] = EISImagImpMean;
+
+                                    if (IMP_RE_MAX < EISRealImpMean)
+                                        IMP_RE_MAX = EISRealImpMean;
+                                    if (IMP_IM_MAX < EISImagImpMean)
+                                        IMP_IM_MAX = EISImagImpMean;
+
+                                    if (IMP_RE_MIN > EISRealImpMean)
+                                        IMP_RE_MIN = EISRealImpMean;
+                                    if (IMP_IM_MIN > EISImagImpMean)
+                                        IMP_IM_MIN = EISImagImpMean;
+
                                     //AllSessionsData[EIS.RunningSession].overflow[cnt] = false;
 
                                     EISAverageNumberCounter = 0;
@@ -6049,7 +6113,7 @@ namespace EISProjects
                                                 Port.DiscardOutBuffer(); //Clear Buffer
                                                 Port.DiscardInBuffer(); //Clear Buffer
                                                 Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                                                Port.Write(WriteReadToChar);
+                                                //Port.Write(WriteReadToChar);
                                                 //Thread.Sleep(100);
                                                 byte[] AllBytes11 = new byte[4];
                                                 byte[] AllBytes22 = new byte[4];
@@ -6104,6 +6168,11 @@ namespace EISProjects
                                             {
                                                 IDCSelectMax = Math.Min(2, EISMaxIDCSelect);
                                                 if (AllSessions[EIS.RunningSession].EISDCCurrentRangeModea > IDCSelectMax) AllSessions[EIS.RunningSession].EISDCCurrentRangeModea = IDCSelectMax;
+                                            }
+
+                                            if (checkBox_HImpede.Checked && (Frequency < (double)(numericUpDown_freq.Value)))
+                                            {
+                                                IDCSelectMax = 7;
                                             }
 
                                             if (AllSessions[EIS.RunningSession].EISDCCurrentRangeModea < IDCSelectMax)
@@ -6316,18 +6385,13 @@ namespace EISProjects
                                     isNeedToCorrect = false;
                                 }
 
-                                isDigitalEISStepCompleted = false;
+                                //isDigitalEISStepCompleted = false;
+
+                                DigitalEISStepUnSuccessCounter++;
+                                if (DigitalEISStepUnSuccessCounter > 20) StopRun();
                             }
 
-                            if (!isDigitalEISStepCompleted)
-                            {
-                                DigitalEISStepUnSuccessCounter++;
-                                if (DigitalEISStepUnSuccessCounter > 50) StopRun();
-                            }
-                            else
-                            {
-                                DigitalEISStepUnSuccessCounter = 0;
-                            }
+                            
 
                         }
                         else
@@ -6382,7 +6446,7 @@ namespace EISProjects
                     Port.DiscardOutBuffer();
                     Port.DiscardInBuffer();
                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                    Port.Write(WriteReadToChar);
+                    //Port.Write(WriteReadToChar);
                     Thread.Sleep(200);
 
 
@@ -6400,7 +6464,7 @@ namespace EISProjects
                     Port.DiscardOutBuffer();
                     Port.DiscardInBuffer();
                     Port.Write("ivset " + iVlt.ToString() + ReadToChar);
-                    Port.Write(WriteReadToChar);
+                    //Port.Write(WriteReadToChar);
                     //Thread.Sleep(200);
                     AllBytes1[0] = (byte)Port.ReadByte();
                     AllBytes1[1] = (byte)Port.ReadByte();
@@ -6420,7 +6484,7 @@ namespace EISProjects
                     Port.DiscardInBuffer();
                     Thread.Sleep(250);
                     ans = Port.ReadTo(ReadToChar);
-                    SetLabel(ref label_iacdac, iacdac);
+                    SetLabel(ref label_iacdac, (int)iacdac);
                     //Izero(0);
                     /*   Port.Write("aczero" + WriteReadToChar);
                        Thread.Sleep(100);
@@ -6527,7 +6591,7 @@ namespace EISProjects
             Port.Write("iacdac " + iacdac.ToString() + WriteReadToChar);
             Thread.Sleep(100);
             ans = Port.ReadTo(ReadToChar);
-            SetLabel(ref label_iacdac, iacdac);
+            SetLabel(ref label_iacdac,(int) iacdac);
             label_iacdac.Text += " " + i + "|" + i_zero;
             //Port.DiscardOutBuffer();
             Port.DiscardInBuffer();
@@ -6563,14 +6627,14 @@ namespace EISProjects
                 domain = 4096.0 * 2.2;
             }
 
-            izdac = (int)(i_zero * domain + 2047);
+            izdac = (int)(i_zero * domain + Settings.AnalogCommon_intOffset);
 
         }
         void iaczerodac_to_iaczero(ref double i_zero, double domain5, int iis, int izdac, double V_O4)
         {
             double R;
             double v_i_null = 0;
-            v_i_null = (izdac - 2048) / 2048.0 * 5.0;
+            v_i_null = (izdac - Settings.AnalogCommon_intOffset) / 2048.0 * 5.0;
             if (iis == 3)
             {
 
@@ -6597,6 +6661,8 @@ namespace EISProjects
         }
         private void Izero(double i, int Irange)
         {
+            
+            label_idcmA.Text = (i*1000).ToString("0.0000mA");
             double V_O4 = 0;
             if (Irange == 0)
                 V_O4 = i * 1;
@@ -6609,8 +6675,9 @@ namespace EISProjects
             string ans;
 
             iaczerodac_to_iaczero(ref current_iz, domain5, iIs, current_iacdac, V_O4);
+            label_idcraw.Text = (current_iz*1000).ToString("0.0000mA");
             iaczero_to_iaczerodac(current_iz + i, domain5, ref iIs, ref iacdac);
-
+            
             if (iacdac > 4095) iacdac = 4095;
             if (iacdac < 0) iacdac = 0;
 
@@ -6622,9 +6689,9 @@ namespace EISProjects
             Port.Write("iacdac " + iacdac.ToString() + WriteReadToChar);
             Thread.Sleep(100);
             ans = Port.ReadTo(ReadToChar);
-            SetLabel(ref label_iacdac, iacdac);
+            SetLabel(ref label_iacdac,(int) iacdac);
             current_iacdac = iacdac;
-            label_iacdac.Text += " " + i + "|" + i_zero;
+           // label_iacdac.Text += " " + i.ToString(0.000) + "|" + i_zero;
             //Port.DiscardOutBuffer();
             Port.DiscardInBuffer();
             Port.Write("iIs " + iIs.ToString() + WriteReadToChar);
@@ -6633,6 +6700,77 @@ namespace EISProjects
             SetLabel(ref label_iIs, iIs);
             Thread.Sleep(10);
         }
+
+        private void IZsetoffset()
+        {
+            string ans;
+            Port.DiscardInBuffer();
+            Port.Write("postfilter 2" + WriteReadToChar);
+            ans = Port.ReadTo(ReadToChar);
+            Port.DiscardInBuffer();
+            Port.Write("iacdac 2106" + WriteReadToChar);
+            ans = Port.ReadTo(ReadToChar);
+            SetLabel(ref label_iacdac, (int)2047);
+            current_iacdac = 2047;
+            // label_iacdac.Text += " " + i.ToString(0.000) + "|" + i_zero;
+            //Port.DiscardOutBuffer();
+            Port.DiscardInBuffer();
+            Port.Write("iIs 1" + WriteReadToChar);
+            ans = Port.ReadTo(ReadToChar);
+            SetLabel(ref label_iIs, iIs);
+            Thread.Sleep(10);
+            Thread.Sleep(100);
+            Port.DiscardInBuffer();
+            Port.Write("idcselect 3" + WriteReadToChar);
+            ans = Port.ReadTo(ReadToChar);
+            Thread.Sleep(100);
+            Port.DiscardOutBuffer(); //Clear Buffer
+            Port.DiscardInBuffer(); //Clear Buffer
+            Port.Write("ivset 2047" + WriteReadToChar);
+           
+            //Port.Write(WriteReadToChar);
+            Thread.Sleep(1000);
+
+            try
+            {
+                byte[] AllBytes1 = new byte[4];
+                byte[] AllBytes2 = new byte[4];
+                int word;
+
+                AllBytes1[0] = (byte)Port.ReadByte();
+                AllBytes1[1] = (byte)Port.ReadByte();
+                AllBytes1[2] = (byte)Port.ReadByte();
+                AllBytes1[3] = (byte)Port.ReadByte();
+                AllBytes2[0] = (byte)Port.ReadByte();
+                AllBytes2[1] = (byte)Port.ReadByte();
+                AllBytes2[2] = (byte)Port.ReadByte();
+                AllBytes2[3] = (byte)Port.ReadByte();
+
+                int nData = IVnData;
+                word = AllBytes1[0] | (AllBytes1[1] << 8) | (AllBytes1[2] << 16) | (AllBytes1[3] << 24);
+                double Vmean = (double)word / (double)nData;
+
+                word = AllBytes2[0] | (AllBytes2[1] << 8) | (AllBytes2[2] << 16) | (AllBytes2[3] << 24);
+                double Imean = (double)word / (double)nData;
+
+
+
+                //double TheVoltageisset = GetDCVConvert(Vmean, DEISCurrentVmlp, AllSessions[EIS.RunningSession].EISVoltageRangeMode);
+                //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " The Voltage is set:" + TheVoltageisset.ToString());
+                Imean -= Settings.GetDCI_Offset3d;
+                // Imean =GetDCIConvert(Imean, 4, 0);
+                Imean=Imean;
+                //DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " The Current is set:" + TheCurrentisset.ToString());
+
+            }
+            catch
+            {
+             
+            }
+
+
+        }
+
         private void SetIVFilter(int EISfilterMode, double tPeriod, int EISDCCurrentRangeMode, int EISVoltageRangeMode)
         {
             //return;
@@ -6807,7 +6945,7 @@ namespace EISProjects
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
             Port.Write("vfilter " + VFilter.ToString() + WriteReadToChar);
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             string ans = Port.ReadTo(ReadToChar);
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
@@ -6822,7 +6960,7 @@ namespace EISProjects
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
             Port.Write("postfilter " + postfilter.ToString() + WriteReadToChar);
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             ans = Port.ReadTo(ReadToChar);
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
@@ -6837,7 +6975,7 @@ namespace EISProjects
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
             Port.Write("idcfilter " + IFilter.ToString() + WriteReadToChar);
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             ans = Port.ReadTo(ReadToChar);
             Port.DiscardOutBuffer(); //Clear Buffer
             Port.DiscardInBuffer(); //Clear Buffer
@@ -7151,6 +7289,15 @@ namespace EISProjects
                     vlt = vlt / Settings.SetDCV_Select0;
                 else
                     vlt = vlt / Settings.SetDCV_Select1;
+                
+                //backward iv8
+                if(Settings.ACMultFactor_Select0 > 0.25)
+                if(ISelect < 2 && VSelect == 0)
+                {
+                    vlt = VltOrCurrentInGalvanostat;
+                    vlt = vlt / Settings.SetDCV_Select1 / 5.55;
+                }
+
                 ivlt = (int)(vlt / Settings.SetDCV_Domain * 2047) + Settings.SetDCV_Offset;
                 if (ivlt > 4095) ivlt = 4095;
                 if (ivlt < 0) ivlt = 0;
@@ -7193,6 +7340,15 @@ namespace EISProjects
                     vlt = vlt / Settings.SetDCV_Select0;
                 else
                     vlt = vlt / Settings.SetDCV_Select1;
+
+                //backward iv8
+                if (Settings.ACMultFactor_Select0 > 0.25)
+                    if (ISelect < 2 && VSelect == 0)
+                {
+                    vlt = VltOrCurrentInGalvanostat;
+                    vlt = vlt / Settings.SetDCV_Select1 / 5.55;
+                }
+
                 ivlt = (vlt / Settings.SetDCV_Domain * 2047.0) + Settings.SetDCV_Offset;
             }
             else
@@ -7225,12 +7381,18 @@ namespace EISProjects
             if (PGMode != 3)
             {
                 int ivlt = VltOrCurrentInGalvanostat_Int;
-                vlt = (ivlt - Settings.SetDCV_Offset) * Settings.SetDCV_Domain / 2047;
+                double _vlt = (ivlt - Settings.SetDCV_Offset) * Settings.SetDCV_Domain / 2047;
 
                 if (VSelect == 0)
-                    vlt = vlt * Settings.SetDCV_Select0;
+                    vlt = _vlt * Settings.SetDCV_Select0;
                 else
-                    vlt = vlt * Settings.SetDCV_Select1;
+                    vlt = _vlt * Settings.SetDCV_Select1;
+
+                if (ISelect < 2 && VSelect == 0)
+                {
+                    
+                    vlt = _vlt * Settings.SetDCV_Select1 * 5.55;
+                }
 
             }
             else
@@ -7270,18 +7432,18 @@ namespace EISProjects
             else
                 vlt = vlt * 2;
 
-            float ACMultFactor;
-            if (SetSelect == 0)
-                ACMultFactor = Form1.Settings.ACMultFactor_Select0;
-            else
-                ACMultFactor = Form1.Settings.ACMultFactor_Select1;
+            float ACMultFactor=1;
+            //if (SetSelect == 0)
+            //    ACMultFactor = Form1.Settings.ACMultFactor_Select0;
+            //else
+            //    ACMultFactor = Form1.Settings.ACMultFactor_Select1;
 
             return vlt / ACMultFactor;
         }
 
         public static double GetDCVConvert(double ivlt, int Vmlp, int SetSelect)
         {
-            double domain = Settings.GetDCV_Domain * Math.Pow(5.55, 1 - SetSelect);
+            double domain = Settings.GetDCV_Domain * Math.Pow(5.55* Form1.Settings.ACMultFactor_Select0, 1 - SetSelect);
             double vlt = (ivlt - Settings.GetDCV_OffsetMLP0) * domain / 2047;
 
             if (Vmlp == 1)
@@ -7309,7 +7471,7 @@ namespace EISProjects
         {
             //return GetDCVConvert(ivlt, Vmlp, SetSelect);
             double vlt;
-            double domain = Settings.GetDCV_Domain * Math.Pow(5.55, 1 - SetSelect);
+            double domain = Settings.GetDCV_Domain * Math.Pow(5.55 * Form1.Settings.ACMultFactor_Select0, 1 - SetSelect);
             vlt = (ivlt - Offset) * domain / 2047;
 
             if (Vmlp < 7)
@@ -8825,9 +8987,9 @@ namespace EISProjects
         private void TBIVVoltageFrom_TextChanged(object sender, EventArgs e)
         {
             if (!(AllSessions[Selected].PGmode == 3))
-                DigitTextChange(ref AllSessions[Selected].IVVoltageFrom, TBIVVoltageFrom, -5, 5);
+                DigitTextChange(ref AllSessions[Selected].IVVoltageFrom, TBIVVoltageFrom, -5 * Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
             else
-                DigitTextChange(ref AllSessions[Selected].IVVoltageFrom, TBIVVoltageFrom, -5000000, 5000000);
+                DigitTextChange(ref AllSessions[Selected].IVVoltageFrom, TBIVVoltageFrom, -5000000 * Settings.AnalogCommon_factor, 5000000 * Settings.AnalogCommon_factor);
             TBIVVelosity_Validated(null, null);
             TBIVVoltageFrom.Text = AllSessions[Selected].IVVoltageFrom.ToString();
 
@@ -8868,9 +9030,9 @@ namespace EISProjects
             if (AllSessions[Selected].Mode == 3) //I-V & C-V
             {
                 if (!(AllSessions[Selected].PGmode == 3))
-                    DigitTextChange(ref AllSessions[Selected].IVvoltageTo, TBIVVoltageTo, -5, 5);
+                    DigitTextChange(ref AllSessions[Selected].IVvoltageTo, TBIVVoltageTo, -5 * Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
                 else
-                    DigitTextChange(ref AllSessions[Selected].IVvoltageTo, TBIVVoltageTo, -5000000, 5000000);
+                    DigitTextChange(ref AllSessions[Selected].IVvoltageTo, TBIVVoltageTo, -5000000 * Settings.AnalogCommon_factor, 5000000 * Settings.AnalogCommon_factor);
             }
             else if (AllSessions[Selected].Mode == 2)  //Chrono
                 DigitTextChange(ref AllSessions[Selected].ChronoEndTime, TBIVVoltageTo, 0.00001, 100000);
@@ -9885,7 +10047,7 @@ namespace EISProjects
                         Port.DiscardOutBuffer(); //Clear Buffer
                         Port.DiscardInBuffer(); //Clear Buffer
                         Port.Write("ivset 2047" + ReadToChar);
-                        Port.Write(WriteReadToChar);
+                        //Port.Write(WriteReadToChar);
                         Thread.Sleep(100);
                         try
                         {
@@ -9912,7 +10074,7 @@ namespace EISProjects
                         Port.DiscardOutBuffer(); //Clear Buffer
                         Port.DiscardInBuffer(); //Clear Buffer
                         Port.Write("ivset 2047" + ReadToChar);
-                        Port.Write(WriteReadToChar);
+                        //Port.Write(WriteReadToChar);
                         Thread.Sleep(100);
 
                         try
@@ -9968,7 +10130,7 @@ namespace EISProjects
                         Port.DiscardOutBuffer(); //Clear Buffer
                         Port.DiscardInBuffer(); //Clear Buffer
                         Port.Write("ivset 2047" + ReadToChar);
-                        Port.Write(WriteReadToChar);
+                        //Port.Write(WriteReadToChar);
                         Thread.Sleep(100);
                         try
                         {
@@ -9995,7 +10157,7 @@ namespace EISProjects
                         Port.DiscardOutBuffer(); //Clear Buffer
                         Port.DiscardInBuffer(); //Clear Buffer
                         Port.Write("ivset 2047" + ReadToChar);
-                        Port.Write(WriteReadToChar);
+                        //Port.Write(WriteReadToChar);
                         Thread.Sleep(100);
 
                         try
@@ -10038,7 +10200,7 @@ namespace EISProjects
                                 Port.DiscardOutBuffer(); //Clear Buffer
                                 Port.DiscardInBuffer(); //Clear Buffer
                                 Port.Write("ivset 2047" + ReadToChar);
-                                Port.Write(WriteReadToChar);
+                                //Port.Write(WriteReadToChar);
                                 Thread.Sleep(100);
                                 try
                                 {
@@ -10065,7 +10227,7 @@ namespace EISProjects
                                 Port.DiscardOutBuffer(); //Clear Buffer
                                 Port.DiscardInBuffer(); //Clear Buffer
                                 Port.Write("ivset 2047" + ReadToChar);
-                                Port.Write(WriteReadToChar);
+                                //Port.Write(WriteReadToChar);
                                 Thread.Sleep(100);
 
                                 try
@@ -10119,7 +10281,7 @@ namespace EISProjects
                                 Port.DiscardOutBuffer(); //Clear Buffer
                                 Port.DiscardInBuffer(); //Clear Buffer
                                 Port.Write("ivset 2047" + ReadToChar);
-                                Port.Write(WriteReadToChar);
+                                //Port.Write(WriteReadToChar);
                                 Thread.Sleep(100);
                                 try
                                 {
@@ -10146,7 +10308,7 @@ namespace EISProjects
                                 Port.DiscardOutBuffer(); //Clear Buffer
                                 Port.DiscardInBuffer(); //Clear Buffer
                                 Port.Write("ivset 2047" + ReadToChar);
-                                Port.Write(WriteReadToChar);
+                                //Port.Write(WriteReadToChar);
                                 Thread.Sleep(100);
 
                                 try
@@ -10304,7 +10466,7 @@ namespace EISProjects
 
                     Port.DiscardOutBuffer();
                     Port.DiscardInBuffer();
-                    Port.Write("iacdac 2047" + WriteReadToChar);
+                    Port.Write("iacdac "+ iacdac_zero.ToString() + WriteReadToChar);
                     Thread.Sleep(10);
                     ans = Port.ReadTo(ReadToChar);
                     current_iacdac = 2047;
@@ -10747,7 +10909,7 @@ namespace EISProjects
                         Port.DiscardOutBuffer(); //Clear Buffer
                         Port.DiscardInBuffer(); //Clear Buffer
                         Port.Write("ivset 2047" + ReadToChar);
-                        Port.Write(WriteReadToChar);
+                        //Port.Write(WriteReadToChar);
                         Thread.Sleep(10);
 
                         byte[] AllBytes1 = new byte[4];
@@ -11021,11 +11183,11 @@ namespace EISProjects
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset: " + zset.ToString());
 
                     Port.ReadTo(ReadToChar);
-                    Thread.Sleep(20);
+                    Thread.Sleep(30);
                     Port.DiscardOutBuffer(); //Clear Buffer
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset " + iVoltChecker.ToString() + WriteReadToChar);
-                    Thread.Sleep(20);
+                    Thread.Sleep(1);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
 
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
@@ -11080,7 +11242,7 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset 1000" + WriteReadToChar);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
-                    Thread.Sleep(50);
+                    Thread.Sleep(500);
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
                     byte[] AllBytes1 = new byte[4];
                     byte[] AllBytes2 = new byte[4];
@@ -11117,7 +11279,7 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset 3000" + WriteReadToChar);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
-                    Thread.Sleep(50);
+                    Thread.Sleep(500);
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
                     AllBytes1 = new byte[4];
                     AllBytes2 = new byte[4];
@@ -11232,7 +11394,7 @@ namespace EISProjects
                 Port.DiscardInBuffer(); //Clear Buffer
                 Port.Write("zeroset " + checkmin.ToString() + WriteReadToChar);
                 DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset: " + checkmin.ToString());
-                Thread.Sleep(20);
+                Thread.Sleep(30);
                 Port.Write("ivset " + iVoltChecker.ToString() + WriteReadToChar);
                 Port.ReadByte();
                 Port.ReadByte();
@@ -11249,11 +11411,12 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("zeroset " + zset.ToString() + WriteReadToChar);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " zeroset: " + zset.ToString());
-                    Thread.Sleep(20);
+                    Thread.Sleep(30);
                     Port.ReadTo(ReadToChar);
                     Port.DiscardOutBuffer(); //Clear Buffer
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset " + iVoltChecker.ToString() + WriteReadToChar);
+                    Thread.Sleep(1);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
 
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
@@ -11310,7 +11473,7 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset 1000" + WriteReadToChar);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
-                    Thread.Sleep(50);
+                    Thread.Sleep(500);
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
                     byte[] AllBytes1 = new byte[4];
                     byte[] AllBytes2 = new byte[4];
@@ -11348,7 +11511,7 @@ namespace EISProjects
                     Port.DiscardInBuffer(); //Clear Buffer
                     Port.Write("ivset 3000" + WriteReadToChar);
                     DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + " ivset:" + iVoltChecker.ToString());
-                    Thread.Sleep(50);
+                    Thread.Sleep(500);
                     DebugListBox.SelectedIndex = DebugListBox.Items.Count - 1;
                     AllBytes1 = new byte[4];
                     AllBytes2 = new byte[4];
@@ -11835,6 +11998,14 @@ namespace EISProjects
 
                 if (!isformPID)
                 {
+                    Port.DiscardOutBuffer(); //Clear Buffer
+                    Port.DiscardInBuffer(); //Clear Buffer
+                    Port.Write("postfilter 3" + WriteReadToChar);
+                    Thread.Sleep(100);
+                    string ans = Port.ReadTo(ReadToChar);
+                    Port.DiscardOutBuffer(); //Clear Buffer
+                    Port.DiscardInBuffer(); //Clear Buffer
+
                     isformPID = true;
                     FormPID pid = new FormPID();
                     //OCTTimer.Start();
@@ -12006,6 +12177,7 @@ namespace EISProjects
         {
             if (EIS.Connected)
             {
+                //IZsetoffset();
                 if (Selected > -1 && EIS.nSsn > 0)
                 {
                     loadSetting(ref Settings);
@@ -12142,7 +12314,7 @@ namespace EISProjects
                 MessageBox.Show("You are going to change voltage offset settings.\nPlease disconnect any sample which is connected to device.");
                 Port.DiscardOutBuffer();
                 Port.DiscardInBuffer();
-                Port.Write("iacdac 2047" + WriteReadToChar);
+                Port.Write("iacdac " + iacdac_zero.ToString() + WriteReadToChar);
                 Thread.Sleep(10);
                 ans = Port.ReadTo(ReadToChar);
                 current_iacdac = 2047;
@@ -12227,10 +12399,12 @@ namespace EISProjects
                     int BoardISelectMax = 3;
                     if (BoardType >= 2) BoardISelectMax = 7;
                     if (BoardType < 2) BoardISelectMax = 2;
+                    double Ioffset = 0;
+                    double Voffset = 0;
                     for (int isel = 0; isel <= BoardISelectMax; isel++)
                     {
-                        double Ioffset = 0;
-                        double Voffset = 0;
+                         Ioffset = 0;
+                         Voffset = 0;
                         CalculateSpecificIVOffsets_dumoff(isel, 0, 0, ref Ioffset, ref Voffset);
                         DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + "isel=" + isel.ToString() + " Ioffset=" + Ioffset.ToString() + " done.");
                         if (isel == 0)
@@ -12250,7 +12424,46 @@ namespace EISProjects
                         else if (isel == 7)
                             Settings.GetDCI_Offset7d = (float)Ioffset;
                     }
-
+                    //////////////////////////////////////////////////////////////////////////////////////
+                    //moosa Izero dac offset find
+                     Ioffset = 0;
+                     Voffset = 0;
+                    double IO2, IO1;
+                    Port.DiscardOutBuffer();
+                    Port.DiscardInBuffer();
+                    Port.Write("iacdac 1847" + WriteReadToChar);
+                    Thread.Sleep(10);
+                    ans = Port.ReadTo(ReadToChar);
+                    current_iacdac = 1947;
+                    SetLabel(ref label_iacdac, 1947);
+                    Port.DiscardOutBuffer();
+                    Port.DiscardInBuffer();
+                    Port.Write("iIs 1" + WriteReadToChar);
+                    Thread.Sleep(10);
+                    ans = Port.ReadTo(ReadToChar);
+                    iIs = 1;
+                    SetLabel(ref label_iIs, 1);
+                    Port.DiscardOutBuffer(); //Clear Buffer
+                    Port.DiscardInBuffer(); //Clear Buffer
+                    CalculateSpecificIVOffsets_dumoff(3, 0, 0, ref Ioffset, ref Voffset);
+                    IO1 = Ioffset;
+                    DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + "isel=3" + " Ioffset=" + Ioffset.ToString() + " done.");
+                    //IZsetoffset();
+                    Port.DiscardOutBuffer();
+                    Port.DiscardInBuffer();
+                    Port.Write("iacdac 2247" + WriteReadToChar);
+                    Thread.Sleep(10);
+                    ans = Port.ReadTo(ReadToChar);
+                    Port.DiscardOutBuffer(); //Clear Buffer
+                    Port.DiscardInBuffer(); //Clear Buffer
+                    CalculateSpecificIVOffsets_dumoff(3, 0, 0, ref Ioffset, ref Voffset);
+                    IO2 = Ioffset;
+                    DebugListBox.Items.Add("stp:" + DebugListBox.Items.Count.ToString() + "isel=3" + " Ioffset=" + Ioffset.ToString() + " done.");
+                    double M = 400.0 / (IO2 - IO1);
+                    Settings.AnalogCommon_intOffset = (int)((Settings.GetDCI_Offset3d - IO1) * M + 1847);
+                    if (Settings.AnalogCommon_intOffset > 2300) Settings.AnalogCommon_intOffset = 2106;
+                    if (Settings.AnalogCommon_intOffset < 1700) Settings.AnalogCommon_intOffset = 2106;
+                    iacdac_zero = Settings.AnalogCommon_intOffset;
                     if (isDummyOn)
                     {
                         try
@@ -12415,7 +12628,7 @@ namespace EISProjects
 
         private void TBPretreatmentVoltage_Validated(object sender, EventArgs e)
         {
-            DigitTextChange(ref AllSessions[Selected].PretreatmentVoltage, TBPretreatmentVoltage, -5, 5);
+            DigitTextChange(ref AllSessions[Selected].PretreatmentVoltage, TBPretreatmentVoltage, -5 * Settings.AnalogCommon_factor, 5 * Settings.AnalogCommon_factor);
         }
 
         private void ChBPreProcProbOn_CheckedChanged(object sender, EventArgs e)
@@ -13037,8 +13250,8 @@ namespace EISProjects
                 AllSessions[Selected].Charge_VoltageRangeMode = CBCharge_VoltageRangeMode.SelectedIndex;
                 if (AllSessions[Selected].Charge_VoltageRangeMode == 0)
                 {
-                    Charge_MaxVoltage = 5;
-                    Charge_MinVoltage = -5;
+                    Charge_MaxVoltage = 5 * Settings.AnalogCommon_factor;
+                    Charge_MinVoltage = -5 * Settings.AnalogCommon_factor;
                 }
                 else
                 {

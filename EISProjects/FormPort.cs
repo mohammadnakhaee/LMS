@@ -375,7 +375,22 @@ namespace EISProjects
                             {
                                 Form1.Port.DiscardOutBuffer(); //Clear Buffer
                                 Form1.Port.DiscardInBuffer(); //Clear Buffer
-                                Form1.Port.Write("sampleon 0\n");
+                                Form1.Port.Write("idcselect 0\r");
+                                Thread.SpinWait(2000 * 1000);
+                                string ans = Form1.Port.ReadTo(ReadToChar);
+                                Form1.Port.DiscardOutBuffer(); //Clear Buffer
+                                Form1.Port.DiscardInBuffer(); //Clear Buffer
+                                if (ans == "OK")
+                                {
+                                   
+                                }
+                            }
+                            catch { }
+                            try
+                            {
+                                Form1.Port.DiscardOutBuffer(); //Clear Buffer
+                                Form1.Port.DiscardInBuffer(); //Clear Buffer
+                                Form1.Port.Write("sampleon 0\r");
                                 Thread.SpinWait(2000 * 1000);
                                 string ans = Form1.Port.ReadTo(ReadToChar);
                                 Form1.Port.DiscardOutBuffer(); //Clear Buffer
@@ -388,11 +403,12 @@ namespace EISProjects
                             }
                             catch { }
 
+
                             try
                             {
                                 Form1.Port.DiscardOutBuffer(); //Clear Buffer
                                 Form1.Port.DiscardInBuffer(); //Clear Buffer
-                                Form1.Port.Write("dummyon 0\n");
+                                Form1.Port.Write("dummyon 0\r");
                                 Thread.SpinWait(2000 * 1000);
                                 string ans = Form1.Port.ReadTo(ReadToChar);
                                 Form1.Port.DiscardOutBuffer(); //Clear Buffer
@@ -570,6 +586,54 @@ namespace EISProjects
             }
         }
 
+        private void BLUpdates_FromFile(int CurrentVersion)
+        {
+
+            string sFileName="Update";
+            try
+            {
+                OpenFileDialog choofdlog = new OpenFileDialog();
+                choofdlog.Filter = "All Files (*.*)|*.*";
+                choofdlog.FilterIndex = 1;
+                
+
+                if (choofdlog.ShowDialog() == DialogResult.OK)
+                {
+                     sFileName = choofdlog.FileName;
+                            
+                }
+                //string path = "Update";
+                //if (Directory.Exists(sFileName))
+                {
+                    
+                    {
+                        if (File.Exists(sFileName))
+                        {
+                            FileStream FileProtocol = new FileStream(sFileName, FileMode.Open);
+                            BinaryReader br = new BinaryReader(FileProtocol);
+                            long nBytes = FileProtocol.Length;
+                            if (nBytes > 64000) return;
+                            byte[] MaxVerBytes = new byte[PageNumber * PageSize];
+
+                            for (int ib = 0; ib < PageNumber * PageSize; ib++) MaxVerBytes[ib] = 0xFF;
+                            for (int ib = 0; ib < nBytes; ib++) MaxVerBytes[ib] = br.ReadByte();
+
+                            br.Close();
+
+                            if (BLUpdateMicro(1, MaxVerBytes, nBytes) == 1)
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
         private void BLCheckUpdates(int CurrentVersion)
         {
             List<string> Ufiles = new List<string> { };
@@ -627,7 +691,15 @@ namespace EISProjects
 
                             br.Close();
 
-                            BLUpdateMicro(MaxVer, MaxVerBytes, nBytes);
+                            if(BLUpdateMicro(MaxVer, MaxVerBytes, nBytes) == 1)
+                            {
+                                if (File.Exists(MaxVerFile))
+                                {
+                                    File.Copy(MaxVerFile, Path.Combine(Path.GetFullPath(MaxVerFile), "backup_u"), true);
+                                    File.Delete(MaxVerFile);
+                                }
+
+                            }
                         }
                     }
                 }
@@ -833,7 +905,7 @@ namespace EISProjects
 
         }
 
-        private void BLUpdateMicro(int ver, byte[] Bytes, long nBytes)
+        private int BLUpdateMicro(int ver, byte[] Bytes, long nBytes)
         {
             byte[] checkback = new byte[PageNumber * PageSize];
             byte[] deltacheckback = new byte[PageNumber * PageSize];
@@ -998,10 +1070,12 @@ namespace EISProjects
                 //          if (Form1.Port.ReadByte() != '\r') throw(new Exception("error:4012 Command:0"));
                 Form1.Port.WriteLine("ver?");
                 Form1.Status.Text = "Firmware is updated ... ver=" + Form1.Port.ReadLine();
+                return 1;
             }
             catch (Exception e)
             {
                 MessageBox.Show("Boot loader error ...\n" + e.Message);
+                return 0;
             }
 
         }
@@ -1148,8 +1222,147 @@ namespace EISProjects
             }
         }
 
+        private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(new Form() { TopMost = true }, "You are requesting to upgrade to a newer release of firmware.\nDo you realy want to continue?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No) return;
+            string DeviceName = "";
+            string Ver = "";
+            isFounded = false;
+            SetPortprogressBar(1);
+            for (int trynum = 0; trynum < 2; trynum++)
+            {
+                if (!isFounded)
+                {
+                    richTextBox1.Text = "";
+                    if (trynum == 0)
+                        Form1.Status.Text = "Searching ...";
+                    else
+                        Form1.Status.Text = "Searching ...";
+                    Form1.Status.Refresh();
+                    string[] ArrayComPortsNames = null;
+                    int index = -1;
+                    FoundedPort = "";
+                    DeviceVersion = 0;
 
+                    string ComPortName = null;
+                    ArrayComPortsNames = SerialPort.GetPortNames();
+                    PortprogressBar.Maximum = 2 * ArrayComPortsNames.Length + 1;
+                    do
+                    {
+                        index++;
 
+                        if (!isFounded)
+                        {
+                            int newval = PortprogressBar.Value + 1;
+                            SetPortprogressBar(newval);
 
+                            if (CheckPort.IsOpen) CheckPort.Close();
+                            CheckPort.WriteTimeout = CheckPortTimeoutSec; CheckPort.ReadTimeout = CheckPortTimeoutSec;
+                            CheckPort.PortName = ArrayComPortsNames[index];
+                            // try to open the selected port:
+                            try
+                            {
+                                CheckPort.Open();
+                                CheckPort.DiscardOutBuffer(); //Clear Buffer
+                                CheckPort.DiscardInBuffer(); //Clear Buffer
+                                try
+                                {
+                                    CheckPort.DiscardOutBuffer(); //Clear Buffer
+                                    CheckPort.DiscardInBuffer(); //Clear Buffer
+                                    //CheckPort.Write("you?" + ReadToChar);
+                                    CheckPort.Write("1");
+                                    Thread.SpinWait(2000 * 1000);
+                                    string Order = "";
+                                    try
+                                    {
+                                        for (int i = 0; i < 10; i++) Order = Order + (char)CheckPort.ReadChar();
+                                    }
+                                    catch
+                                    {
+                                    }
+
+                                    switch (Order)
+                                    {
+                                        case "EIS.......":
+                                            FoundedPort = CheckPort.PortName;
+                                            DeviceVersion = 1;
+                                            isFounded = true;
+                                            //CheckPort.Write("ver?" + ReadToChar);
+                                            CheckPort.Write("2");
+                                            try
+                                            {
+                                                //Ver = CheckPort.ReadTo(ReadToChar);
+                                                int intVer = CheckPort.ReadByte();
+                                                Ver = intVer.ToString();
+                                                Form1.Port = CheckPort;
+                                                //int CurrentVer = Convert.ToInt16(Ver);
+                                                CheckPort.Write("3");
+                                                int intValid = CheckPort.ReadByte();
+                                                char Valid = (char)((byte)intValid);
+                                                BLCheckUpdates(0);
+                                            }
+                                            catch
+                                            {
+                                            }
+                                            DeviceName = Order;
+                                            break;
+                                        default:
+                                            if (CheckPort.IsOpen) CheckPort.Close();
+                                            break;
+                                    }
+
+                                }
+                                catch { }
+                            }
+                            catch { }
+
+                        }
+
+                        /*
+                         * 1 name 10 ta character read(offset=0,cont=10)
+                         * 2 ver 0:255  readbyte -> unsign
+                         * 3 valid  v=valid readbyte
+                         * 7 u
+                         * 
+                         * 7 v
+                         * 10 -1  write
+                         */
+
+                        if (ArrayComPortsNames[index] == FoundedPort)
+                        {
+                            richTextBox1.Text += ArrayComPortsNames[index] + DeviceName + " Ver:" + Ver + "\n";
+                        }
+                        else
+                        {
+                            richTextBox1.Text += ArrayComPortsNames[index] + "\n";
+                        }
+                        richTextBox1.Refresh();
+                    }
+                    while (!((ArrayComPortsNames[index] == ComPortName) ||
+                                        (index == ArrayComPortsNames.GetUpperBound(0))));
+
+                    if (CheckPort.IsOpen) CheckPort.Close();
+                    if (isFounded)
+                    {
+                        Form1.Port.WriteTimeout = Form1.FactoryDefault.PortTimeout; Form1.Port.ReadTimeout = Form1.FactoryDefault.PortTimeout;
+                        Form1.Port.PortName = FoundedPort;
+                        if (Form1.Port.IsOpen) Form1.Port.Close();
+                        // try to open the selected port:
+                        SetPortprogressBar(0);
+                    }
+                    else
+                    {
+                        if (trynum > 0)
+                        {
+                            SetPortprogressBar(0);
+                            MessageBox.Show("Device is not found.", " Error ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            Form1.Status.Text = "Device is not found.!";
+                        }
+                    }
+
+                }
+            }
+
+        }
     }
 }

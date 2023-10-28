@@ -8,14 +8,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="LMS.exe.manifest" size="3848">
+    <dependentAssembly dependencyType="install" codebase="LMS.exe.manifest" size="3846">
       <assemblyIdentity name="LMS.exe" version="27.2.0.19" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>iH3IKUQHXXj6E6zfMl//IGy+JiI=</dsig:DigestValue>
+        <dsig:DigestValue>Vrg8V57Jx052PdjADZX8TgeOlJU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

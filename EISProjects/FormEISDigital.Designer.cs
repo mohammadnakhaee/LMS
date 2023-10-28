@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,9 +74,9 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolsToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(754, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(807, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(126, 472);
+            this.menuStrip1.Size = new System.Drawing.Size(73, 472);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -87,7 +85,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(113, 19);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(60, 19);
             this.toolsToolStripMenuItem.Text = "    Tools   ";
             // 
             // clearToolStripMenuItem
@@ -100,20 +98,21 @@
             // chart1
             // 
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea3.AxisY.Maximum = 4096D;
-            chartArea3.AxisY.Minimum = 0D;
-            chartArea3.CursorX.IsUserEnabled = true;
-            chartArea3.CursorX.IsUserSelectionEnabled = true;
-            chartArea3.CursorY.IsUserEnabled = true;
-            chartArea3.CursorY.IsUserSelectionEnabled = true;
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea1.AxisX.IsLabelAutoFit = false;
+            chartArea1.AxisX.LabelStyle.Enabled = false;
+            chartArea1.AxisY.LabelStyle.Enabled = false;
+            chartArea1.AxisY.Maximum = 4096D;
+            chartArea1.AxisY.Minimum = 0D;
+            chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
+            chartArea1.CursorY.IsUserEnabled = true;
+            chartArea1.CursorY.IsUserSelectionEnabled = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(3, 20);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(748, 196);
+            this.chart1.Size = new System.Drawing.Size(801, 196);
             this.chart1.TabIndex = 4;
             this.chart1.Text = "chart1";
             // 
@@ -135,7 +134,7 @@
             this.GBVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GBVoltage.Location = new System.Drawing.Point(0, 0);
             this.GBVoltage.Name = "GBVoltage";
-            this.GBVoltage.Size = new System.Drawing.Size(754, 219);
+            this.GBVoltage.Size = new System.Drawing.Size(807, 219);
             this.GBVoltage.TabIndex = 1;
             this.GBVoltage.TabStop = false;
             this.GBVoltage.Text = "V(t)    Voltage";
@@ -143,20 +142,20 @@
             // chart2
             // 
             this.chart2.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.AxisY.Maximum = 4096D;
-            chartArea4.AxisY.Minimum = 0D;
-            chartArea4.CursorX.IsUserEnabled = true;
-            chartArea4.CursorX.IsUserSelectionEnabled = true;
-            chartArea4.CursorY.IsUserEnabled = true;
-            chartArea4.CursorY.IsUserSelectionEnabled = true;
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.LabelStyle.Enabled = false;
+            chartArea2.AxisY.LabelStyle.Enabled = false;
+            chartArea2.AxisY.Maximum = 4096D;
+            chartArea2.AxisY.Minimum = 0D;
+            chartArea2.CursorX.IsUserEnabled = true;
+            chartArea2.CursorX.IsUserSelectionEnabled = true;
+            chartArea2.CursorY.IsUserEnabled = true;
+            chartArea2.CursorY.IsUserSelectionEnabled = true;
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
             this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(3, 20);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(748, 196);
+            this.chart2.Size = new System.Drawing.Size(801, 196);
             this.chart2.TabIndex = 5;
             this.chart2.Text = "chart2";
             // 
@@ -167,7 +166,7 @@
             this.GBCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GBCurrent.Location = new System.Drawing.Point(0, 253);
             this.GBCurrent.Name = "GBCurrent";
-            this.GBCurrent.Size = new System.Drawing.Size(754, 219);
+            this.GBCurrent.Size = new System.Drawing.Size(807, 219);
             this.GBCurrent.TabIndex = 2;
             this.GBCurrent.TabStop = false;
             this.GBCurrent.Text = "I(t)      Current";
